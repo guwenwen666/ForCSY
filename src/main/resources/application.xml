@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+		 http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		 http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-3.0.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+         http://www.springframework.org/schema/jdbc 
+         http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+         http://www.springframework.org/schema/task   
+    	 http://www.springframework.org/schema/task/spring-task-3.0.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
+	default-autowire="byName">
+
+	<context:property-placeholder location="classpath:datasource.properties" />
+	<context:component-scan base-package="com.csy">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- <bean id="cacheService" class="com.mysteel.cache.memcached.MemcachedService" 
+		destroy-method="destroy"> <constructor-arg index="0" value="${memcached.servers}" 
+		/> <constructor-arg index="1" value="${memcached.readThreadCount}" /> <constructor-arg 
+		index="2" value="${memcached.connectTimeout}" /> <constructor-arg index="3" 
+		value="${memcached.opTimeout}" /> </bean> -->
+
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<property name="driverClassName" value="${csy.dataSource.driverClassName}" />
+		<property name="url" value="${csy.dataSource.url}" />
+		<property name="username" value="${csy.dataSource.username}" />
+		<property name="password" value="${csy.dataSource.password}" />
+		<property name="initialSize" value="${csy.dataSource.initialSize}" />
+		<property name="maxActive" value="${csy.dataSource.maxActive}" />
+		<property name="minIdle" value="${csy.dataSource.minIdle}" />
+		<property name="testOnBorrow" value="${csy.dataSource.testOnBorrow}" />
+		<property name="testWhileIdle" value="${csy.dataSource.testWhileIdle}" />
+		<property name="validationQuery" value="${csy.dataSource.validationQuery}" />
+		<property name="filters" value="stat" />
+	</bean>
+
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean"
+		autowire="byName">
+		<property name="mapperLocations" value="classpath*:com/csy/**/sqlmap/*.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!--MapperScannerConfigurer配置 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!--basePackage指定要扫描的包，在此包之下的映射器都会被 搜索到。可指定多个包，包与包之间用逗号或分号分隔 -->
+		<property name="basePackage" value="com.csy.**.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
+
+	<tx:advice id="userTxAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false" />
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false" />
+			<tx:method name="update*" propagation="REQUIRED" read-only="false" />
+			<tx:method name="query*" propagation="SUPPORTS" />
+			<tx:method name="find*" propagation="SUPPORTS" />
+			<tx:method name="get*" propagation="SUPPORTS" />
+			<tx:method name="select*" propagation="SUPPORTS" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="pc" expression="execution(* com.csy..*.*(..))" /> <!--把事务控制在Service层 -->
+		<aop:advisor pointcut-ref="pc" advice-ref="userTxAdvice" />
+	</aop:config>
+
+</beans>
