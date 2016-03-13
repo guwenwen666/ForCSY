@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>欢迎来到csy!</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<link href="${springPath}/static/plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="${springPath}/static/css/common/common.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+           <script src="${springPath}/static/plugins/patch/html5shiv.js"></script>
+           <script src="${springPath}/static/plugins/patch/respond.min.js"></script>
+        <![endif]-->
+	</head>
+	<body>
+		#parse("/include/head/indexTop.vm")
+		
+		<script src="${springPath}/static/plugins/jquery/dist/jquery.min.js"></script>
+		<script src="${springPath}/static/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    		
+	</body>
+</html>

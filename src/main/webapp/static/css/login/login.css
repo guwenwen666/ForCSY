@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+
+.loginBox {
+	
+}
+
+.loginBox .loginBoxBackground{
+	background: rgba(0, 0, 0, 0.2);
+	position: absolute;
+	top:0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.box-content{
+	position: relative;
+	top: 15%;
+}
+
+.nav.nav-pills.linesWidthBlackBg li:not(.disabled) a{
+	background-color: none;
+	color: #eee;
+}
+
+.nav.nav-pills.linesWidthBlackBg li a{
+	color: #ccc;
+}
+
+.nav.nav-pills.linesWidthBlackBg li.active a{
+	background-color: rgba(0, 0, 0, 0);
+	color: #fff;
+	border-bottom: 3px solid #ffa00a;
+	border-radius: 4px 4px 0px 0px;
+}
+
+.loginBtn {
+    background: #ff8140 none repeat scroll 0 0;
+    border: 1px solid #f77c3d;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    color: #fff;
+}

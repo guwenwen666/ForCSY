@@ -40,7 +40,7 @@
 
 	
 	<!-- 对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能  需要更改-->
-	<context:component-scan base-package="com.csy">
+	<context:component-scan base-package="com.csy.**">
 		<context:exclude-filter type="assignable" expression="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"></context:exclude-filter>
 		<context:exclude-filter type="assignable" expression="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"></context:exclude-filter>
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"></context:exclude-filter>
@@ -50,7 +50,7 @@
 	<context:annotation-config />
 	
 	<!-- 激活@Controller模式,注册了DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter(@Controller的前提)--> 
-	<!-- 	<mvc:annotation-driven/> -->
+	<!-- <mvc:annotation-driven/> -->
 	
     <!-- velocityConfig配置文件 --> 
 	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
@@ -102,13 +102,13 @@
 	</bean>
 	
 	<!-- MVC拦截器,仅拦截被注释的mapping -->
-<!-- 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"> -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
 <!-- 		<property name="interceptors"> -->
 <!-- 		    <list> -->
 <!-- 		        <bean class="com.esademo.utils.annotation.AuthPassportInterceptor"/> -->
 <!-- 		    </list>   -->
 <!-- 		</property> -->
-<!--     </bean> -->
+    </bean>
     
     <!-- MVC拦截器,会拦截静态资源 -->
 	<!-- 	<mvc:interceptors> -->

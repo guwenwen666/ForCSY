@@ -1,0 +1,16 @@
+<div class="foot">
+    <div class="container">
+    	<div class="row">
+    		<div class="col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2">
+				<div style="color:#666;padding:10px 0px;">
+					<div class="left">
+						<small>本站点仅供个人学习参考，禁止任何人进行违规操作</small>
+                    </div>
+					<div class="right">
+						<small>站主：<cite title="皮卡卡">皮卡卡</cite></small>
+                    </div>
+                </div>
+    		</div>
+    	</div>
+    </div>
+</div>

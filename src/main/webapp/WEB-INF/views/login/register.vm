@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>欢迎注册csy帐号</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<link href="${springPath}/static/plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="${springPath}/static/plugins/bootstrapValidate/dist/css/bootstrapValidator.min.css" rel="stylesheet">
+		<link href="${springPath}/static/css/common/common.css" rel="stylesheet">
+		<link href="${springPath}/static/css/login/register.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+           <script src="${springPath}/static/plugins/patch/html5shiv.js"></script>
+           <script src="${springPath}/static/plugins/patch/respond.min.js"></script>
+        <![endif]-->
+	</head>
+	<body>
+		#parse("/include/common.vm")
+		<div class="line"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<div class="header">
+						<div class="logo_big"></div>
+                    </div>
+                </div>
+            </div>
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 content">
+					<ul class="nav nav-pills lines">
+						<li class="active">
+							<a href="#emailRegister" data-toggle="tab">邮箱注册</a>
+						</li>
+						<li class="disabled phoneRegister">
+							<a href="#phoneRegister" data-toggle="tab">手机注册</a>
+						</li>
+					</ul>
+					
+					<div class="col-sm-6">
+    					<div class="tab-content">
+    						<div class="tab-pane active" id="emailRegister">
+								<form class="form-horizontal registerForm">
+                            		<div class="form-group">
+                            			<label for="account" class="col-sm-4 control-label">帐号</label>
+                            			<div class="col-sm-8">
+                            				<input type="text" class="form-control" id="account" name="account" placeholder="请输入帐号">
+                            			</div>
+                            		</div>
+                            		<div class="form-group">
+                            			<label for="email" class="col-sm-4 control-label">邮箱</label>
+                            			<div class="col-sm-8">
+                            				<input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱">
+                            			</div>
+                            		</div>
+                            		<div class="form-group">
+                            			<label for="password" class="col-sm-4 control-label">密码</label>
+                            			<div class="col-sm-8">
+                            				<input type="password" class="form-control" id="password" name="password" placeholder="输入密码">
+                            			</div>
+                            		</div>
+                            		<div class="form-group">
+                            			<label for="repassword" class="col-sm-4 control-label">确认密码</label>
+                            			<div class="col-sm-8">
+                            				<input type="password" class="form-control" id="repassword" name="repassword" placeholder="确认密码">
+                            			</div>
+                            		</div>
+    								<div class="form-group">
+        								<div class="col-sm-8 col-sm-offset-4">
+											<div class="hidden-sm hidden-md hidden-lg">已有帐号?<a href="${springPath}/login">去登录</a></div>
+    										<div class="checkbox" style="margin-left:20px;">
+                                                  <input type="checkbox" id="readThisProtocol" name="readProtocol"/>
+    											  我已同意<a data-toggle="modal" data-target="#readProtocolModal" href="javascript:void();">服务使用协议</a>
+                                            </div>
+        								</div>
+                                    </div>
+                            		<div class="form-group">
+                            			<div class="col-sm-offset-4 col-sm-8">
+                            				<button type="submit" class="btn btn-primary">注册</button>
+    										<button type="button" class="btn btn-primary resetFormBtn">重置</button>
+                            			</div>
+                            		</div>
+                            	</form>
+    						</div>
+    						<div class="tab-pane" id="phoneRegister">
+								
+    						</div>
+                        </div>
+					</div>
+					<div class="col-sm-6 hidden-xs">
+						<div class="col-sm-1"></div>
+                        <div class="col-sm-10">
+                            <div class="title">已有帐号?<a href="${springPath}/login">去登录</a></div>
+							<div>
+								<p>欢迎注册CSY服务</p>
+								<p>完善信息会让你更快交到朋友</p>
+                                <p>好的点子?  <a>意见反馈</a></p>
+                            </div>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+		<div id="readProtocolModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+        			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        				<h4 id="myModalLabel">CSY服务使用协议</h4>
+        			</div>
+        			<div class="modal-body">
+        				<p>用户在使用CSY服务的过程中应文明发言，并依法尊重其它用户的人格权与身份权等人身权利，共同建立和谐、文明、礼貌的网络社交环境。</p>
+						<strong class="text-primary">用户在使用服务过程中，必须遵循以下原则:</strong>
+						<ol>
+    						<li>不得违反中华人民共和国法律法规及相关国际条约或规则</li>
+    						<li>不得违反法律法规、社会主义制度、国家利益、公民合法权益、公共秩序、社会道德风尚和信息真实性等“七条底线”要求</li>
+    						<li>不得进行任何可能对互联网或移动网正常运转造成不利影响的行为</li>
+    						<li>不得上传、展示或传播任何不实虚假、冒充性的、骚扰性的、中伤性的、攻击性的、辱骂性的、恐吓性的、种族歧视性的、诽谤诋毁、泄露隐私、成人情色、恶意抄袭的或其他任何非法的信息资料</li>
+    						<li>不得以任何方式侵犯其他任何人依法享有的专利权、著作权、商标权等知识产权，或姓名权、名称权、名誉权、荣誉权、肖像权、隐私权等人身权益，或其他任何合法权益</li>
+                        </ol>
+        			</div>
+        			<div class="modal-footer">
+        				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+        			</div>
+                </div>
+            </div>
+        </div>
+		
+		<div id="registerTip" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="registerTip" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+        			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        				<h4 id="myModalLabel">提示</h4>
+        			</div>
+        			<div class="modal-body">
+						<div class="success">
+							<p class="text-center"><strong id="registerTip_account"></strong>注册成功! &nbsp;&nbsp;<a href="$!{springPath}/login">去登录</a></p>
+							<p class="text-left" style="margin-left:30px;">激活后的邮箱、手机号也能用来登录哦</p>
+						</div>
+						<div class="error">
+							<p class="text-center">注册失败!</p>
+                        </div>
+        			</div>
+                </div>
+            </div>
+        </div>
+		#parse("/include/foot/indexFoot.vm")
+		<script src="${springPath}/static/plugins/jquery/dist/jquery.min.js"></script>
+		<script src="${springPath}/static/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="${springPath}/static/plugins/bootstrapValidate/dist/js/bootstrapValidator.min.js"></script>
+		<script src="${springPath}/static/js/login/register.js"></script>
+	</body>
+</html>

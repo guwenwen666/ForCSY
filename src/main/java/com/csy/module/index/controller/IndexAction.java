@@ -1,0 +1,19 @@
+package com.csy.module.index.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class IndexAction {
+
+	@RequestMapping("/{account}/index")
+	public ModelAndView accountIndex(String account){
+		return new ModelAndView("index");
+	}
+	
+	@RequestMapping("/index")
+	public ModelAndView index(String account){
+		return new ModelAndView("index");
+	}
+}

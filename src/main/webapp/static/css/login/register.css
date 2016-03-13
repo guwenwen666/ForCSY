@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+
+.line{
+	height: 3px;
+	background: rgba(0, 0, 0, 0) linear-gradient(90deg, rgba(235, 25, 45, 1) 0px, rgba(253, 185, 64, 1) 100%) repeat scroll 0 0
+}
+.header {
+    background: rgba(0, 0, 0, 0) url("../../img/login/register/bg_reg_wave.png") no-repeat scroll center bottom;
+    height: 184px;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+
+.logo_big {
+    background: rgba(0, 0, 0, 0) url("../../img/login/register/wb_logo_big.png") no-repeat scroll 0 0;
+    height: 72px;
+    margin: 26px auto 0;
+    width: 200px;
+}
+
+.content{
+	background:#fff;
+	padding:10px 20px;
+	border-radius: 5px;
+}
+
+.title{
+	padding-bottom: 10px;
+	border-bottom: 1px solid red;
+}

@@ -1,0 +1,53 @@
+@CHARSET "UTF-8";
+
+body{
+	background: #bee1f5 url("../../img/common/reg_repeat_bg.png") repeat-x scroll 0 0
+}
+
+.topic{
+	border-top: 2px solid #fa7d3c;
+	padding: 6px 0px;
+	box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.3), 0 0 6px 2px rgba(0, 0, 0, 0.15);
+	position: fixed;
+	width:100%;
+	z-index:9999;
+	background-color: #fff;
+}
+.topic + .topicPosition{
+	height:40px;
+	position: relative;
+}
+
+.left>*{
+	float: left;
+}
+
+.right>*{
+	float: right;
+}
+
+span.website_logo{
+	height: 26px;
+	width: 80px;
+	display: inline-block;
+	background-image: url("../../img/common/wb_logo.png");
+	background-position: 50% 50%;
+	background-size: 100%;
+}
+
+.nav.nav-pills.lines li:not(.disabled) a{
+	background-color: #fff;
+	color: #333;
+}
+
+.nav.nav-pills.lines li.active a{
+	background-color: #fff;
+	border-bottom: 3px solid #ffa00a;
+	border-radius: 4px 4px 0px 0px;
+}
+
+.fullpage .section{
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover; 
+}
