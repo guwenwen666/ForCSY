@@ -165,7 +165,7 @@ function formValidate() {
 					$("#registerTip .error").show();
 					$("#registerTip .success").hide();
 				}else{
-					$("#registerTip_account").text(rst.register.account);
+					$("#registerTip_account").text(rst.account);
 					$("#registerTip .error").hide();
 					$("#registerTip .success").show();
 				}

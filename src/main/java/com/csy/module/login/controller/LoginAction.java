@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
@@ -19,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.csy.module.user.entity.BUserAccount;
 import com.csy.module.user.service.service.BuserAccountService;
 import com.csy.util.ObjectUtils;
+import com.csy.util.SecurityCodeImg;
 import com.csy.util.StringUtils;
+import com.csy.util.algorithm.MD5Util;
 
 
 @Controller
@@ -40,8 +43,7 @@ public class LoginAction {
 			,String account,String password,String isCache) throws IOException{
 		//如果不是从cache里面取出
 		if(!StringUtils.isTrimEmpty(isCache)){
-			//password需要加密处理!
-			
+			password = MD5Util.MD5(password);
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("power", account);
@@ -51,6 +53,17 @@ public class LoginAction {
 			BUserAccount user = accountService.loginCheck(map);
 			if(ObjectUtils.isNull(user)){
 				jsonObject.put("errorMsg", "帐号或密码不正确!");
+				HttpSession session = req.getSession(true);
+				Object timesObj = session.getAttribute("login_errorTime");
+				if(ObjectUtils.isNull(timesObj)){
+					session.setAttribute("login_errorTime", 1);
+				}else{
+					int times = (int)timesObj + 1;
+					session.setAttribute("login_errorTime", times);
+					if(times >= 3){
+						jsonObject.put("securityCode", true);
+					}
+				}
 			}else{
 				jsonObject.put("success", "验证通过!");
 				jsonObject.put("account", user.getAccount());
@@ -63,4 +76,13 @@ public class LoginAction {
 		}
 		res.getWriter().print(jsonObject);
 	}
+	
+	@RequestMapping("login/securityCodeImg")
+	public void SecurityCodeImg(HttpServletRequest req,
+			HttpServletResponse response) throws IOException {
+		SecurityCodeImg securityCodeImg = new SecurityCodeImg();
+		req.setAttribute("login_security", securityCodeImg.getSecurityCode());
+		securityCodeImg.outPutStream(response);
+	}
+	
 }

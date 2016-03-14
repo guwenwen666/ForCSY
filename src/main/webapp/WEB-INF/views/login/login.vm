@@ -47,6 +47,19 @@
                                                 <span class="input-group-addon" style="background-color:#fff;"><span class="glyphicon glyphicon-eye-close"></span></span>
                                                 <input type="password" class="form-control" id="password" name="password" placeholder="输入密码">
 											</div>
+											<div style="margin:0px 0px 5px 0px;display:none;">
+												<div class="row">
+													<div class="col-sm-6">
+														<input type="text" class="form-control " id="securityCode" name="securityCode" placeholder="输入验证码" />
+                                                    </div>
+													<div class="col-sm-6">
+                                                        <a href="#" title="点击刷新">
+															<img src="${springPath}/login/securityCodeImg" height="34"/>
+															<span class="glyphicon glyphicon-refresh" style="color:#fff;"></span>
+														</a>
+                                                    </div>
+                                                </div>
+											</div>
 											<div class="row">
 												<div class="col-xs-6 text-left">
 													<input type="checkbox" style="float:left;margin-right:5px;" id="rememberAccount" name="rememberAccount" />

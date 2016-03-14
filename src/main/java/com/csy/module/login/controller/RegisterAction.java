@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.csy.module.login.service.service.RegisterService;
 import com.csy.module.user.entity.BUserAccount;
 import com.csy.module.user.service.service.BuserAccountService;
 import com.csy.util.StringUtils;
@@ -25,8 +26,12 @@ public class RegisterAction {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+//	@Autowired
+	private RegisterService registerService;
+	
 	@Autowired
 	private BuserAccountService accountService;
+	
 	
 	@RequestMapping("/register")
 	public ModelAndView register(){
@@ -38,11 +43,10 @@ public class RegisterAction {
 			,BUserAccount account) throws IOException{
 		JSONObject jsonObject = new JSONObject();
 		try {
-			accountService.insertSelective(account);
-			BUserAccount register = accountService.selectByPrimaryKey(account.getAccount());
+			registerService.insertAccount(account);
 			jsonObject.put("success", "success");
-			jsonObject.put("register", register);
-		} catch (Exception e) {
+			jsonObject.put("account", account);
+		} catch (Exception e){
 			logger.info(account.getAccount()+"添加失败！", e);
 			jsonObject.put("errorMsg", e.getMessage());
 		}

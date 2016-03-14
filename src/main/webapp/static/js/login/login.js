@@ -100,6 +100,9 @@ function formValidate() {
 						content: rst.errorMsg,
 						placement: "top"
 						}).popover("show");
+					if(rst.securityCode){
+						
+					}
 					return;
 				}
 				window.open(getSpringPath()+"/"+rst.account+"/index","_self");
