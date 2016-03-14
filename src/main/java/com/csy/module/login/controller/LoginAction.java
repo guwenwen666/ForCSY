@@ -46,7 +46,7 @@ public class LoginAction {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("power", account);
 		map.put("password", password);
-		JSONObject jsonObject = JSONObject.fromObject(map);
+		JSONObject jsonObject = new JSONObject();
 		try {
 			BUserAccount user = accountService.loginCheck(map);
 			if(ObjectUtils.isNull(user)){
