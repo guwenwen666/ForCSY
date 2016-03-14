@@ -32,11 +32,10 @@ function init() {
 	// 解决firefox下input有默认值的问题
 	$(".loginForm")[0].reset();
 	
-	$("#account,#password").blur(function(){
-		$(this).popover("hide");
-	});
+//	$("#account,#password").blur(function(){
+//		$(this).popover("hide");
+//	});
 }
-
 
 function formValidate() {
 	$('.loginForm').bootstrapValidator({
@@ -57,11 +56,10 @@ function formValidate() {
 									selector: "#account",
 									content: "帐号不可为空!",
 									placement: "top" 
-								});
-								jQuerydom.popover("show");
+								}).popover("show");
 								return false;
 							}else{
-								jQuerydom.popover("hide");
+								jQuerydom.popover("destroy");
 							}
 							return true;
 						}
@@ -78,11 +76,10 @@ function formValidate() {
 									selector: "#password",
 									content: "密码不可为空!",
 									placement: "top" 
-								});
-								jQuerydom.popover("show");
+								}).popover("show");
 								return false;
 							}else{
-								jQuerydom.popover("hide");
+								jQuerydom.popover("destroy");
 							}
 							return true;
 						}
