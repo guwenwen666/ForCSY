@@ -161,17 +161,25 @@ function formValidate() {
 			dataType: "json",
 			success: function(rst, textStatus){
 				$("#registerTip").modal("show");
-				if(!!rst.errorMsg){
-					$("#registerTip .error").show();
-					$("#registerTip .success").hide();
-				}else{
+				if(!!rst.success){
 					$("#registerTip_account").text(rst.account);
 					$("#registerTip .error").hide();
 					$("#registerTip .success").show();
+				}else{
+					if(!rst.errorMsg)
+						rst.errorMsg = "未知错误";
+					$("#registerTip_errorMsg").text(rst.errorMsg);
+					$("#registerTip .error").show();
+					$("#registerTip .success").hide();
 				}
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
 				$("#registerTip").modal("show");
+				var errorMsg = XMLHttpRequest.status;
+				if(!errorMsg){
+					errorMsg = "未知异常!";
+				}
+				$("#registerTip_errorMsg").text(errorMsg);
 				$("#registerTip .error").show();
 				$("#registerTip .success").hide();
 			}

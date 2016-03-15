@@ -42,7 +42,7 @@ public class LoginAction {
 	public void accountLogin(HttpServletRequest req,HttpServletResponse res
 			,String account,String password,String isCache) throws IOException{
 		//如果不是从cache里面取出
-		if(!StringUtils.isTrimEmpty(isCache)){
+		if(StringUtils.isTrimEmpty(isCache)){
 			password = MD5Util.MD5(password);
 		}
 		Map<String, Object> map = new HashMap<String, Object>();

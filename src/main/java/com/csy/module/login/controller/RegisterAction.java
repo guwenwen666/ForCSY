@@ -26,7 +26,7 @@ public class RegisterAction {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-//	@Autowired
+	@Autowired
 	private RegisterService registerService;
 	
 	@Autowired
@@ -45,7 +45,7 @@ public class RegisterAction {
 		try {
 			registerService.insertAccount(account);
 			jsonObject.put("success", "success");
-			jsonObject.put("account", account);
+			jsonObject.put("account", account.getAccount());
 		} catch (Exception e){
 			logger.info(account.getAccount()+"添加失败！", e);
 			jsonObject.put("errorMsg", e.getMessage());

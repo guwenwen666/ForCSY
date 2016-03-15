@@ -135,11 +135,15 @@
         			</div>
         			<div class="modal-body">
 						<div class="success">
-							<p class="text-center"><strong id="registerTip_account"></strong>注册成功! &nbsp;&nbsp;<a href="$!{springPath}/login">去登录</a></p>
+							<p class="text-center" style="font-size:14px;">
+								注册成功!&nbsp;您的帐号:&nbsp;<strong id="registerTip_account" class="text-primary"></strong>
+								现在<a href="$!{springPath}/login">去登录</a>
+							</p>
+							<div class="line" style="margin-bottom:10px;"></div>
 							<p class="text-left" style="margin-left:30px;">激活后的邮箱、手机号也能用来登录哦</p>
 						</div>
-						<div class="error">
-							<p class="text-center">注册失败!</p>
+						<div class="error text-danger">
+							<p class="text-center">注册失败!&nbsp;&nbsp;异常原因:<strong id="registerTip_errorMsg"></strong></p>
                         </div>
         			</div>
                 </div>
