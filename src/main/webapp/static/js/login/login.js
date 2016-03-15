@@ -32,9 +32,18 @@ function init() {
 	// 解决firefox下input有默认值的问题
 	$(".loginForm")[0].reset();
 	
-//	$("#account,#password").blur(function(){
-//		$(this).popover("hide");
-//	});
+	$("#securityCodeImg").parents("a").click(function(){
+		var imgUrl = $("#securityCodeImg").attr("src");
+		var index = imgUrl.lastIndexOf("?");
+		if(index > -1){
+			imgUrl.substring(0, index);
+		}
+		$("#securityCodeImg").attr("src",imgUrl+"?a="+Math.random());
+	});
+	
+	$("#account,#password,#securityCode").blur(function(){
+		$(this).popover("hide");
+	});
 }
 
 function formValidate() {
@@ -58,9 +67,8 @@ function formValidate() {
 									placement: "top" 
 								}).popover("show");
 								return false;
-							}else{
-								jQuerydom.popover("destroy");
 							}
+							jQuerydom.popover("destroy");
 							return true;
 						}
 					}
@@ -78,6 +86,28 @@ function formValidate() {
 									placement: "top" 
 								}).popover("show");
 								return false;
+							}
+							jQuerydom.popover("destroy");
+							return true;
+						}
+					}
+				}
+			},
+			securityCode:{
+				validators:{
+					callback:{
+						message:'<div></div>',
+						callback: function(value,validate,jQuerydom){
+							if($("#securityCodeDiv").hasClass("hidden")){
+								return true;
+							}
+							if(!value){
+								jQuerydom.popover({
+									selector: "#securityCode",
+									content: "验证码不可为空!",
+									placement: "top" 
+								}).popover("show");
+								return false;
 							}else{
 								jQuerydom.popover("destroy");
 							}
@@ -88,6 +118,34 @@ function formValidate() {
 			}
 		}
 	}).on("success.form.bv",function(e){
+		if(!$("#securityCodeDiv").hasClass("hidden")){
+			var isTure = false;
+			$.ajax({
+				type: "post",
+				url: getSpringPath()+"/login/securityCodeCheck",
+				data: {
+					securityCode: $("#securityCode").val()
+				},
+				async: false,
+				success: function(rst){
+					if(rst=="true"){
+						isTure = true;
+					}else{
+						$("#securityCode").popover({
+							selector: "#password",
+							content: "验证码不正确!",
+							placement: "top" 
+						}).popover("show");
+						$("#securityCodeImg").parents("a").click();
+					}
+				}
+			});
+			if(!isTure){
+				return false;
+			}
+			$("#securityCode").popover("destroy");
+		}
+		
 		$.ajax({
 			type: "post",
 			url: getSpringPath()+"/login/accountLogin",
@@ -101,7 +159,8 @@ function formValidate() {
 						placement: "top"
 						}).popover("show");
 					if(rst.securityCode){
-						
+						$("#securityCodeDiv").removeClass("hidden");
+						$("#securityCodeImg").parents("a").click();
 					}
 					return;
 				}

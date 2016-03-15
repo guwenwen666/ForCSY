@@ -4,6 +4,10 @@ body{
 	background: #bee1f5 url("../../img/common/reg_repeat_bg.png") repeat-x scroll 0 0
 }
 
+.hidden{
+	display:none;
+}
+
 .topic{
 	border-top: 2px solid #fa7d3c;
 	padding: 6px 0px;

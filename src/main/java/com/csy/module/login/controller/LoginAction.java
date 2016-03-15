@@ -81,8 +81,17 @@ public class LoginAction {
 	public void SecurityCodeImg(HttpServletRequest req,
 			HttpServletResponse response) throws IOException {
 		SecurityCodeImg securityCodeImg = new SecurityCodeImg();
-		req.setAttribute("login_security", securityCodeImg.getSecurityCode());
+		req.getSession(true).setAttribute("login_security", securityCodeImg.getSecurityCode());
 		securityCodeImg.outPutStream(response);
 	}
 	
+	@RequestMapping("login/securityCodeCheck")
+	public void SecurityCodeImg(HttpServletRequest req,
+			HttpServletResponse response,String securityCode) throws IOException {
+		String realCode = (String)req.getSession(true).getAttribute("login_security");
+		boolean b=false;
+		if(realCode!=null && realCode.toUpperCase().equals(securityCode.toUpperCase()))
+			b=true;
+		response.getWriter().print(b);
+	}
 }
