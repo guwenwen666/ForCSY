@@ -5,5 +5,6 @@ import com.csy.module.user.entity.BUserAccount;
 
 public interface RegisterService{
 	
-	public int insertAccount(BUserAccount account);
+	public int insertAccount(BUserAccount account) throws Exception;
+	
 }

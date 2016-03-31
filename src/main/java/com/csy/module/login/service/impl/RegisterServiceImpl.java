@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 import com.csy.module.login.service.service.RegisterService;
 import com.csy.module.user.dao.BUserAccountMapper;
 import com.csy.module.user.entity.BUserAccount;
-import com.csy.util.algorithm.MD5Util;
+import com.csy.util.RandDomUtil;
+import com.csy.util.algorithm.DesUtil;
 
 @Service
 public class RegisterServiceImpl implements RegisterService{
@@ -15,9 +16,11 @@ public class RegisterServiceImpl implements RegisterService{
 	private BUserAccountMapper accountMapper;
 
 	@Override
-	public int insertAccount(BUserAccount account) {
+	public int insertAccount(BUserAccount account) throws Exception {
 		String password = account.getPassword();
-		account.setPassword(MD5Util.MD5(password));
+		String safeKey = RandDomUtil.getRandomString(32);
+		account.setSafekey(safeKey);
+		account.setPassword(new DesUtil(safeKey).encrypt(password));
 		return accountMapper.insertSelective(account);
 	}
 	

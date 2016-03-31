@@ -12,6 +12,10 @@ import com.csy.module.user.entity.BUserAccount;
 import com.csy.module.user.entity.BUserAccountExample;
 import com.csy.module.user.service.service.BuserAccountService;
 import com.csy.util.ObjectUtils;
+import com.csy.util.algorithm.DesUtil;
+import com.csy.util.exception.account.EmailNotActivatedException;
+import com.csy.util.exception.account.PhoneNotActivatedException;
+import com.csy.util.exception.account.UserNotUniqueException;
 import com.csy.util.spring.BaseService;
 
 @Service
@@ -46,8 +50,34 @@ public class BuserAccountServiceImpl extends BaseService<BUserAccount, BUserAcco
 	}
 
 	@Override
-	public BUserAccount loginCheck(Map<String, Object> map) {
-		return dao.loginCheck(map);
+	public BUserAccount loginUser(String account,String password) 
+			throws UserNotUniqueException, EmailNotActivatedException
+			, PhoneNotActivatedException, Exception{
+		BUserAccountExample example = new BUserAccountExample();
+		example.or().andAccountEqualTo(account);
+		example.or().andEmailEqualTo(account);
+		example.or().andPhoneEqualTo(account);
+		List<BUserAccount> users = dao.selectByExample(example);
+		//帐号不存在
+		if(ObjectUtils.isEmpty(users))
+			return null;
+		//帐号不唯一！（严重问题）
+		if(users.size() > 1)
+			throw new UserNotUniqueException(account);
+		BUserAccount user = users.get(0);
+		String encryptPassword = new DesUtil(user.getSafekey()).encrypt(password);
+		//密码不匹配
+		if(!encryptPassword.equals(user.getPassword())){
+			return null;
+		}
+		//email登录,并且email未激活
+		if(account.equals(user.getEmail()) && user.getEmailstatue() != (byte)1){
+			throw new EmailNotActivatedException(account);
+		}
+		//手机登录，并且手机未激活
+		if(account.equals(user.getPhone()) && user.getPhonestatue() != (byte)1){
+			throw new PhoneNotActivatedException(account);
+		}
+		return user;
 	}
-
 }

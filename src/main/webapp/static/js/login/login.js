@@ -47,6 +47,30 @@ function init() {
 }
 
 function formValidate() {
+	
+	$("#account").popover({
+		selector: "#account",
+		placement: "top",
+		content: "account"
+	});
+	
+	$("#password").popover({
+		selector: "#password",
+		placement: "top",
+		content: "password"
+	});
+	
+	$("#securityCode").popover({
+		selector: "#securityCode",
+		placement: "top",
+		content: "securityCode"
+	});
+	
+	var resetPopoverContext = function(dom,msg){
+		dom.popover("show");
+		dom.nextAll(".popover").find(".popover-content").text(msg);
+	};
+	
 	$('.loginForm').bootstrapValidator({
 		message : '验证未通过!',
 		feedbackIcons: { 
@@ -61,14 +85,9 @@ function formValidate() {
 						message:'<div></div>',
 						callback: function(value,validate,jQuerydom){
 							if(!value){
-								jQuerydom.popover({
-									selector: "#account",
-									content: "帐号不可为空!",
-									placement: "top" 
-								}).popover("show");
+								resetPopoverContext(jQuerydom,"帐号不可为空!");
 								return false;
 							}
-							jQuerydom.popover("destroy");
 							return true;
 						}
 					}
@@ -80,14 +99,9 @@ function formValidate() {
 						message:'<div></div>',
 						callback: function(value,validate,jQuerydom){
 							if(!value){
-								jQuerydom.popover({
-									selector: "#password",
-									content: "密码不可为空!",
-									placement: "top" 
-								}).popover("show");
+								resetPopoverContext(jQuerydom,"密码不可为空!");
 								return false;
 							}
-							jQuerydom.popover("destroy");
 							return true;
 						}
 					}
@@ -102,14 +116,8 @@ function formValidate() {
 								return true;
 							}
 							if(!value){
-								jQuerydom.popover({
-									selector: "#securityCode",
-									content: "验证码不可为空!",
-									placement: "top" 
-								}).popover("show");
+								resetPopoverContext(jQuerydom,"输入验证码!");
 								return false;
-							}else{
-								jQuerydom.popover("destroy");
 							}
 							return true;
 						}
@@ -131,19 +139,14 @@ function formValidate() {
 					if(rst=="true"){
 						isTure = true;
 					}else{
-						$("#securityCode").popover({
-							selector: "#password",
-							content: "验证码不正确!",
-							placement: "top" 
-						}).popover("show");
+						resetPopoverContext($("#securityCode"),"验证码不正确!");
 						$("#securityCodeImg").parents("a").click();
 					}
 				}
 			});
-			if(!isTure){
+			//验证码不正确
+			if(!isTure)
 				return false;
-			}
-			$("#securityCode").popover("destroy");
 		}
 		
 		$.ajax({
@@ -153,25 +156,17 @@ function formValidate() {
 			dataType: "json",
 			success: function(rst, textStatus){
 				if(!!rst.errorMsg){
-					$("#account").popover({
-						selector: "#account",
-						content: rst.errorMsg,
-						placement: "top"
-						}).popover("show");
+					resetPopoverContext($("#account"), rst.errorMsg);
 					if(rst.securityCode){
 						$("#securityCodeDiv").removeClass("hidden");
 						$("#securityCodeImg").parents("a").click();
 					}
 					return;
 				}
-				window.open(getSpringPath()+"/"+rst.account+"/index","_self");
+				window.open(getSpringPath()+"/"+rst.account_id+"/index","_self");
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
-				$("#account").popover({
-					selector: "#account",
-					content:"登录异常!"+ XMLHttpRequest.status + ":" + XMLHttpRequest.statusText,
-					placement: "top"
-					}).popover("show");
+				resetPopoverContext($("#account"), "登录异常!"+ XMLHttpRequest.status);
 			}
 		});
 		e.preventDefault();

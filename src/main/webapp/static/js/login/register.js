@@ -50,8 +50,8 @@ function formValidate() {
 						message : '账户名长度6-30位'
 					},
 					regexp : {
-						regexp : /^[a-zA-Z0-9_\.]+$/,
-						message : '字母数组下划线组成'
+						regexp : /^\w*[a-zA-Z_]+\w*$/,
+						message : '字母数字下划线组成(至少一个字母)'
 					},
 					callback: {
 						message: '该账户已经被注册',

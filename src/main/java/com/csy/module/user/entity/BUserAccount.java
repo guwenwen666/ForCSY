@@ -3,6 +3,8 @@ package com.csy.module.user.entity;
 import java.util.Date;
 
 public class BUserAccount {
+    private Long id;
+
     private String account;
 
     private String password;
@@ -11,11 +13,25 @@ public class BUserAccount {
 
     private String email;
 
+    private Byte emailstatue;
+
     private String phone;
 
-    private Integer status;
+    private Byte phonestatue;
+
+    private String safekey;
+
+    private Byte status;
 
     private Date createtime;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getAccount() {
         return account;
@@ -49,6 +65,14 @@ public class BUserAccount {
         this.email = email == null ? null : email.trim();
     }
 
+    public Byte getEmailstatue() {
+        return emailstatue;
+    }
+
+    public void setEmailstatue(Byte emailstatue) {
+        this.emailstatue = emailstatue;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -57,11 +81,27 @@ public class BUserAccount {
         this.phone = phone == null ? null : phone.trim();
     }
 
-    public Integer getStatus() {
+    public Byte getPhonestatue() {
+        return phonestatue;
+    }
+
+    public void setPhonestatue(Byte phonestatue) {
+        this.phonestatue = phonestatue;
+    }
+
+    public String getSafekey() {
+        return safekey;
+    }
+
+    public void setSafekey(String safekey) {
+        this.safekey = safekey == null ? null : safekey.trim();
+    }
+
+    public Byte getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Byte status) {
         this.status = status;
     }
 

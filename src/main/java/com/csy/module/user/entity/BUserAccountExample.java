@@ -105,6 +105,66 @@ public class BUserAccountExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
+        public Criteria andIdIsNull() {
+            addCriterion("id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIsNotNull() {
+            addCriterion("id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEqualTo(Long value) {
+            addCriterion("id =", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotEqualTo(Long value) {
+            addCriterion("id <>", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdGreaterThan(Long value) {
+            addCriterion("id >", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("id >=", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdLessThan(Long value) {
+            addCriterion("id <", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdLessThanOrEqualTo(Long value) {
+            addCriterion("id <=", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIn(List<Long> values) {
+            addCriterion("id in", values, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotIn(List<Long> values) {
+            addCriterion("id not in", values, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBetween(Long value1, Long value2) {
+            addCriterion("id between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotBetween(Long value1, Long value2) {
+            addCriterion("id not between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
         public Criteria andAccountIsNull() {
             addCriterion("account is null");
             return (Criteria) this;
@@ -385,6 +445,66 @@ public class BUserAccountExample {
             return (Criteria) this;
         }
 
+        public Criteria andEmailstatueIsNull() {
+            addCriterion("emailStatue is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailstatueIsNotNull() {
+            addCriterion("emailStatue is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailstatueEqualTo(Byte value) {
+            addCriterion("emailStatue =", value, "emailstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailstatueNotEqualTo(Byte value) {
+            addCriterion("emailStatue <>", value, "emailstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailstatueGreaterThan(Byte value) {
+            addCriterion("emailStatue >", value, "emailstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailstatueGreaterThanOrEqualTo(Byte value) {
+            addCriterion("emailStatue >=", value, "emailstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailstatueLessThan(Byte value) {
+            addCriterion("emailStatue <", value, "emailstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailstatueLessThanOrEqualTo(Byte value) {
+            addCriterion("emailStatue <=", value, "emailstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailstatueIn(List<Byte> values) {
+            addCriterion("emailStatue in", values, "emailstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailstatueNotIn(List<Byte> values) {
+            addCriterion("emailStatue not in", values, "emailstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailstatueBetween(Byte value1, Byte value2) {
+            addCriterion("emailStatue between", value1, value2, "emailstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailstatueNotBetween(Byte value1, Byte value2) {
+            addCriterion("emailStatue not between", value1, value2, "emailstatue");
+            return (Criteria) this;
+        }
+
         public Criteria andPhoneIsNull() {
             addCriterion("phone is null");
             return (Criteria) this;
@@ -455,6 +575,136 @@ public class BUserAccountExample {
             return (Criteria) this;
         }
 
+        public Criteria andPhonestatueIsNull() {
+            addCriterion("phoneStatue is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhonestatueIsNotNull() {
+            addCriterion("phoneStatue is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhonestatueEqualTo(Byte value) {
+            addCriterion("phoneStatue =", value, "phonestatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhonestatueNotEqualTo(Byte value) {
+            addCriterion("phoneStatue <>", value, "phonestatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhonestatueGreaterThan(Byte value) {
+            addCriterion("phoneStatue >", value, "phonestatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhonestatueGreaterThanOrEqualTo(Byte value) {
+            addCriterion("phoneStatue >=", value, "phonestatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhonestatueLessThan(Byte value) {
+            addCriterion("phoneStatue <", value, "phonestatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhonestatueLessThanOrEqualTo(Byte value) {
+            addCriterion("phoneStatue <=", value, "phonestatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhonestatueIn(List<Byte> values) {
+            addCriterion("phoneStatue in", values, "phonestatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhonestatueNotIn(List<Byte> values) {
+            addCriterion("phoneStatue not in", values, "phonestatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhonestatueBetween(Byte value1, Byte value2) {
+            addCriterion("phoneStatue between", value1, value2, "phonestatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhonestatueNotBetween(Byte value1, Byte value2) {
+            addCriterion("phoneStatue not between", value1, value2, "phonestatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyIsNull() {
+            addCriterion("safeKey is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyIsNotNull() {
+            addCriterion("safeKey is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyEqualTo(String value) {
+            addCriterion("safeKey =", value, "safekey");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyNotEqualTo(String value) {
+            addCriterion("safeKey <>", value, "safekey");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyGreaterThan(String value) {
+            addCriterion("safeKey >", value, "safekey");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyGreaterThanOrEqualTo(String value) {
+            addCriterion("safeKey >=", value, "safekey");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyLessThan(String value) {
+            addCriterion("safeKey <", value, "safekey");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyLessThanOrEqualTo(String value) {
+            addCriterion("safeKey <=", value, "safekey");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyLike(String value) {
+            addCriterion("safeKey like", value, "safekey");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyNotLike(String value) {
+            addCriterion("safeKey not like", value, "safekey");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyIn(List<String> values) {
+            addCriterion("safeKey in", values, "safekey");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyNotIn(List<String> values) {
+            addCriterion("safeKey not in", values, "safekey");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyBetween(String value1, String value2) {
+            addCriterion("safeKey between", value1, value2, "safekey");
+            return (Criteria) this;
+        }
+
+        public Criteria andSafekeyNotBetween(String value1, String value2) {
+            addCriterion("safeKey not between", value1, value2, "safekey");
+            return (Criteria) this;
+        }
+
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;
@@ -465,52 +715,52 @@ public class BUserAccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Integer value) {
+        public Criteria andStatusEqualTo(Byte value) {
             addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Integer value) {
+        public Criteria andStatusNotEqualTo(Byte value) {
             addCriterion("status <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Integer value) {
+        public Criteria andStatusGreaterThan(Byte value) {
             addCriterion("status >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
+        public Criteria andStatusGreaterThanOrEqualTo(Byte value) {
             addCriterion("status >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Integer value) {
+        public Criteria andStatusLessThan(Byte value) {
             addCriterion("status <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Integer value) {
+        public Criteria andStatusLessThanOrEqualTo(Byte value) {
             addCriterion("status <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Integer> values) {
+        public Criteria andStatusIn(List<Byte> values) {
             addCriterion("status in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Integer> values) {
+        public Criteria andStatusNotIn(List<Byte> values) {
             addCriterion("status not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Integer value1, Integer value2) {
+        public Criteria andStatusBetween(Byte value1, Byte value2) {
             addCriterion("status between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
+        public Criteria andStatusNotBetween(Byte value1, Byte value2) {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
