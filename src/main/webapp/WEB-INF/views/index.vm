@@ -11,9 +11,24 @@
            <script src="${springPath}/static/plugins/patch/html5shiv.js"></script>
            <script src="${springPath}/static/plugins/patch/respond.min.js"></script>
         <![endif]-->
+        <style>
+        	iframe.uploadIframe{
+        		border: none;
+        		width: 600px;
+        		height: 400px;
+        		position: relative;
+        		top: 50%;
+        		left: 50%;
+        		margin: 200px 0px 0px -300px;
+        	}
+        </style>
 	</head>
 	<body>
 		#parse("/include/head/indexTop.vm")
+		
+		<iframe class="uploadIframe" style=""
+			 src="${springPath}/common/upload.ms">
+		</iframe>
 		
 		<script src="${springPath}/static/plugins/jquery/dist/jquery.min.js"></script>
 		<script src="${springPath}/static/plugins/bootstrap/dist/js/bootstrap.min.js"></script>

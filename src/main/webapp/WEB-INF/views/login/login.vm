@@ -16,8 +16,11 @@
         <![endif]-->
 	</head>
 	<body>
-		#parse("/include/head/indexTopWithNoLink.vm")
+		
 		<div id="fullpage" class="fullpage">
+			<div class="section fp-auto-height">
+				#parse("/include/head/indexTopWithNoLink.vm")
+			</div>
             <div class="section" style="background-image:url('${springPath}/static/img/login/login/T1.jpg');">
 				<div class="container box-content">
 					<div class="row">

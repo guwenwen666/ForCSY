@@ -8,11 +8,11 @@ $(function() {
 	$('#fullpage').fullpage({
 		'verticalCentered' : false,
 		'css3' : true,
-		anchors : [ 'loginWindow', 'pic2', 'pic3', 'pic4' ],
+		'anchors' : [ "head",'loginWindow', 'pic2', 'pic3', 'pic4' ],
 		'navigation' : true,
-		'loopBottom' : true,
+		'loopBottom' : false,
 		'navigationPosition' : 'right',
-		'navigationTooltips' : [ 'loginWindow', 'pic2', 'pic3', 'pic4' ],
+		'navigationTooltips' : [ 'head','loginWindow', 'pic2', 'pic3', 'pic4' ],
 	});
 });
 

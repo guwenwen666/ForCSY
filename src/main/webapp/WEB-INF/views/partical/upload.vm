@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>Csy文件上传中心</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<link href="${springPath}/static/plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="${springPath}/static/plugins/Dropper-master/jquery.fs.dropper.css" rel="stylesheet">
+		<link href="${springPath}/static/css/common/common.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+           <script src="${springPath}/static/plugins/patch/html5shiv.js"></script>
+           <script src="${springPath}/static/plugins/patch/respond.min.js"></script>
+        <![endif]-->
+        <style type="text/css">
+        	body{
+        		background: none;
+        	}
+        </style>
+	</head>
+	<body>
+		#parse("include/common.vm")
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">上传文件列表</h3>
+			</div>
+			<div class="panel-body">
+				<table class="table table-striped" style="font-size:14px;">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>文件名</th>
+							<th>文件大小</th>
+							<th>上传进度</th>
+						</tr>
+					</thead>
+					<tbody class="uploadList">
+						
+					</tbody>
+				</table>
+				<form class="uploadForm">
+					<div class="dropped"></div>
+				</form>
+			</div>
+		</div>
+	
+		<script src="${springPath}/static/plugins/jquery/dist/jquery.min.js"></script>
+		<script src="${springPath}/static/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="${springPath}/static/plugins/Dropper-master/jquery.fs.dropper.js"></script>
+		<script src="${springPath}/static/js/partical/upload.js"></script>
+	</body>
+</html>
