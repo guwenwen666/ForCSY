@@ -331,6 +331,7 @@
 				contentType:false,
 				processData: false,
 				cache: false,
+				dataType: "json",
 				xhr: function() {
 					var $xhr = $.ajaxSettings.xhr();
 
