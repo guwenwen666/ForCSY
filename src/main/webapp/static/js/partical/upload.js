@@ -12,7 +12,7 @@ $(document).ready(function() {
 		label : "拖拽或点击选择文件进行上传",
 		action : getSpringPath()+"/common/upload/ABC.ms",
 		maxQueue : 2,
-		maxSize : 300*1024*1024
+		maxSize : 500*1024*1024
 	}).on("start.dropper", onStart)
 	.on("complete.dropper", onComplete)
 	.on("fileStart.dropper", onFileStart)
@@ -29,13 +29,13 @@ function onStart(e, files) {
 	
 	var getFileSize = function(fireSize){
 		if(fireSize < 1024){
-			fireSize = fireSize + "B";
+			fireSize = parseFloat(fireSize) + "B";
 		}else if(fireSize < 1024*1024){
-			fireSize = (fireSize/1024).toFixed(2) + "KB";
+			fireSize = parseFloat((fireSize/1024).toFixed(2)) + "KB";
 		}else if(fireSize < 1024*1024*1024){
-			fireSize = (fireSize/1024/1024).toFixed(2) + "M";
+			fireSize = parseFloat((fireSize/1024/1024).toFixed(2)) + "M";
 		}else if(fireSize < 1024*1024*1024*1024){
-			fireSize = (fireSize/1024/1024/1024).toFixed(2) + "G";
+			fireSize = parseFloat((fireSize/1024/1024/1024).toFixed(2)) + "G";
 		}
 		return fireSize;
 	};
@@ -50,7 +50,6 @@ function onStart(e, files) {
 		$tr.append($("<td class='fileStatue'>").append("等待上传"));
 		//将td存储在file对象中,方便后续的操作
 		curFile.tr = $tr;
-		console.log(curFile);
 		$(".uploadList").append($tr);
 	});
 }
@@ -100,6 +99,12 @@ function onFileComplete(e, file, rst) {
 }
 
 function onFileError(e, file, error) {
-	var $errorMsg = $("<p class='text-danger'>").html(error);
-	file.tr.find(".fileStatue").html($errorMsg);
+	var errorFuc = function(errorMsg){
+		var $errorTip = $("<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>");
+		var $errorCnt = $("<span>").text(errorMsg);
+		var $errorMsg = $("<span class='text-danger'>").append($errorTip).append($errorCnt);
+		file.tr.addClass("danger");
+		file.tr.find(".fileStatue").html($errorMsg);
+	};
+	errorFuc(error);
 }

@@ -60,7 +60,7 @@ public class UploadMapping {
 			jObject.put("error", "上传文件类型不符合要求!");
 		}else{
 			Map<String, String> map = new HashMap<String, String>();
-			String filePath = FileStoreE.DEFAULTDIR + File.separator + user.getAccount() + fileE.getDir();
+			String filePath = FileStoreE.DEFAULTDIR + File.separator + user.getId() + fileE.getDir();
 			fileStorePath = request.getServletContext().getRealPath(filePath);
 			//路径不存在，则创建目录 
 			if(!FolderUtils.exists(fileStorePath)){
@@ -75,7 +75,7 @@ public class UploadMapping {
 				for(MultipartFile mFile:multipartFiles){
 					try {
 						InputStream in = mFile.getInputStream();
-						FileOutputStream out = new FileOutputStream(fileStorePath+File.separator+mFile.getName());
+						FileOutputStream out = new FileOutputStream(fileStorePath+File.separator+mFile.getOriginalFilename());
 						//创建一个缓冲区
 						byte buffer[] = new byte[1024];
 						//判断输入流中的数据是否已经读完的标识
@@ -89,7 +89,7 @@ public class UploadMapping {
 						in.close();
 						//关闭输出流
 						out.close();
-						map.put(mFile.getName(), "success");
+						map.put(mFile.getOriginalFilename(), "success");
 					} catch (IOException e) {
 						e.printStackTrace();
 						map.put(mFile.getName(), e.getMessage());

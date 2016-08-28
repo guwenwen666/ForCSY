@@ -318,8 +318,21 @@
 	 */
 	function _uploadFile(data, file, formData) {
 		if (file.size >= data.maxSize) {
+			var getFileSize = function(fireSize){
+				if(fireSize < 1024){
+					fireSize = parseFloat(fireSize) + "B";
+				}else if(fireSize < 1024*1024){
+					fireSize = parseFloat((fireSize/1024).toFixed(2)) + "KB";
+				}else if(fireSize < 1024*1024*1024){
+					fireSize = parseFloat((fireSize/1024/1024).toFixed(2)) + "M";
+				}else if(fireSize < 1024*1024*1024*1024){
+					fireSize = parseFloat((fireSize/1024/1024/1024).toFixed(2)) + "G";
+				}
+				return fireSize;
+			};
+			
 			file.error = true;
-			data.$dropper.trigger("fileError.dropper", [ file, "Too large" ]);
+			data.$dropper.trigger("fileError.dropper", [ file, "文件不得超"+getFileSize(data.maxSize)+"!" ]);
 
 			_checkQueue(data);
 		} else {
