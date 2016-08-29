@@ -12,19 +12,81 @@
            <script src="${springPath}/static/plugins/patch/respond.min.js"></script>
         <![endif]-->
         <style type="text/css">
+			
         	body{
         		background: none;
         	}
+			
 			table.uploadTab{
 				table-layout: fixed;
 				font-size:14px;
 			}
-			table.uploadTab td{
+			
+			table.uploadTab tr.list-view td{
+				position: relative;
 				word-break: break-all;
 				word-wrap:break-word;
 				text-overflow:ellipsis; 
 				white-space:nowrap; 
 				overflow:hidden; 
+			}
+			
+			table.uploadTab tr.list-view.hover-item.success td.fileLink{
+				padding-right: 80px;
+			}
+			
+			table.uploadTab tr.list-view.hover-item.danger td.fileLink{
+				padding-right: 30px;
+			}
+			
+			table.uploadTab tr.list-view td span.glyphicon{
+				margin-right: 5px;
+			}
+			
+			table.uploadTab tr.list-view.hover-item td.fileLink div.operator{
+				display: inline-block !important;
+			}
+			
+			table.uploadTab tr.list-view td.fileLink div.operator{
+				display: none;
+				margin: 10px;
+                height: 100%;
+                position: absolute;
+                right: 0;
+                top: 0;
+				vertical-align: middle;
+                z-index: 2;
+				font-size: 16px;
+				color: #79ADE7;
+				cursor: pointer;
+			}
+			
+			table.uploadTab tr.list-view td.fileLink div.operator span.glyphicon:hover{
+				color: #146ACB;
+			}
+			
+			tr.list-view.success td.fileLink{
+				padding-right: 10px;
+			}
+			
+			tr.danger div.operator span.glyphicon-upload{
+				display: inline-block;
+			}
+			
+			tr.danger div.operator span.glyphicon-download
+				, tr.danger div.operator span.glyphicon-copy
+				, tr.danger div.operator span.glyphicon-remove{
+				display: none;
+			}
+			
+			tr.success div.operator span.glyphicon-upload{
+				display: none;
+			}
+			
+			tr.success div.operator span.glyphicon-download
+				, tr.success div.operator span.glyphicon-copy
+				, tr.success div.operator span.glyphicon-remove{
+				display: inline-block;
 			}
         </style>
 	</head>
@@ -38,10 +100,10 @@
 				<table class="table table-striped uploadTab">
 					<thead>
 						<tr>
-							<th width="40px">#</th>
-							<th width="40%">文件名</th>
-							<th width="100px">文件大小</th>
-							<th width="*">上传状态</th>
+							<th width="3%">#</th>
+							<th width="50%">文件名</th>
+							<th width="16%">文件大小</th>
+							<th width="30%">上传状态</th>
 						</tr>
 					</thead>
 					<tbody class="uploadList">

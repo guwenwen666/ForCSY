@@ -7,12 +7,23 @@
  * 		1.上传文件的类型, 一定要通过后台审核（在后台配置不同上传文件类型的存储路径）。
  *  
  */
+
+var $operator = function(){
+	var $outerDiv = $("<div class='operator'>");
+	var $uploadIcon = $("<span class='glyphicon glyphicon-upload' title='重新上传'>");
+	var $downloadIcon = $("<span class='glyphicon glyphicon-download' title='下载'>");
+	var $renameIcon = $("<span class='glyphicon glyphicon-copy' title='重命名'>");
+	var $deleteIcon = $("<span class='glyphicon glyphicon-remove' title='删除'>");
+	$outerDiv.append($uploadIcon).append($downloadIcon).append($deleteIcon).append($renameIcon);
+	return $outerDiv;
+}();
+
 $(document).ready(function() {
 	$(".uploadForm .dropped").dropper({
 		label : "拖拽或点击选择文件进行上传",
 		action : getSpringPath()+"/common/upload/ABC.ms",
 		maxQueue : 2,
-		maxSize : 500*1024*1024
+		maxSize : 100*1024*1024
 	}).on("start.dropper", onStart)
 	.on("complete.dropper", onComplete)
 	.on("fileStart.dropper", onFileStart)
@@ -22,6 +33,12 @@ $(document).ready(function() {
 
 	$(window).one("pronto.load", function() {
 		$(".demo .dropped").dropper("destroy").off(".dropper");
+	});
+	
+	$(".uploadTab").delegate("tr.list-view", "mouseenter", function(){
+		$(this).addClass("hover-item");
+	}).delegate("tr.list-view", "mouseleave", function(){
+		$(this).removeClass("hover-item");
 	});
 });
 
@@ -42,7 +59,7 @@ function onStart(e, files) {
 	
 	$.each(files, function(index){
 		var curFile = files[index];
-		var $tr = $("<tr></tr>");
+		var $tr = $("<tr class='list-view'></tr>");
 		var $link = $("<a href='javascript:;'>").text(curFile.name).attr("title",curFile.name);
 		$tr.append($("<td class='fileIndex'>").append(curFile.index+1));
 		$tr.append($("<td class='fileLink'>").append($link));
@@ -80,8 +97,8 @@ function onFileProgress(e, file, percent) {
 function onFileComplete(e, file, rst) {
 	var errorFuc = function(errorMsg){
 		var $errorTip = $("<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>");
-		var $errorCnt = $("<span>").text(errorMsg);
-		var $errorMsg = $("<span class='text-danger'>").append($errorTip).append($errorCnt);
+		var $errorHid = $("<span class='sr-only'>").append("Error:");
+		var $errorMsg = $("<span class='text-danger'>").append($errorTip).append($errorHid).append(errorMsg);
 		file.tr.addClass("danger");
 		file.tr.find(".fileStatue").html($errorMsg);
 	};
@@ -91,20 +108,23 @@ function onFileComplete(e, file, rst) {
 		errorFuc(rst.result[file.name]);
 	}else{
 		var $successTip = $("<span class='glyphicon glyphicon-ok-sign' aria-hidden='true'>");
-		var $successCnt = $("<span>").text("上传成功!");
-		var $successMsg = $("<span class='text-success'>").append($successTip).append($successCnt);
+		var $successHid = $("<span class='sr-only'>").append("Success:");
+		var $successMsg = $("<span class='text-success'>").append($successTip).append($successHid).append("上传成功!");
 		file.tr.addClass("success");
 		file.tr.find(".fileStatue").html($successMsg);
 	}
+	file.tr.find(".fileLink").append($operator.clone());
 }
 
 function onFileError(e, file, error) {
 	var errorFuc = function(errorMsg){
 		var $errorTip = $("<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>");
-		var $errorCnt = $("<span>").text(errorMsg);
-		var $errorMsg = $("<span class='text-danger'>").append($errorTip).append($errorCnt);
+		var $errorHid = $("<span class='sr-only'>").append("Error:");
+		var $errorMsg = $("<span class='text-danger'>").append($errorTip).append($errorHid).append(errorMsg);
 		file.tr.addClass("danger");
 		file.tr.find(".fileStatue").html($errorMsg);
 	};
+	error = (!!error?error:"服务器无响应!");
 	errorFuc(error);
+	file.tr.find(".fileLink").append($operator.clone());
 }

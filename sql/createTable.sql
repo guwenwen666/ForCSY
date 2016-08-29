@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `csy` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `csy`;
--- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: csy
 -- ------------------------------------------------------
--- Server version	5.6.21
+-- Server version	5.6.24
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -39,7 +39,26 @@ CREATE TABLE `b_user_account` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `account_UNIQUE` (`account`)
-) ENGINE=InnoDB AUTO_INCREMENT=1002 DEFAULT CHARSET=utf8 COMMENT='用户帐号管理';
+) ENGINE=InnoDB AUTO_INCREMENT=1004 DEFAULT CHARSET=utf8 COMMENT='用户帐号管理';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `b_user_filestore`
+--
+
+DROP TABLE IF EXISTS `b_user_filestore`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `b_user_filestore` (
+  `id` int(11) NOT NULL COMMENT '文件ID',
+  `foreign_account` varchar(16) NOT NULL COMMENT '外键帐号',
+  `fileType` varchar(64) NOT NULL COMMENT '文件类型',
+  `tags` varchar(128) DEFAULT NULL COMMENT '标签',
+  `fileName` varchar(512) NOT NULL COMMENT '文件名称',
+  `createTime` datetime DEFAULT CURRENT_TIMESTAMP,
+  `description` varchar(128) DEFAULT NULL COMMENT '文件描述信息',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文件存储信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,10 +120,6 @@ CREATE TABLE `b_xtpz_dmx` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping events for database 'csy'
---
-
---
 -- Dumping routines for database 'csy'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -117,4 +132,4 @@ CREATE TABLE `b_xtpz_dmx` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-31 21:58:45
+-- Dump completed on 2016-08-29 19:47:00
