@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.csy.module.user.dao.BUserAccountMapper;
 import com.csy.module.user.entity.BUserAccount;
 import com.csy.module.user.entity.BUserAccountExample;
 import com.csy.module.user.service.service.BuserAccountService;
@@ -19,11 +17,9 @@ import com.csy.util.exception.account.UserNotUniqueException;
 import com.csy.util.spring.BaseService;
 
 @Service
-public class BuserAccountServiceImpl extends BaseService<BUserAccount, BUserAccountExample> implements BuserAccountService{
+public class BuserAccountServiceImpl extends BaseService<BUserAccount, BUserAccountExample>
+		implements BuserAccountService{
 
-	@Autowired
-	BUserAccountMapper dao;
-	
 	@Override
 	public boolean isAlreayExist(Map<String, Object> map) {
 		BUserAccountExample example = new BUserAccountExample();
@@ -45,7 +41,7 @@ public class BuserAccountServiceImpl extends BaseService<BUserAccount, BUserAcco
 				}
 			}
 		}
-		List<BUserAccount> users = dao.selectByExample(example);
+		List<BUserAccount> users = _dao.selectByExample(example);
 		return !ObjectUtils.isEmpty(users);
 	}
 
@@ -57,7 +53,7 @@ public class BuserAccountServiceImpl extends BaseService<BUserAccount, BUserAcco
 		example.or().andAccountEqualTo(account);
 		example.or().andEmailEqualTo(account);
 		example.or().andPhoneEqualTo(account);
-		List<BUserAccount> users = dao.selectByExample(example);
+		List<BUserAccount> users = _dao.selectByExample(example);
 		//帐号不存在
 		if(ObjectUtils.isEmpty(users))
 			return null;

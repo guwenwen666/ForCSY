@@ -12,7 +12,7 @@ public abstract class BaseService<T,Texample>{
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private BaseDao<T,Texample> _dao;
+	protected BaseDao<T,Texample> _dao;
 	
 	
 	public int deleteByPrimaryKey(String key){
