@@ -11,29 +11,31 @@
 var $operator = function(){
 	var $outerDiv = $("<div class='operator'>");
 	var $uploadIcon = $("<span class='glyphicon glyphicon-upload' title='重新上传'>");
-	var $downloadIcon = $("<span class='glyphicon glyphicon-download' title='下载'>");
-	var $renameIcon = $("<span class='glyphicon glyphicon-copy' title='重命名'>");
-	var $deleteIcon = $("<span class='glyphicon glyphicon-remove' title='删除'>");
-	$outerDiv.append($uploadIcon).append($downloadIcon).append($deleteIcon).append($renameIcon);
+	$outerDiv.append($uploadIcon);
 	return $outerDiv;
 }();
 
 $(document).ready(function() {
+	
+	$("div.uploadPanelBody").innerHeight($("body").height() - $("div.panel-heading").outerHeight());
+	
 	$(".uploadForm .dropped").dropper({
 		label : "拖拽或点击选择文件进行上传",
-		action : getSpringPath()+"/common/upload/ABC.ms",
+		action : $(".uploadForm").attr("action"),
 		maxQueue : 2,
-		maxSize : 100*1024*1024
-	}).on("start.dropper", onStart)
-	.on("complete.dropper", onComplete)
-	.on("fileStart.dropper", onFileStart)
-	.on("fileProgress.dropper", onFileProgress)
-	.on("fileComplete.dropper", onFileComplete)
-	.on("fileError.dropper", onFileError);
-
-	$(window).one("pronto.load", function() {
-		$(".demo .dropped").dropper("destroy").off(".dropper");
+		maxSize : 2*1024*1024,
+		onLoadSuccess : onLoadSuccess,
+		onStart : onStart,
+		onComplete : onComplete,
+		onFileStart : onFileStart,
+		onFileProgress : onFileProgress,
+		onFileComplete : onFileComplete,
+		onFileError : onFileError
 	});
+
+//	$(window).one("pronto.load", function() {
+//		$(".demo .dropped").dropper("destroy").off(".dropper");
+//	});
 	
 	$(".uploadTab").delegate("tr.list-view", "mouseenter", function(){
 		$(this).addClass("hover-item");
@@ -59,20 +61,27 @@ function onStart(e, files) {
 	
 	$.each(files, function(index){
 		var curFile = files[index];
-		var $tr = $("<tr class='list-view'></tr>");
-		var $link = $("<a href='javascript:;'>").text(curFile.name).attr("title",curFile.name);
+		var $tr = $("<tr class='list-view'></tr>").attr("index", curFile.index);
+		var $link = $("<span>").text(curFile.name).attr("title",curFile.name);
 		$tr.append($("<td class='fileIndex'>").append(curFile.index+1));
-		$tr.append($("<td class='fileLink'>").append($link));
+		$tr.append($("<td class='fileLink'>").append($("<div>").append($link)));
 		$tr.append($("<td class='fileSize'>").append(getFileSize(curFile.size)));
 		$tr.append($("<td class='fileStatue'>").append("等待上传"));
 		//将td存储在file对象中,方便后续的操作
 		curFile.tr = $tr;
-		$(".uploadList").append($tr);
+
+		//改行是否已经存在(用于重新上传)
+		var $oldTr = $(".uploadList tr.list-view[index="+curFile.index+"]");
+		if(!!$oldTr[0]){
+			$oldTr.replaceWith($tr);
+		}else{
+			$(".uploadList").append($tr);
+		}
 	});
 }
 
 function onComplete(e) {
-	console.log("Complete");
+	
 }
 
 function onFileStart(e, file){
@@ -95,28 +104,16 @@ function onFileProgress(e, file, percent) {
 }
 
 function onFileComplete(e, file, rst) {
-	var errorFuc = function(errorMsg){
-		var $errorTip = $("<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>");
-		var $errorHid = $("<span class='sr-only'>").append("Error:");
-		var $errorMsg = $("<span class='text-danger'>").append($errorTip).append($errorHid).append(errorMsg);
-		file.tr.addClass("danger");
-		file.tr.find(".fileStatue").html($errorMsg);
-	};
-	if(rst.error){
-		errorFuc(rst.error);
-	}else if(rst.result[file.name] != "success"){
-		errorFuc(rst.result[file.name]);
-	}else{
-		var $successTip = $("<span class='glyphicon glyphicon-ok-sign' aria-hidden='true'>");
-		var $successHid = $("<span class='sr-only'>").append("Success:");
-		var $successMsg = $("<span class='text-success'>").append($successTip).append($successHid).append("上传成功!");
-		file.tr.addClass("success");
-		file.tr.find(".fileStatue").html($successMsg);
-	}
-	file.tr.find(".fileLink").append($operator.clone());
+	var $successTip = $("<span class='glyphicon glyphicon-ok-sign' aria-hidden='true'>");
+	var $successHid = $("<span class='sr-only'>").append("Success:");
+	var $successMsg = $("<span class='text-success'>").append($successTip).append($successHid).append("上传成功!");
+	file.tr.addClass("success");
+	file.tr.find(".fileStatue").html($successMsg);
+	
+	file.tr.find(".fileLink div").append($operator.clone());
 }
 
-function onFileError(e, file, error) {
+function onFileError(e, file, rst) {
 	var errorFuc = function(errorMsg){
 		var $errorTip = $("<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>");
 		var $errorHid = $("<span class='sr-only'>").append("Error:");
@@ -124,7 +121,30 @@ function onFileError(e, file, error) {
 		file.tr.addClass("danger");
 		file.tr.find(".fileStatue").html($errorMsg);
 	};
-	error = (!!error?error:"服务器无响应!");
-	errorFuc(error);
-	file.tr.find(".fileLink").append($operator.clone());
+	
+	var errorMsg = "服务器无响应!";
+	if(typeof rst === "object"){		//返回json对象
+		if(rst.error){
+			errorMsg = rst.error;
+		}else if(rst.result && rst.result[file.name]){
+			errorMsg =  rst.result[file.name];
+		}
+	}else if(!!rst){					//返回字符串
+		errorMsg = rst;
+	}
+	errorFuc(errorMsg);
+	file.tr.find(".fileLink div").append($operator.clone());
+	
+	//下载失败的允许重新上传
+	file.tr.find(".fileLink div").find(".glyphicon-upload").click(function(e1){
+		$(".uploadForm .dropped").trigger("fileReupload.dropper", [file]);
+	});
+}
+
+function onLoadSuccess(file, rst){
+	if(rst.error){
+		return false;
+	}else if(rst.result && rst.result[file.name] != "success"){
+		return false;
+	}
 }

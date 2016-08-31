@@ -3,7 +3,12 @@
  * A jQuery plugin for simple drag and drop uploads. Part of the Formstone Library. 
  * http://classic.formstone.it/dropper/ 
  * 
- * Copyright 2015 Ben Plum; MIT Licensed 
+ * Copyright 2015 Ben Plum; MIT Licensed
+ * 
+ * modify:
+ * 	v1.0.2 - 2016-08-31
+ * 	wangqiang
+ * 
  */
 
 ;(function ($, window) {
@@ -19,15 +24,29 @@
 	 * @param maxSize [int] <5242880> "Max file size allowed"
 	 * @param postData [object] "Extra data to post with upload"
 	 * @param postKey [string] <'file'> "Key to upload file as"
+	 * @param onLoadSuccess [function] "return true/false, execute onFileComplete/onFileError"
+	 * @param onStart [function] "Execute before all files upload ,return false will break all files"
+	 * @param onFileStart [function] "Execute before the current file upload"
+	 * @param onFileProgress [function] "Execute when the current file is uploading"
+	 * @param onFileComplete [function] "Execute when the current file is uploaded success"
+	 * @param onFileError [function] "Execute where error occurs in the process"
+	 * @param onComplete [function] "Execute where all files is uploaded"
 	 */
 
 	var options = {
 		action: "",
-		label: "Drag and drop files or click to select",
+		label: "拖拽或点击选择文件进行上传",
 		maxQueue: 2,
-		maxSize: 5242880, // 5 mb
+		maxSize: 5242880,
 		postData: {},
-		postKey: "file"
+		postKey: "file",
+		onLoadSuccess: function(){return true;},
+		onStart: function(){return true;},
+		onFileStart: function(){},
+		onFileProgress: function(){},
+		onFileComplete: function(){},
+		onFileError: function(){},
+		onComplete: function(){}
 	};
 
 	/**
@@ -99,8 +118,7 @@
 		}
 		html += '>';
 
-		$dropper.addClass("dropper")
-				.append(html);
+		$dropper.addClass("dropper").append(html);
 
 		var data =  $.extend({
 			$dropper: $dropper,
@@ -110,6 +128,14 @@
 			uploading: false
 		}, opts);
 
+		$dropper.on("start.dropper", opts.onStart)
+				.on("complete.dropper", opts.onComplete)
+				.on("fileStart.dropper", opts.onFileStart)
+				.on("fileProgress.dropper", opts.onFileProgress)
+				.on("fileComplete.dropper", opts.onFileComplete)
+				.on("fileError.dropper", opts.onFileError)
+				.on("fileReupload.dropper", _fileReupload);
+		
 		$dropper.on("click.dropper", ".dropper-dropzone", data, _onClick)
 				.on("dragenter.dropper", data, _onDragEnter)
 				.on("dragover.dropper", data, _onDragOver)
@@ -215,6 +241,22 @@
 		_handleUpload(data, files);
 	}
 
+	function _fileReupload(e, file){
+		var data = $(e.target).data("dropper");
+		
+		if(!(file instanceof Array)){
+			file = [file];
+		}
+		
+		var paramFile = [];
+		var paramFileIndex = [];
+		for(var i in file){
+			paramFile.push(file[i].file);
+			paramFileIndex.push(file[i].index);
+		}
+		_handleUpload(data, paramFile, paramFileIndex);
+	}
+	
 	/**
 	 * @method private
 	 * @name _handleUpload
@@ -222,12 +264,12 @@
 	 * @param data [object] "Instance data"
 	 * @param files [object] "File list"
 	 */
-	function _handleUpload(data, files) {
+	function _handleUpload(data, files, fileIndex) {
 		var newFiles = [];
 
 		for (var i = 0; i < files.length; i++) {
 			var file = {
-				index: data.total++,
+				index: fileIndex ? fileIndex[i] : data.total++,
 				file: files[i],
 				name: files[i].name,
 				size: files[i].size,
@@ -243,15 +285,17 @@
 
 	   if (!data.uploading) {
 		   $(window).on("beforeunload.dropper", function(){
-				return 'You have uploads pending, are you sure you want to leave this page?';
+				return '有文件处于上传队列, 你确定要离开页面吗?';
 			});
 
 			data.uploading = true;
 		}
 
-		data.$dropper.trigger("start.dropper", [ newFiles ]);
-
-		_checkQueue(data);
+		var rtn = data.$dropper.trigger("start.dropper", [ newFiles ]);
+		
+		if(rtn !== false){
+			_checkQueue(data);
+		}
 	}
 
 	/**
@@ -365,13 +409,20 @@
 					return $xhr;
 				},
 				beforeSend: function(e) {
-					data.$dropper.trigger("fileStart.dropper", [ file ]);
+					var rtn = data.$dropper.trigger("fileStart.dropper", [ file ]);
 				},
 				success: function(response, status, jqXHR) {
-					file.complete = true;
-					data.$dropper.trigger("fileComplete.dropper", [ file, response ]);
+					if(data.onLoadSuccess.apply(this, [file, response]) === false){
+						file.error = true;
+						data.$dropper.trigger("fileError.dropper", [ file, response ]);
 
-					_checkQueue(data);
+						_checkQueue(data);
+					}else{
+						file.complete = true;
+						data.$dropper.trigger("fileComplete.dropper", [ file, response ]);
+
+						_checkQueue(data);
+					}
 				},
 				error: function(jqXHR, status, error) {
 					file.error = true;

@@ -13,22 +13,19 @@
         <![endif]-->
         <style>
         	iframe.uploadIframe{
-        		border: none;
+        		position: fixed;
         		width: 600px;
         		height: 400px;
-        		position: relative;
-        		top: 50%;
-        		left: 50%;
-        		margin: 200px 0px 0px -300px;
+        		right: 20px;
+        		bottom: 0; 
+        		border: none;
         	}
         </style>
 	</head>
 	<body>
 		#parse("/include/head/indexTop.vm")
 		
-		<iframe class="uploadIframe" style=""
-			 src="${springPath}/common/upload.ms">
-		</iframe>
+		<iframe class="uploadIframe" src="${springPath}/common/upload.ms"></iframe>
 		
 		<script src="${springPath}/static/plugins/jquery/dist/jquery.min.js"></script>
 		<script src="${springPath}/static/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
