@@ -55,6 +55,7 @@ CREATE TABLE `b_user_filestore` (
   `fileType` varchar(64) NOT NULL COMMENT '文件类型',
   `tags` varchar(128) DEFAULT NULL COMMENT '标签',
   `fileName` varchar(512) NOT NULL COMMENT '文件名称',
+  `fileSize` bigint(16) NOT NULL COMMENT '文件大小',
   `createTime` datetime DEFAULT CURRENT_TIMESTAMP,
   `description` varchar(128) DEFAULT NULL COMMENT '文件描述信息',
   PRIMARY KEY (`id`),

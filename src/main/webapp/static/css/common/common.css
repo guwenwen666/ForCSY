@@ -10,26 +10,14 @@ body{
 	display:none;
 }
 
-.topic{
+.head_wrapper{
 	border-top: 2px solid #fa7d3c;
 	padding: 6px 0px;
 	box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.3), 0 0 6px 2px rgba(0, 0, 0, 0.15);
 	position: fixed;
 	width:100%;
-	z-index:9999;
+	z-index:99999;
 	background-color: #fff;
-}
-.topic + .topicPosition{
-	height:40px;
-	position: relative;
-}
-
-.left>*{
-	float: left;
-}
-
-.right>*{
-	float: right;
 }
 
 span.website_logo{
@@ -56,4 +44,46 @@ span.website_logo{
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover; 
+}
+
+/*重写局部的bootstrap CSS样式*/
+
+.head_wrapper .popover{
+	padding: 1px;
+	border-radius: 0px;
+} 
+
+.head_wrapper .popover-content{
+	padding: 0px;
+}
+
+.head_wrapper .popover-content>.list-group{
+	font-size: 12px;
+	margin-bottom: 0px;
+}
+
+.head_wrapper .popover-content>.list-group .list-group-item{
+	padding: 4px 8px;
+	border: 0px; 
+	border-radius: 0px;
+}
+
+.head_wrapper .popover-content>.list-group .list-group-item:hover{
+	background-color: #337ab7;
+	color: #fff;
+}
+
+.head_wrapper .popover.bottom > .arrow::after {
+    top: 1px;
+}
+
+.head_wrapper .popover.bottom > .arrow {
+    top: -6px;
+}
+
+/*重写适用所有元素的bootstrap CSS样式*/
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus{
+    outline: none;          
 }

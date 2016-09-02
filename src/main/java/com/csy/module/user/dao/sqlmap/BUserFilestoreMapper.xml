@@ -7,6 +7,7 @@
     <result column="fileType" property="filetype" jdbcType="VARCHAR" />
     <result column="tags" property="tags" jdbcType="VARCHAR" />
     <result column="fileName" property="filename" jdbcType="VARCHAR" />
+    <result column="fileSize" property="filesize" jdbcType="BIGINT" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="description" property="description" jdbcType="VARCHAR" />
   </resultMap>
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, foreign_account, fileType, tags, fileName, createTime, description
+    id, foreign_account, fileType, tags, fileName, fileSize, createTime, description
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csy.module.user.entity.BUserFilestoreExample" >
     select
@@ -104,11 +105,11 @@
   </delete>
   <insert id="insert" parameterType="com.csy.module.user.entity.BUserFilestore" >
     insert into b_user_filestore (id, foreign_account, fileType, 
-      tags, fileName, createTime, 
-      description)
+      tags, fileName, fileSize, 
+      createTime, description)
     values (#{id,jdbcType=INTEGER}, #{foreignAccount,jdbcType=VARCHAR}, #{filetype,jdbcType=VARCHAR}, 
-      #{tags,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{description,jdbcType=VARCHAR})
+      #{tags,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, #{filesize,jdbcType=BIGINT}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.csy.module.user.entity.BUserFilestore" >
     insert into b_user_filestore
@@ -127,6 +128,9 @@
       </if>
       <if test="filename != null" >
         fileName,
+      </if>
+      <if test="filesize != null" >
+        fileSize,
       </if>
       <if test="createtime != null" >
         createTime,
@@ -150,6 +154,9 @@
       </if>
       <if test="filename != null" >
         #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filesize != null" >
+        #{filesize,jdbcType=BIGINT},
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
@@ -183,6 +190,9 @@
       <if test="record.filename != null" >
         fileName = #{record.filename,jdbcType=VARCHAR},
       </if>
+      <if test="record.filesize != null" >
+        fileSize = #{record.filesize,jdbcType=BIGINT},
+      </if>
       <if test="record.createtime != null" >
         createTime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
@@ -201,6 +211,7 @@
       fileType = #{record.filetype,jdbcType=VARCHAR},
       tags = #{record.tags,jdbcType=VARCHAR},
       fileName = #{record.filename,jdbcType=VARCHAR},
+      fileSize = #{record.filesize,jdbcType=BIGINT},
       createTime = #{record.createtime,jdbcType=TIMESTAMP},
       description = #{record.description,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -222,6 +233,9 @@
       <if test="filename != null" >
         fileName = #{filename,jdbcType=VARCHAR},
       </if>
+      <if test="filesize != null" >
+        fileSize = #{filesize,jdbcType=BIGINT},
+      </if>
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -237,6 +251,7 @@
       fileType = #{filetype,jdbcType=VARCHAR},
       tags = #{tags,jdbcType=VARCHAR},
       fileName = #{filename,jdbcType=VARCHAR},
+      fileSize = #{filesize,jdbcType=BIGINT},
       createTime = #{createtime,jdbcType=TIMESTAMP},
       description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

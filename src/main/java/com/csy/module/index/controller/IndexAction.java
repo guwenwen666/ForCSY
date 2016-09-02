@@ -7,9 +7,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class IndexAction {
 
-	@RequestMapping("/{account}/index")
+	@RequestMapping("/{account}/cZone")
 	public ModelAndView accountIndex(String account){
-		return new ModelAndView("index");
+		return new ModelAndView("cZone");
 	}
 	
 	@RequestMapping("/index")

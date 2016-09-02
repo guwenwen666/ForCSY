@@ -445,6 +445,66 @@ public class BUserFilestoreExample {
             return (Criteria) this;
         }
 
+        public Criteria andFilesizeIsNull() {
+            addCriterion("fileSize is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesizeIsNotNull() {
+            addCriterion("fileSize is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesizeEqualTo(Long value) {
+            addCriterion("fileSize =", value, "filesize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesizeNotEqualTo(Long value) {
+            addCriterion("fileSize <>", value, "filesize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesizeGreaterThan(Long value) {
+            addCriterion("fileSize >", value, "filesize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesizeGreaterThanOrEqualTo(Long value) {
+            addCriterion("fileSize >=", value, "filesize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesizeLessThan(Long value) {
+            addCriterion("fileSize <", value, "filesize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesizeLessThanOrEqualTo(Long value) {
+            addCriterion("fileSize <=", value, "filesize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesizeIn(List<Long> values) {
+            addCriterion("fileSize in", values, "filesize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesizeNotIn(List<Long> values) {
+            addCriterion("fileSize not in", values, "filesize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesizeBetween(Long value1, Long value2) {
+            addCriterion("fileSize between", value1, value2, "filesize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesizeNotBetween(Long value1, Long value2) {
+            addCriterion("fileSize not between", value1, value2, "filesize");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatetimeIsNull() {
             addCriterion("createTime is null");
             return (Criteria) this;

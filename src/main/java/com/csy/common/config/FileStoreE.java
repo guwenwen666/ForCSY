@@ -14,7 +14,9 @@ import java.io.File;
  */
 public enum FileStoreE {
 	
-	ABC("temp1"),BCD("temp2");
+	FAVICON("picture/favicon"),		//头像文件夹管理
+	ABC("temp1"),
+	BCD("temp2");
 	
 	private String dir;
 	

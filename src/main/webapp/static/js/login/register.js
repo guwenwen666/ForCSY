@@ -65,7 +65,7 @@ function formValidate() {
 							param[name] = value;
 							$.ajax({
 								type: 'POST',
-								url: getSpringPath() + '/register/accountIsExist',
+								url: rootPath + '/register/accountIsExist',
 								async: false,
 								data: param,
 								success: function(rst){
@@ -99,7 +99,7 @@ function formValidate() {
 							param[name] = value;
 							$.ajax({
 								type: 'POST',
-								url: getSpringPath() + '/register/accountIsExist',
+								url: rootPath + '/register/accountIsExist',
 								async: false,
 								data: param,
 								success: function(rst){
@@ -156,7 +156,7 @@ function formValidate() {
 	}).on("success.form.bv",function(e){
 		$.ajax({
 			type: "post",
-			url: getSpringPath()+"/register/emailAccount",
+			url: rootPath+"/register/emailAccount",
 			data: $(".registerForm").serializeArray(),
 			dataType: "json",
 			success: function(rst, textStatus){

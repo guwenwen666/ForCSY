@@ -13,6 +13,8 @@ public class BUserFilestore {
 
     private String filename;
 
+    private Long filesize;
+
     private Date createtime;
 
     private String description;
@@ -55,6 +57,14 @@ public class BUserFilestore {
 
     public void setFilename(String filename) {
         this.filename = filename == null ? null : filename.trim();
+    }
+
+    public Long getFilesize() {
+        return filesize;
+    }
+
+    public void setFilesize(Long filesize) {
+        this.filesize = filesize;
     }
 
     public Date getCreatetime() {

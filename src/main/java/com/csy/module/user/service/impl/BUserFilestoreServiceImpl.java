@@ -48,6 +48,7 @@ public class BUserFilestoreServiceImpl extends BaseService<BUserFilestore, BUser
 					if(rtn){
 						BUserFilestore filestore = new BUserFilestore();
 						filestore.setForeignAccount(account.getAccount());
+						filestore.setFilesize(mFile.getSize());
 						filestore.setFiletype(fileStoreE.toString());
 						filestore.setFilename(mFile.getOriginalFilename());
 						filestore.setCreatetime(new Date());
@@ -55,6 +56,7 @@ public class BUserFilestoreServiceImpl extends BaseService<BUserFilestore, BUser
 							_dao.insertSelective(filestore);
 							rtnMap.put(mFile.getOriginalFilename(), "success");
 						}catch(Exception exception){
+							exception.printStackTrace();
 							FileUtils.delete(folderPath, mFile.getOriginalFilename());
 							rtnMap.put(mFile.getOriginalFilename(), "文件录入异常!");
 						}

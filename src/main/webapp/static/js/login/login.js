@@ -130,7 +130,7 @@ function formValidate() {
 			var isTure = false;
 			$.ajax({
 				type: "post",
-				url: getSpringPath()+"/login/securityCodeCheck",
+				url: rootPath+"/login/securityCodeCheck",
 				data: {
 					securityCode: $("#securityCode").val()
 				},
@@ -151,7 +151,7 @@ function formValidate() {
 		
 		$.ajax({
 			type: "post",
-			url: getSpringPath()+"/login/accountLogin",
+			url: rootPath+"/login/accountLogin",
 			data: $(".loginForm").serializeArray(),
 			dataType: "json",
 			success: function(rst, textStatus){
@@ -163,7 +163,7 @@ function formValidate() {
 					}
 					return;
 				}
-				window.open(getSpringPath()+"/"+rst.account_id+"/index","_self");
+				window.open(rootPath+"/"+rst.account_id+"/cZone","_self");
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
 				resetPopoverContext($("#account"), "登录异常!"+ XMLHttpRequest.status);

@@ -19,7 +19,7 @@
 		
 		<div id="fullpage" class="fullpage">
 			<div class="section fp-auto-height">
-				#parse("/include/head/indexTopWithNoLink.vm")
+				#parse("/include/head/commonTopWithNoLink.vm")
 			</div>
             <div class="section" style="background-image:url('${springPath}/static/img/login/login/T1.jpg');">
 				<div class="container box-content">
@@ -110,6 +110,7 @@
 		<script src="${springPath}/static/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="${springPath}/static/plugins/bootstrapValidate/dist/js/bootstrapValidator.min.js"></script>
 		<script src="${springPath}/static/plugins/fullPage/jquery.fullpage.min.js"></script>
+		<script src="${springPath}/static/js/common/common.js"></script>
 		<script src="${springPath}/static/js/login/login.js"></script>
     		
 	</body>

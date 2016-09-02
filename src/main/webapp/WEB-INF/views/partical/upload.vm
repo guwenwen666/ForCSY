@@ -95,7 +95,6 @@
         </style>
 	</head>
 	<body>
-		#parse("include/common.vm")
 		<div class="panel panel-info uploadPanel">
 			<div class="panel-heading">
 				<h1 class="panel-title">上传文件列表</h1>

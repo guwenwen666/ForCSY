@@ -3,10 +3,10 @@
     	<div class="row">
     		<div class="col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2">
 				<div style="color:#666;padding:10px 0px;">
-					<div class="left">
+					<div class="pull-left">
 						<small>本站仅供个人学习，请文明交流沟通</small>
                     </div>
-					<div class="right">
+					<div class="pull-right">
 						<small>站主：<cite title="皮卡卡">皮卡卡</cite></small>
                     </div>
                 </div>

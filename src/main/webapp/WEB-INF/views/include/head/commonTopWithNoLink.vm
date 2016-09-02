@@ -1,0 +1,13 @@
+<div style="height:45px;">
+	<div class="head_wrapper">
+	    <div class="container">
+	    	<div class="row">
+	    		<div class="col-lg-6 col-md-6">
+					<div class="pull-left">
+						<span class="website_logo"></span>
+	                </div>
+	    		</div>
+	    	</div>
+	    </div>
+	</div>
+</div>
