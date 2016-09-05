@@ -73,13 +73,45 @@ span.website_logo{
 	color: #fff;
 }
 
-.head_wrapper .popover.bottom > .arrow::after {
-    top: 1px;
+.head_wrapper .popover{
+	margin-top: 0px;
 }
 
-.head_wrapper .popover.bottom > .arrow {
-    top: -6px;
+.head_wrapper .popover .head-arrow.bottom{
+	-moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: transparent transparent rgba(0, 0, 0, 0.2);
+    border-image: none;
+    border-style: dashed dashed solid;
+    border-width: 5px;
+    display: inline-block;
+    font-size: 0;
+    height: 0;
+    left: 28px;
+    line-height: 0;
+    position: absolute;
+    top: -11px;
+    width: 0;
+    z-index: 2;
 }
+
+.head_wrapper .popover .head-arrow.bottom em{
+	border-color: transparent transparent #fff;
+    border-style: dashed dashed solid;
+    border-width: 5px;
+    color: #666;
+    display: block;
+    font-size: 0;
+    height: 0;
+    left: -5px;
+    line-height: 0;
+    position: absolute;
+    top: -4px;
+    width: 0;
+}
+
 
 /*重写适用所有元素的bootstrap CSS样式*/
 .btn:focus,

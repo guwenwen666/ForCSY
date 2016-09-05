@@ -19,11 +19,16 @@ $(function(){
 			}();
 			
 			$("#user-name-top").popover({
+				animation: false,
 				container: ".head_wrapper",
 				html: true,
 				content: user_name_topPopover,
 				placement: "bottom",
-				trigger: "click"
+				trigger: "hover"
+			}).on("shown.bs.popover",function(e){
+				var $newArrow = $("<span class='head-arrow bottom'><em></em></span>");
+				$(e.target).data()["bs.popover"].$arrow.replaceWith($newArrow);
+				$(e.target).data()["bs.popover"].$arrow = $newArrow;
 			});
 		}
 	}
