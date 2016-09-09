@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.csy.module.login.service.service.RegisterService;
-import com.csy.module.user.dao.BUserAccountMapper;
 import com.csy.module.user.entity.BUserAccount;
+import com.csy.module.user.entity.BUserInfo;
+import com.csy.module.user.service.service.BUserInfoService;
+import com.csy.module.user.service.service.BuserAccountService;
 import com.csy.util.RandDomUtil;
 import com.csy.util.algorithm.DesUtil;
 
@@ -13,7 +15,9 @@ import com.csy.util.algorithm.DesUtil;
 public class RegisterServiceImpl implements RegisterService{
 	
 	@Autowired
-	private BUserAccountMapper accountMapper;
+	private BuserAccountService accountService;
+	@Autowired
+	private BUserInfoService userInfoService;
 
 	@Override
 	public int insertAccount(BUserAccount account) throws Exception {
@@ -21,7 +25,12 @@ public class RegisterServiceImpl implements RegisterService{
 		String safeKey = RandDomUtil.getRandomString(32);
 		account.setSafekey(safeKey);
 		account.setPassword(new DesUtil(safeKey).encrypt(password));
-		return accountMapper.insertSelective(account);
+		
+		BUserInfo bUserInfo = new BUserInfo();
+		bUserInfo.setForeignAccount(account.getAccount());
+		accountService.insertSelective(account);
+		int i = userInfoService.insertSelective(bUserInfo);
+		return i;
 	}
 	
 }

@@ -1,5 +1,6 @@
 @CHARSET "UTF-8";
 
+/*通用样式定义*/
 body{
 	background: #bee1f5 url("../../img/common/reg_repeat_bg.png") repeat-x scroll 0 0;
 	font-family: "Helvetica Neue",Helvetica,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;
@@ -13,6 +14,7 @@ body{
 .head_wrapper{
 	border-top: 2px solid #fa7d3c;
 	padding: 6px 0px;
+	height: 45px;
 	box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.3), 0 0 6px 2px rgba(0, 0, 0, 0.15);
 	position: fixed;
 	width:100%;
@@ -20,26 +22,88 @@ body{
 	background-color: #fff;
 }
 
-span.website_logo{
-	height: 26px;
+.head_wrapper .btn{
+	font-size: 14px;
+	height: 30px;
+}
+
+div.website_logo{
+	height: 30px;
 	width: 80px;
 	display: inline-block;
+	float: left;
 	background-image: url("../../img/common/wb_logo.png");
 	background-position: 50% 50%;
+	background-repeat: no-repeat;
 	background-size: 100%;
 }
 
-.nav.nav-pills.lines li:not(.disabled) a{
+.xs-popover{
+	padding: 1px;
+	margin-top: 0px;
+	border-radius: 0px;
+	border: 1px solid rgba(0,0,0,0.2);
+	box-shadow: 1px 1px 5px #d1d1d1;
 	background-color: #fff;
-	color: #333;
+	position:relative;
+} 
+
+.xs-popover .xs-popover-content{
+	padding: 0px;
 }
 
-.nav.nav-pills.lines li.active a{
-	background-color: #fff;
-	border-bottom: 3px solid #ffa00a;
-	border-radius: 4px 4px 0px 0px;
+.xs-popover .xs-popover-content>.list-group{
+	font-size: 12px;
+	margin-bottom: 0px;
 }
 
+.xs-popover .xs-popover-content>.list-group .list-group-item{
+	padding: 4px 8px;
+	border: 0px; 
+	border-radius: 0px;
+}
+
+.xs-popover .xs-popover-content>.list-group .list-group-item:hover{
+	background-color: #337ab7;
+	color: #fff;
+}
+
+.xs-popover.bottom .arrow{
+	-moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: transparent transparent rgba(0, 0, 0, 0.2);
+    border-image: none;
+    border-style: dashed dashed solid;
+    border-width: 5px;
+    display: inline-block;
+    font-size: 0;
+    height: 0;
+    left: 28px;
+    line-height: 0;
+    position: absolute;
+    top: -11px;
+    width: 0;
+    z-index: 2;
+}
+
+.xs-popover.bottom .arrow em{
+	border-color: transparent transparent #fff;
+    border-style: dashed dashed solid;
+    border-width: 5px;
+    color: #666;
+    display: block;
+    font-size: 0;
+    height: 0;
+    left: -5px;
+    line-height: 0;
+    position: absolute;
+    top: -4px;
+    width: 0;
+}
+
+/*重写fullpage.css的样式*/
 .fullpage .section{
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -112,10 +176,20 @@ span.website_logo{
     width: 0;
 }
 
-
 /*重写适用所有元素的bootstrap CSS样式*/
 .btn:focus,
 .btn:active:focus,
 .btn.active:focus{
     outline: none;          
+}
+
+.nav.nav-pills.lines li:not(.disabled) a{
+	background-color: #fff;
+	color: #333;
+}
+
+.nav.nav-pills.lines li.active a{
+	background-color: #fff;
+	border-bottom: 3px solid #ffa00a;
+	border-radius: 4px 4px 0px 0px;
 }

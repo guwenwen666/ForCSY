@@ -8,12 +8,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.csy.common.config.FileStoreE;
 import com.csy.module.user.entity.BUserAccount;
+import com.csy.module.user.entity.BUserFilestore;
+import com.csy.module.user.entity.BUserFilestoreExample;
+import com.csy.util.spring.BaseDao;
 
 /**@author wangqiang
  * @date 2016-8-30 14:29:22
  * @description 
  */
-public interface BUserFilestoreService{
+public interface BUserFilestoreService extends BaseDao<BUserFilestore, BUserFilestoreExample>{
 	
 	/**
 	 * @author wangqiang

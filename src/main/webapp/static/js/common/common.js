@@ -3,33 +3,15 @@ var rootPath = function(){
 }();
 
 $(function(){
+	//初始化加载事件
+	init();
 	
-	//帐号组件的初始化
-	accountInit();
-	
-	
-	function accountInit(){
-		if(!!$("#user-name-top")[0]){
-			var user_name_topPopover = function(){
-				var $listGroup = $("#user-name-top").find(".list-group");
-				$listGroup.removeClass("sr-only");
-				var $html = $listGroup[0].outerHTML;
-				$listGroup.remove();
-				return $html;
-			}();
-			
-			$("#user-name-top").popover({
-				animation: false,
-				container: ".head_wrapper",
-				html: true,
-				content: user_name_topPopover,
-				placement: "bottom",
-				trigger: "hover"
-			}).on("shown.bs.popover",function(e){
-				var $newArrow = $("<span class='head-arrow bottom'><em></em></span>");
-				$(e.target).data()["bs.popover"].$arrow.replaceWith($newArrow);
-				$(e.target).data()["bs.popover"].$arrow = $newArrow;
-			});
-		}
+	function init(){
+		//用户菜单
+		$(".usermenu").hover(function(e){
+			$(this).children('.xs-popover').removeClass("hidden");
+		},function(e){
+			$(this).children('.xs-popover').addClass("hidden");
+		});
 	}
 });

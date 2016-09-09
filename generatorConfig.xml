@@ -44,7 +44,7 @@
 		</javaClientGenerator>
 		
 		<!-- 要生成的表名称 -->
-		<table tableName="b_user_filestore" domainObjectName="BUserFilestore"
+		<table tableName="b_user_info" domainObjectName="BUserInfo"
 			enableCountByExample="true" enableUpdateByExample="true"
 			enableDeleteByExample="true" enableSelectByExample="true"
 			selectByExampleQueryId="true"></table>
