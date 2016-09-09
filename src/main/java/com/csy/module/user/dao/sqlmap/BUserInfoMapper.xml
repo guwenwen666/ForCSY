@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csy.module.user.dao.BUserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.csy.module.user.entity.BUserInfo" >
+    <id column="foreign_account" property="foreignAccount" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="TINYINT" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+    <result column="favicon" property="favicon" jdbcType="VARCHAR" />
+    <result column="blood" property="blood" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="tag" property="tag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    foreign_account, gender, birthday, signature, favicon, blood, address, tag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csy.module.user.entity.BUserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from b_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from b_user_info
+    where foreign_account = #{foreignAccount,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from b_user_info
+    where foreign_account = #{foreignAccount,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csy.module.user.entity.BUserInfoExample" >
+    delete from b_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csy.module.user.entity.BUserInfo" >
+    insert into b_user_info (foreign_account, gender, birthday, 
+      signature, favicon, blood, 
+      address, tag)
+    values (#{foreignAccount,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=DATE}, 
+      #{signature,jdbcType=VARCHAR}, #{favicon,jdbcType=VARCHAR}, #{blood,jdbcType=INTEGER}, 
+      #{address,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csy.module.user.entity.BUserInfo" >
+    insert into b_user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="foreignAccount != null" >
+        foreign_account,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="signature != null" >
+        signature,
+      </if>
+      <if test="favicon != null" >
+        favicon,
+      </if>
+      <if test="blood != null" >
+        blood,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="foreignAccount != null" >
+        #{foreignAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="signature != null" >
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="favicon != null" >
+        #{favicon,jdbcType=VARCHAR},
+      </if>
+      <if test="blood != null" >
+        #{blood,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csy.module.user.entity.BUserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from b_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update b_user_info
+    <set >
+      <if test="record.foreignAccount != null" >
+        foreign_account = #{record.foreignAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=TINYINT},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.signature != null" >
+        signature = #{record.signature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.favicon != null" >
+        favicon = #{record.favicon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blood != null" >
+        blood = #{record.blood,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tag != null" >
+        tag = #{record.tag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update b_user_info
+    set foreign_account = #{record.foreignAccount,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=TINYINT},
+      birthday = #{record.birthday,jdbcType=DATE},
+      signature = #{record.signature,jdbcType=VARCHAR},
+      favicon = #{record.favicon,jdbcType=VARCHAR},
+      blood = #{record.blood,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      tag = #{record.tag,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csy.module.user.entity.BUserInfo" >
+    update b_user_info
+    <set >
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="signature != null" >
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="favicon != null" >
+        favicon = #{favicon,jdbcType=VARCHAR},
+      </if>
+      <if test="blood != null" >
+        blood = #{blood,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where foreign_account = #{foreignAccount,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csy.module.user.entity.BUserInfo" >
+    update b_user_info
+    set gender = #{gender,jdbcType=TINYINT},
+      birthday = #{birthday,jdbcType=DATE},
+      signature = #{signature,jdbcType=VARCHAR},
+      favicon = #{favicon,jdbcType=VARCHAR},
+      blood = #{blood,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR}
+    where foreign_account = #{foreignAccount,jdbcType=VARCHAR}
+  </update>
+</mapper>

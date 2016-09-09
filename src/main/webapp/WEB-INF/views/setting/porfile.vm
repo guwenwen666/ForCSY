@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Csy个人资料设置</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<link href="${springPath}/static/plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="${springPath}/static/css/common/common.css" rel="stylesheet">
+		<link href="${springPath}/static/css/setting/profile.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+           <script src="${springPath}/static/plugins/patch/html5shiv.js"></script>
+           <script src="${springPath}/static/plugins/patch/respond.min.js"></script>
+        <![endif]-->
+	</head>
+	<body data-spy="scroll" data-target="#profilespy" data-offset="1">
+		#parse("/include/head/commonTop.vm")
+		
+		<div class="container main">
+			<div class="row">
+				<nav class="col-md-3 " id="profilespy">
+					<div class="container-fluid"> 
+						<ul class="nav nav-pills nav-stacked ">
+							<li>
+								<a href="#person">
+									<span class="glyphicon glyphicon-user"></span>
+									个人资料
+								</a>
+								<ul>
+									<li class="list-group-item">
+										<a href="#person-basic">
+											<span class="glyphicon glyphicon-play"></span>
+											基本资料
+										</a>
+									</li>
+									<li class="list-group-item">
+										<a href="#person-detail">
+											<span class="glyphicon glyphicon-play"></span>
+											详细资料
+										</a>
+									</li>
+									<li class="list-group-item">
+										<a href="#person-portrait">
+											<span class="glyphicon glyphicon-play"></span>
+											头像设置
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a href="#safty">
+									<span class="glyphicon glyphicon-lock"></span>
+									安全设置
+								</a>
+								<ul>
+									<li class="list-group-item">
+										<a href="#safty-email">
+											<span class="glyphicon glyphicon-play"></span>
+											邮箱绑定
+										</a>
+									</li>
+									<li class="list-group-item">
+										<a href="#safty-phone">
+											<span class="glyphicon glyphicon-play"></span>
+											手机绑定
+										</a>
+									</li>
+									<li class="list-group-item">
+										<a href="#safty-quickBind">
+											<span class="glyphicon glyphicon-play"></span>
+											账户授权
+										</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</nav>
+				<div class="col-md-9 col-md-offset-3 main-content" role="main">
+					<div id="person-basic" class="section">
+						<div class="page-header">
+							<h3>基本资料</h3>
+						</div>
+					</div>
+					<div id="person-detail" class="section">
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						
+					</div>
+					<div id="person-portrait" class="section">
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						
+					</div>
+					
+					<div id="safty-email" class="section">
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+					</div>
+					
+					<div id="safty-phone" class="section">
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+					</div>
+					<div id="safty-quickBind" class="section">
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+						1<br/>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="${springPath}/static/plugins/jquery/dist/jquery.min.js"></script>
+		<script src="${springPath}/static/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="${springPath}/static/js/common/common.js"></script>
+		<script src="${springPath}/static/js/setting/profile.js"></script>
+	</body>
+</html>
