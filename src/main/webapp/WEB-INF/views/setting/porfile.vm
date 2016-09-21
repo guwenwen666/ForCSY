@@ -16,16 +16,16 @@
 	<body data-spy="scroll" data-target="#profilespy" data-offset="1">
 		#parse("/include/head/commonTop.vm")
 		
-		<div class="container main">
+		<div class="container nav-warpper-container">
 			<div class="row">
-				<nav class="col-md-3 " id="profilespy">
-					<div class="container-fluid"> 
+				<nav class="col-md-2" id="profilespy">
+					<div class="nav-warpper container-fluid"> 
 						<ul class="nav nav-pills nav-stacked ">
 							<li>
-								<a href="#person">
+								<div class="list-head">
 									<span class="glyphicon glyphicon-user"></span>
 									个人资料
-								</a>
+								</div>
 								<ul>
 									<li class="list-group-item">
 										<a href="#person-basic">
@@ -48,10 +48,10 @@
 								</ul>
 							</li>
 							<li>
-								<a href="#safty">
+								<div class="list-head">
 									<span class="glyphicon glyphicon-lock"></span>
 									安全设置
-								</a>
+								</div>
 								<ul>
 									<li class="list-group-item">
 										<a href="#safty-email">
@@ -76,38 +76,33 @@
 						</ul>
 					</div>
 				</nav>
-				<div class="col-md-9 col-md-offset-3 main-content" role="main">
+			</div>
+		</div>
+		
+		<div class="container main">
+			<div class="row">
+				<div class="col-md-10 col-md-offset-2 main-content" role="main">
 					<div id="person-basic" class="section">
 						<div class="page-header">
 							<h3>基本资料</h3>
 						</div>
 					</div>
 					<div id="person-detail" class="section">
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
-						1<br/>
 						
+						<form name="person-detail-form" id="person-detail-form" class="form-horizontal">
+							<div class="form-group">
+							    <label for="gender" class="col-md-2 control-label">性别:</label>
+							    <div class="col-md-10">
+									<label class="radio-inline">
+									  <input type="radio" name="gender" class="gender" id="gender-male" value="1"> 男
+									</label>
+									
+									<label class="radio-inline">
+									  <input type="radio" name="gender" class="gender" id="gender-female" value="0"> 女
+									</label>
+							    </div>
+							</div>
+						</form>
 					</div>
 					<div id="person-portrait" class="section">
 						1<br/>

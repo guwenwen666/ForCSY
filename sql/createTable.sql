@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `csy` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `csy`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: csy
@@ -39,7 +37,7 @@ CREATE TABLE `b_user_account` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `account_UNIQUE` (`account`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='用户帐号管理';
+) ENGINE=InnoDB AUTO_INCREMENT=1005 DEFAULT CHARSET=utf8 COMMENT='用户帐号管理';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +58,7 @@ CREATE TABLE `b_user_filestore` (
   `description` varchar(128) DEFAULT NULL COMMENT '文件描述信息',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='文件存储信息';
+) ENGINE=InnoDB AUTO_INCREMENT=1003 DEFAULT CHARSET=utf8 COMMENT='文件存储信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,14 +91,16 @@ DROP TABLE IF EXISTS `b_xtpz_dmlx`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `b_xtpz_dmlx` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `dmlxywm` varchar(32) NOT NULL COMMENT '代码类型英文名',
-  `dmlxzwm` varchar(32) NOT NULL COMMENT '代码类型中文名',
-  `fdmlxywm` varchar(32) DEFAULT NULL COMMENT '父代码类型英文名',
+  `dmlxbh` int(10) NOT NULL COMMENT '代码类型编号',
+  `ywm` varchar(32) NOT NULL COMMENT '代码类型英文名',
+  `zwm` varchar(32) NOT NULL COMMENT '代码类型中文名',
+  `p_ywm` varchar(32) DEFAULT NULL COMMENT '父代码类型英文名',
   `dmlxms` varchar(128) DEFAULT NULL COMMENT '代码类型描述',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `dmlxywm_UNIQUE` (`dmlxywm`),
-  UNIQUE KEY `dmlxzwm_UNIQUE` (`dmlxzwm`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代码类型管理';
+  UNIQUE KEY `dmlxywm_UNIQUE` (`ywm`),
+  UNIQUE KEY `dmlxzwm_UNIQUE` (`zwm`),
+  UNIQUE KEY `dmlxbh_UNIQUE` (`dmlxbh`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='代码类型管理';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,12 +111,18 @@ DROP TABLE IF EXISTS `b_xtpz_dmx`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `b_xtpz_dmx` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `foreign_dmlxywm` varchar(32) NOT NULL COMMENT '外键 代码类型英文名',
+  `id` int(10) NOT NULL,
+  `dmlxbh` int(10) NOT NULL COMMENT '外键 代码类型英文名',
   `dmxywm` varchar(32) NOT NULL COMMENT '代码项英文名',
   `dmxzwm` varchar(32) NOT NULL COMMENT '代码项中文名',
-  `value` varchar(45) NOT NULL COMMENT '值',
+  `dmxz` varchar(128) NOT NULL COMMENT '值',
+  `p_dmxywm` varchar(32) DEFAULT NULL COMMENT '父代码项英文名',
+  `sfxs` int(2) DEFAULT '1' COMMENT '是否显示(1:显示,其他:不显示)',
+  `sfky` int(2) DEFAULT '1' COMMENT '是否可用(1:可用,其他:不可用)',
+  `sfmr` int(2) DEFAULT '0' COMMENT '是否默认(1:是,其他:否)',
+  `xssx` int(4) DEFAULT NULL COMMENT '显示顺序',
   `dmxms` varchar(128) DEFAULT NULL COMMENT '代码项描述',
+  `dmxkz` varchar(128) DEFAULT NULL COMMENT '代码项拓展(每个代码项可能有各自的拓展功能)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代码项管理';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -134,4 +140,4 @@ CREATE TABLE `b_xtpz_dmx` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-30 14:47:36
+-- Dump completed on 2016-09-21 17:18:22

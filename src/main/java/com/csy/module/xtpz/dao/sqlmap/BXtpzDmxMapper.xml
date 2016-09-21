@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csy.module.xtpz.dao.BXtpzDmxMapper" >
+  <resultMap id="BaseResultMap" type="com.csy.module.xtpz.entity.BXtpzDmx" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dmlxbh" property="dmlxbh" jdbcType="INTEGER" />
+    <result column="dmxywm" property="dmxywm" jdbcType="VARCHAR" />
+    <result column="dmxzwm" property="dmxzwm" jdbcType="VARCHAR" />
+    <result column="dmxz" property="dmxz" jdbcType="VARCHAR" />
+    <result column="p_dmxywm" property="pDmxywm" jdbcType="VARCHAR" />
+    <result column="sfxs" property="sfxs" jdbcType="INTEGER" />
+    <result column="sfky" property="sfky" jdbcType="INTEGER" />
+    <result column="sfmr" property="sfmr" jdbcType="INTEGER" />
+    <result column="xssx" property="xssx" jdbcType="INTEGER" />
+    <result column="dmxms" property="dmxms" jdbcType="VARCHAR" />
+    <result column="dmxkz" property="dmxkz" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, dmlxbh, dmxywm, dmxzwm, dmxz, p_dmxywm, sfxs, sfky, sfmr, xssx, dmxms, dmxkz
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csy.module.xtpz.entity.BXtpzDmxExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from b_xtpz_dmx
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from b_xtpz_dmx
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from b_xtpz_dmx
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csy.module.xtpz.entity.BXtpzDmxExample" >
+    delete from b_xtpz_dmx
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csy.module.xtpz.entity.BXtpzDmx" >
+    insert into b_xtpz_dmx (id, dmlxbh, dmxywm, 
+      dmxzwm, dmxz, p_dmxywm, 
+      sfxs, sfky, sfmr, xssx, 
+      dmxms, dmxkz)
+    values (#{id,jdbcType=INTEGER}, #{dmlxbh,jdbcType=INTEGER}, #{dmxywm,jdbcType=VARCHAR}, 
+      #{dmxzwm,jdbcType=VARCHAR}, #{dmxz,jdbcType=VARCHAR}, #{pDmxywm,jdbcType=VARCHAR}, 
+      #{sfxs,jdbcType=INTEGER}, #{sfky,jdbcType=INTEGER}, #{sfmr,jdbcType=INTEGER}, #{xssx,jdbcType=INTEGER}, 
+      #{dmxms,jdbcType=VARCHAR}, #{dmxkz,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csy.module.xtpz.entity.BXtpzDmx" >
+    insert into b_xtpz_dmx
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dmlxbh != null" >
+        dmlxbh,
+      </if>
+      <if test="dmxywm != null" >
+        dmxywm,
+      </if>
+      <if test="dmxzwm != null" >
+        dmxzwm,
+      </if>
+      <if test="dmxz != null" >
+        dmxz,
+      </if>
+      <if test="pDmxywm != null" >
+        p_dmxywm,
+      </if>
+      <if test="sfxs != null" >
+        sfxs,
+      </if>
+      <if test="sfky != null" >
+        sfky,
+      </if>
+      <if test="sfmr != null" >
+        sfmr,
+      </if>
+      <if test="xssx != null" >
+        xssx,
+      </if>
+      <if test="dmxms != null" >
+        dmxms,
+      </if>
+      <if test="dmxkz != null" >
+        dmxkz,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dmlxbh != null" >
+        #{dmlxbh,jdbcType=INTEGER},
+      </if>
+      <if test="dmxywm != null" >
+        #{dmxywm,jdbcType=VARCHAR},
+      </if>
+      <if test="dmxzwm != null" >
+        #{dmxzwm,jdbcType=VARCHAR},
+      </if>
+      <if test="dmxz != null" >
+        #{dmxz,jdbcType=VARCHAR},
+      </if>
+      <if test="pDmxywm != null" >
+        #{pDmxywm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfxs != null" >
+        #{sfxs,jdbcType=INTEGER},
+      </if>
+      <if test="sfky != null" >
+        #{sfky,jdbcType=INTEGER},
+      </if>
+      <if test="sfmr != null" >
+        #{sfmr,jdbcType=INTEGER},
+      </if>
+      <if test="xssx != null" >
+        #{xssx,jdbcType=INTEGER},
+      </if>
+      <if test="dmxms != null" >
+        #{dmxms,jdbcType=VARCHAR},
+      </if>
+      <if test="dmxkz != null" >
+        #{dmxkz,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csy.module.xtpz.entity.BXtpzDmxExample" resultType="java.lang.Integer" >
+    select count(*) from b_xtpz_dmx
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update b_xtpz_dmx
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.dmlxbh != null" >
+        dmlxbh = #{record.dmlxbh,jdbcType=INTEGER},
+      </if>
+      <if test="record.dmxywm != null" >
+        dmxywm = #{record.dmxywm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dmxzwm != null" >
+        dmxzwm = #{record.dmxzwm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dmxz != null" >
+        dmxz = #{record.dmxz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pDmxywm != null" >
+        p_dmxywm = #{record.pDmxywm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfxs != null" >
+        sfxs = #{record.sfxs,jdbcType=INTEGER},
+      </if>
+      <if test="record.sfky != null" >
+        sfky = #{record.sfky,jdbcType=INTEGER},
+      </if>
+      <if test="record.sfmr != null" >
+        sfmr = #{record.sfmr,jdbcType=INTEGER},
+      </if>
+      <if test="record.xssx != null" >
+        xssx = #{record.xssx,jdbcType=INTEGER},
+      </if>
+      <if test="record.dmxms != null" >
+        dmxms = #{record.dmxms,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dmxkz != null" >
+        dmxkz = #{record.dmxkz,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update b_xtpz_dmx
+    set id = #{record.id,jdbcType=INTEGER},
+      dmlxbh = #{record.dmlxbh,jdbcType=INTEGER},
+      dmxywm = #{record.dmxywm,jdbcType=VARCHAR},
+      dmxzwm = #{record.dmxzwm,jdbcType=VARCHAR},
+      dmxz = #{record.dmxz,jdbcType=VARCHAR},
+      p_dmxywm = #{record.pDmxywm,jdbcType=VARCHAR},
+      sfxs = #{record.sfxs,jdbcType=INTEGER},
+      sfky = #{record.sfky,jdbcType=INTEGER},
+      sfmr = #{record.sfmr,jdbcType=INTEGER},
+      xssx = #{record.xssx,jdbcType=INTEGER},
+      dmxms = #{record.dmxms,jdbcType=VARCHAR},
+      dmxkz = #{record.dmxkz,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csy.module.xtpz.entity.BXtpzDmx" >
+    update b_xtpz_dmx
+    <set >
+      <if test="dmlxbh != null" >
+        dmlxbh = #{dmlxbh,jdbcType=INTEGER},
+      </if>
+      <if test="dmxywm != null" >
+        dmxywm = #{dmxywm,jdbcType=VARCHAR},
+      </if>
+      <if test="dmxzwm != null" >
+        dmxzwm = #{dmxzwm,jdbcType=VARCHAR},
+      </if>
+      <if test="dmxz != null" >
+        dmxz = #{dmxz,jdbcType=VARCHAR},
+      </if>
+      <if test="pDmxywm != null" >
+        p_dmxywm = #{pDmxywm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfxs != null" >
+        sfxs = #{sfxs,jdbcType=INTEGER},
+      </if>
+      <if test="sfky != null" >
+        sfky = #{sfky,jdbcType=INTEGER},
+      </if>
+      <if test="sfmr != null" >
+        sfmr = #{sfmr,jdbcType=INTEGER},
+      </if>
+      <if test="xssx != null" >
+        xssx = #{xssx,jdbcType=INTEGER},
+      </if>
+      <if test="dmxms != null" >
+        dmxms = #{dmxms,jdbcType=VARCHAR},
+      </if>
+      <if test="dmxkz != null" >
+        dmxkz = #{dmxkz,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csy.module.xtpz.entity.BXtpzDmx" >
+    update b_xtpz_dmx
+    set dmlxbh = #{dmlxbh,jdbcType=INTEGER},
+      dmxywm = #{dmxywm,jdbcType=VARCHAR},
+      dmxzwm = #{dmxzwm,jdbcType=VARCHAR},
+      dmxz = #{dmxz,jdbcType=VARCHAR},
+      p_dmxywm = #{pDmxywm,jdbcType=VARCHAR},
+      sfxs = #{sfxs,jdbcType=INTEGER},
+      sfky = #{sfky,jdbcType=INTEGER},
+      sfmr = #{sfmr,jdbcType=INTEGER},
+      xssx = #{xssx,jdbcType=INTEGER},
+      dmxms = #{dmxms,jdbcType=VARCHAR},
+      dmxkz = #{dmxkz,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
