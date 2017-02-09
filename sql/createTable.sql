@@ -127,6 +127,23 @@ CREATE TABLE `b_xtpz_dmx` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代码项管理';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+
+--
+-- Table structure for table `b_wx_user`
+--
+
+DROP TABLE IF EXISTS `b_wx_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `b_wx_user` (
+  `openid` varchar(64) NOT NULL COMMENT 'openid',
+  `account` varchar(32) DEFAULT NULL,
+  `access_token` varchar(128) DEFAULT NULL COMMENT '授权ID',
+  PRIMARY KEY (`openid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信用户存储表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
 --
 -- Dumping routines for database 'csy'
 --
