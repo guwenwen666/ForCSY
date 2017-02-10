@@ -3,8 +3,14 @@
 <mapper namespace="com.csy.module.wx.dao.BWxUserMapper" >
   <resultMap id="BaseResultMap" type="com.csy.module.wx.entity.BWxUser" >
     <id column="openid" property="openid" jdbcType="VARCHAR" />
-    <result column="account" property="account" jdbcType="VARCHAR" />
-    <result column="access_token" property="accessToken" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="TINYINT" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="headimgurl" property="headimgurl" jdbcType="VARCHAR" />
+    <result column="privilege" property="privilege" jdbcType="VARCHAR" />
+    <result column="unionid" property="unionid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    openid, account, access_token
+    openid, nickname, sex, province, city, country, headimgurl, privilege, unionid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csy.module.wx.entity.BWxUserExample" >
     select
@@ -99,9 +105,13 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.csy.module.wx.entity.BWxUser" >
-    insert into b_wx_user (openid, account, access_token
+    insert into b_wx_user (openid, nickname, sex, 
+      province, city, country, 
+      headimgurl, privilege, unionid
       )
-    values (#{openid,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{accessToken,jdbcType=VARCHAR}
+    values (#{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{headimgurl,jdbcType=VARCHAR}, #{privilege,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.csy.module.wx.entity.BWxUser" >
@@ -110,22 +120,58 @@
       <if test="openid != null" >
         openid,
       </if>
-      <if test="account != null" >
-        account,
+      <if test="nickname != null" >
+        nickname,
       </if>
-      <if test="accessToken != null" >
-        access_token,
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="headimgurl != null" >
+        headimgurl,
+      </if>
+      <if test="privilege != null" >
+        privilege,
+      </if>
+      <if test="unionid != null" >
+        unionid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="openid != null" >
         #{openid,jdbcType=VARCHAR},
       </if>
-      <if test="account != null" >
-        #{account,jdbcType=VARCHAR},
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="accessToken != null" >
-        #{accessToken,jdbcType=VARCHAR},
+      <if test="sex != null" >
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="headimgurl != null" >
+        #{headimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="privilege != null" >
+        #{privilege,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null" >
+        #{unionid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -141,11 +187,29 @@
       <if test="record.openid != null" >
         openid = #{record.openid,jdbcType=VARCHAR},
       </if>
-      <if test="record.account != null" >
-        account = #{record.account,jdbcType=VARCHAR},
+      <if test="record.nickname != null" >
+        nickname = #{record.nickname,jdbcType=VARCHAR},
       </if>
-      <if test="record.accessToken != null" >
-        access_token = #{record.accessToken,jdbcType=VARCHAR},
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=TINYINT},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headimgurl != null" >
+        headimgurl = #{record.headimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privilege != null" >
+        privilege = #{record.privilege,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unionid != null" >
+        unionid = #{record.unionid,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -155,8 +219,14 @@
   <update id="updateByExample" parameterType="map" >
     update b_wx_user
     set openid = #{record.openid,jdbcType=VARCHAR},
-      account = #{record.account,jdbcType=VARCHAR},
-      access_token = #{record.accessToken,jdbcType=VARCHAR}
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=TINYINT},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      headimgurl = #{record.headimgurl,jdbcType=VARCHAR},
+      privilege = #{record.privilege,jdbcType=VARCHAR},
+      unionid = #{record.unionid,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -164,19 +234,43 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.csy.module.wx.entity.BWxUser" >
     update b_wx_user
     <set >
-      <if test="account != null" >
-        account = #{account,jdbcType=VARCHAR},
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="accessToken != null" >
-        access_token = #{accessToken,jdbcType=VARCHAR},
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="headimgurl != null" >
+        headimgurl = #{headimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="privilege != null" >
+        privilege = #{privilege,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null" >
+        unionid = #{unionid,jdbcType=VARCHAR},
       </if>
     </set>
     where openid = #{openid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.csy.module.wx.entity.BWxUser" >
     update b_wx_user
-    set account = #{account,jdbcType=VARCHAR},
-      access_token = #{accessToken,jdbcType=VARCHAR}
+    set nickname = #{nickname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=TINYINT},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      headimgurl = #{headimgurl,jdbcType=VARCHAR},
+      privilege = #{privilege,jdbcType=VARCHAR},
+      unionid = #{unionid,jdbcType=VARCHAR}
     where openid = #{openid,jdbcType=VARCHAR}
   </update>
 </mapper>

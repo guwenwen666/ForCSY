@@ -6,4 +6,5 @@ import com.csy.util.spring.BaseDao;
 
 public interface BWxUserService extends BaseDao<BWxUser, BWxUserExample>{
 	
+	
 }

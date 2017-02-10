@@ -1,7 +1,9 @@
-package com.csy.module.wx.entity;
+package com.csy.module.wx.dto;
 
-public class BWxUser {
-    private String openid;
+import com.csy.module.wx.entity.BWxUser;
+
+public class BWxUserDto{
+	private String openid;
 
     private String nickname;
 
@@ -15,7 +17,7 @@ public class BWxUser {
 
     private String headimgurl;
 
-    private String privilege;
+    private String[] privilege;
 
     private String unionid;
 
@@ -75,12 +77,12 @@ public class BWxUser {
         this.headimgurl = headimgurl == null ? null : headimgurl.trim();
     }
 
-    public String getPrivilege() {
+    public String[] getPrivilege() {
         return privilege;
     }
 
-    public void setPrivilege(String privilege) {
-        this.privilege = privilege == null ? null : privilege.trim();
+    public void setPrivilege(String[] privilege) {
+        this.privilege = privilege;
     }
 
     public String getUnionid() {
@@ -89,5 +91,19 @@ public class BWxUser {
 
     public void setUnionid(String unionid) {
         this.unionid = unionid == null ? null : unionid.trim();
+    }
+
+    public BWxUser parseToBWxUser(){
+    	BWxUser bWxUser = new BWxUser();
+    	bWxUser.setCity(city);
+    	bWxUser.setCountry(country);
+    	bWxUser.setHeadimgurl(headimgurl);
+    	bWxUser.setNickname(nickname);
+    	bWxUser.setOpenid(openid);
+    	bWxUser.setPrivilege(privilege == null? privilege.toString():null);
+    	bWxUser.setProvince(province);
+    	bWxUser.setSex(sex);
+    	bWxUser.setUnionid(unionid);
+    	return bWxUser;
     }
 }

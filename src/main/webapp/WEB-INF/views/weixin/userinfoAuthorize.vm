@@ -11,16 +11,14 @@
 		
 	</head>
 	<body ontouchstart>
-		
-		<input id="wx_appid" value="${wx_appid}" type="hidden"/>
-		<input id="wx_appsecret" value="${wx_appsecret}" type="hidden"/>
-		
+		userinfoAuthorize
+		<input id="wx_appid" value="${wx_appid}" type="text"/>
 		<!--
 			<script src="${springPath}/static/js/weixin/zepto.min.js"></script>
 		-->
 		<script src="${springPath}/static/plugins/jquery/dist/jquery.min.js"></script>
 		<script src="${springPath}/static/js/common/common.js"></script>
-		<script src="${springPath}/static/js/weixin/authorize.js"></script>
+		<script src="${springPath}/static/js/weixin/userinfoAuthorize.js"></script>
         <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
         <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
 	</body>

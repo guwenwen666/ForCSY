@@ -1,8 +1,5 @@
 package com.csy.server.listen;
 
-import java.io.IOException;
-import java.util.Properties;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeEvent;
 import javax.servlet.ServletContextAttributeListener;
@@ -10,7 +7,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import org.springframework.core.io.support.PropertiesLoaderUtils;
+import com.csy.util.WxConfig;
 
 /**
  * Application Lifecycle Listener implementation class ServletContextListen
@@ -62,15 +59,8 @@ public class ServletContextListen implements ServletContextListener, ServletCont
     	String springPath = context.getContextPath();
     	context.setAttribute("springPath", springPath);
     	
-    	//微信配置读取
-		Properties properties;
-		try {
-			properties = PropertiesLoaderUtils.loadAllProperties("/weixin.properties");
-	    	context.setAttribute("wx_appid", properties.getProperty("appid"));
-	    	context.setAttribute("wx_appsecret", properties.getProperty("appsecret"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    	context.setAttribute("wx_appid", WxConfig.getInstance().getAppid());
+    	context.setAttribute("wx_appsecret", WxConfig.getInstance().getAppsecret());
     }
 	
 }
