@@ -73,6 +73,10 @@ public class KckpController {
 						wxUserService.insert(bWxUser);
 					}
 				}
+				//如果用户已经存在，更新用户信息
+				else{
+					wxUserService.updateByPrimaryKey(wxUser);
+				}
 				return new ModelAndView("/weixin/kckp", map);
 			}
 			//验证不通过直接抛回原来的页面吧
