@@ -15,6 +15,11 @@ import com.csy.util.WxConfig;
 
 import net.sf.json.JSONObject;
 
+/**
+ * 用户授权access_token管理
+ * @author wangqiang
+ *
+ */
 public class AccessTokenUtil {
 
 	private static Logger logger = LoggerFactory.getLogger(AccessTokenUtil.class);

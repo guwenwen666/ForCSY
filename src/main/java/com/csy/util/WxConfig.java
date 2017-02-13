@@ -17,6 +17,16 @@ public class WxConfig {
 	
 	private String access_token;
 	
+	private String jsapi_ticket;
+	
+	public String getJsapi_ticket() {
+		return jsapi_ticket;
+	}
+
+	public void setJsapi_ticket(String jsapi_ticket) {
+		this.jsapi_ticket = jsapi_ticket;
+	}
+
 	public String getAccess_token() {
 		return access_token;
 	}

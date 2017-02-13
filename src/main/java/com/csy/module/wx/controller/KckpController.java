@@ -37,14 +37,36 @@ public class KckpController {
 		return new ModelAndView("/weixin/baseAuthorize");
 	}
 	
+	@RequestMapping("/kckpTest")
+	public ModelAndView kckpTest(HttpServletRequest request,
+			HttpServletResponse response){
+		HttpSession session = request.getSession(true);
+		if(session.getAttribute("bWxUser") == null){
+			
+		}else{
+			BWxUser bWxUser = wxUserService.selectByPrimaryKey("orbiHuLPLAwip8l4fl2C-kmTexSg");
+			request.getSession(true).setAttribute("bWxUser", bWxUser);
+		}
+		return new ModelAndView("/weixin/kckp");
+	}
+	
+	/**
+	 * 授权成功后，session中bWxUser存放该微信对象
+	 * @param request
+	 * @param response
+	 * @param code
+	 * @param state
+	 * @return
+	 */
 	@RequestMapping("/kckp")
 	public ModelAndView kckp(HttpServletRequest request, 
 			HttpServletResponse response, String code, String state){
 		Map<String, Object> map = new HashMap<String, Object>();
-		
 		HttpSession session = request.getSession(true);
+		
+		BWxUser wxUser = (BWxUser)session.getAttribute("bWxUser");
 		//已经静默授权过一次了成功，也就是只在session重新获取才进行用户更新操作。
-		if(session.getAttribute("wxAuthToken") != null){
+		if(wxUser != null){
 			//正常进入逻辑页面
 			return new ModelAndView("/weixin/kckp", map);
 		}
@@ -54,28 +76,30 @@ public class KckpController {
 			//如果验证正常
 			if(object instanceof WxAccessToken){
 				WxAccessToken accessToken = (WxAccessToken)object;
-				session.setAttribute("wxAuthToken", accessToken);
-				
-				BWxUser wxUser = wxUserService.selectByPrimaryKey(accessToken.getOpenid());
-				//如果从未存储过该用户,新增该用户
-				if(wxUser==null){
-					Object object2 = AccessTokenUtil.getWxUserInfo(accessToken);
-					if(object2 instanceof WxError){
-						WxError wxError = (WxError)object2;
-						//如果授权过期或者未授权
-						if(42001 == wxError.getErrcode() || 48001 == wxError.getErrcode()){
-							return new ModelAndView("/weixin/userinfoAuthorize");
-						}else{
-							return null;
-						}
+				Object object2 = AccessTokenUtil.getWxUserInfo(accessToken);
+				//如果用户信息获取失败
+				if(object2 instanceof WxError){
+					WxError wxError = (WxError)object2;
+					//如果授权过期或者未授权
+					if(42001 == wxError.getErrcode() || 48001 == wxError.getErrcode()){
+						return new ModelAndView("/weixin/userinfoAuthorize");
 					}else{
-						BWxUser bWxUser = (BWxUser)object2;
-						wxUserService.insert(bWxUser);
+						return null;
 					}
 				}
-				//如果用户已经存在，更新用户信息
+				//如果成功获取到用户信息，则新增或者更新用户信息
 				else{
-					wxUserService.updateByPrimaryKey(wxUser);
+					BWxUser wxUserUpdated = (BWxUser)object2;
+					wxUser = wxUserService.selectByPrimaryKey(accessToken.getOpenid());
+					//如果从未存储过该用户,新增该用户
+					if(wxUser==null){
+						wxUserService.insert(wxUserUpdated);
+					}
+					//如果用户已经存在，更新用户信息
+					else{
+						wxUserService.updateByPrimaryKey(wxUserUpdated);
+					}
+					session.setAttribute("bWxUser", wxUserUpdated);
 				}
 				return new ModelAndView("/weixin/kckp", map);
 			}
