@@ -163,3 +163,58 @@ CREATE TABLE `b_wx_user` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2016-09-21 17:18:22
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `b_accident_driver`
+-- ----------------------------
+DROP TABLE IF EXISTS `b_accident_driver`;
+CREATE TABLE `b_accident_driver` (
+  `eventId` varchar(32) NOT NULL COMMENT '事件id 关联事件表',
+  `driverId` varchar(32) DEFAULT NULL COMMENT '驾驶员id 关联驾驶员表',
+  `duty` varchar(32) DEFAULT NULL COMMENT '责任类型(1代表全员)',
+  `id` varchar(32) NOT NULL COMMENT '主键id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of b_accident_driver
+-- ----------------------------
+
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `b_driver_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `b_driver_info`;
+CREATE TABLE `b_driver_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '驾驶员id',
+  `name` varchar(32) DEFAULT NULL COMMENT '驾驶员姓名',
+  `licenseId` varchar(18) DEFAULT NULL COMMENT '驾驶证证号',
+  `drivingId` varchar(32) DEFAULT NULL COMMENT '驾驶员行驶证号',
+  `hphm` varchar(32) DEFAULT NULL COMMENT '号牌号码',
+  `licenseImage` varchar(256) DEFAULT NULL COMMENT '驾驶证图片，多个图片用逗号隔开',
+  `drivingImage` varchar(256) DEFAULT NULL COMMENT '行驶证图片，多张图片以逗号隔开',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of b_driver_info
+-- ----------------------------
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `b_accident_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `b_accident_info`;
+CREATE TABLE `b_accident_info` (
+  `id` varchar(32) NOT NULL COMMENT '事故id',
+  `occurrence_time` date DEFAULT NULL COMMENT '事故发生的时间',
+  `longitude` varchar(128) DEFAULT NULL COMMENT '事故发生的地点的经度',
+  `latitude` varchar(128) DEFAULT NULL COMMENT '事故发生地点的纬度',
+  `live_image` varchar(256) DEFAULT NULL COMMENT '现场拍照的事故图片，多个以逗号隔开，目前最多支持10张',
+  `upload_time` date DEFAULT NULL COMMENT '事故上传时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of b_accident_info
+-- ----------------------------
