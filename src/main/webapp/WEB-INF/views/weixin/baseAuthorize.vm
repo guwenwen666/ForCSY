@@ -11,8 +11,8 @@
 		
 	</head>
 	<body ontouchstart>
-		baseAuthorize
-		<input id="wx_appid" value="${wx_appid}" type="text"/>
+		<input id="wx_appid" value="${wx_appid}" type="hidden"/>
+		
 		<!--
 			<script src="${springPath}/static/js/weixin/zepto.min.js"></script>
 		-->
