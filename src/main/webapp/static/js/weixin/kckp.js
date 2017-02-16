@@ -225,14 +225,33 @@ app.controller("myCtrl", function($scope, $state ,$timeout) {
 	//开始录音
 	$scope.startRecord = function(){
 		$scope.inVoice = !$scope.inVoice;
-		wx.startRecord();
-		//时间过短弹出框
-		$state.go("toast_voice",{fail:false});
+		$scope.test='0' + $scope.test;
+		$timeout(function(){
+			if(!!$scope.inVoice){
+				$scope.inVoicing = true;
+				wx.startRecord();
+				//时间过短弹出框
+				$state.go("toast_voice",{fail:false});
+			}
+		}, 500, true);
 	};
 	
 	$scope.stopRecord = function(){
+		
 		//如果不再录音过程中,直接返回
-		if(!$scope.inVoice)return;
+//		if(!$scope.inVoice)return;
+		
+		//如果没在录音
+		if(!$scope.inVoicing){
+			
+			$scope.test='1'+ $scope.test;
+			
+			$scope.inVoice = false;
+			
+			
+			
+			return;
+		}
 		
 		var rst = false;
 		wx.stopRecord({
@@ -262,12 +281,21 @@ app.controller("myCtrl", function($scope, $state ,$timeout) {
 				    		$state.go("/");
 				    		$scope.inVoice = !$scope.inVoice;
 			    		}, 1000, true);
+			    		
+			    		$scope.test='2'+ $scope.test;
 		    		}else{
 		    			$scope.inVoice = !$scope.inVoice;
+
+		    			$scope.test='3'+ $scope.test;
 		    		}
+		    		$scope.inVoicing = false;
 		    	});
+
+				$scope.test='6'+ $scope.test;
 		    }
 		});
+
+		$scope.test='5'+ $scope.test;
 	};
 });
 

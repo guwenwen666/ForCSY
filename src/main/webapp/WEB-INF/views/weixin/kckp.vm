@@ -9,8 +9,9 @@
 	</head>
 	<body ng-app="myApp" ng-controller="myCtrl"
 		ng-init="inVoice=false;" 
+		ng-touchend="stopRecord();" 
 		class="{{inVoice?'bodyInVoice':''}}" ontouchstart>
-		<div ng-mouseup="stopRecord();" ng-touchend="stopRecord();" >
+		<div>
 			<div class="weui-cells__title">事故信息</div>
     		<div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
@@ -160,12 +161,12 @@
 										-->
                                     </li>
                                 </ul>
+                                <span ng-init="test=''" ng-bind="test"></span>
                                 <div class="weui-btn weui-btn_default weui-uploader__voice-box
 									{{inVoice?'inVoiceBtn':''}}" 
 									ng-hide="voices.length>=3 || editUploderVoice"
-									ng-mousedown="startRecord();"
 									ng-touchstart="startRecord();">
-                                    <span ng-bind="!inVoice?'按住 说话':'松开 结束'"></span>
+                                    <span ng-bind="!inVoice?'按住 出现提示后说话':'松开 结束'"></span>
                                 </div>
                             </div>
                             <div class="weui-uploader__ft">
