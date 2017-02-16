@@ -7,8 +7,10 @@
         <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.1/weui.min.css"/>
         <link rel="stylesheet" href="${springPath}/static/css/weixin/kckp.css"/>
 	</head>
-	<body ng-app="myApp" ontouchstart>
-		<div ng-controller="myCtrl">
+	<body ng-app="myApp" ng-controller="myCtrl"
+		ng-init="inVoice=false;" 
+		class="{{inVoice?'bodyInVoice':''}}" ontouchstart>
+		<div ng-mouseup="stopRecord();" ng-touchend="stopRecord();" >
 			<div class="weui-cells__title">事故信息</div>
     		<div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
@@ -31,7 +33,7 @@
 			<div ng-repeat="jsyxx in jsyxxs">
 				<div class="weui-cells__title">
 					<span ng-bind="jsyxxIndex($index+65)"></span>&nbsp;驾驶员信息
-                    <span class="weui-cells__ft deleteJsy" ng-hide="$index==0" ng-click="deleteJsy($index);">
+                    <span class="weui-cells__ft union-btn" ng-hide="$index==0" ng-click="deleteJsy($index);">
 						<span class="weui-icon-delete_sm"></span>删除
 					</span>	
 				</div>
@@ -57,7 +59,7 @@
                 </div>
             </div>
 			
-			<div ng-show="disableAddJsy">
+			<div ng-init="disableAddJsy=true;" ng-show="disableAddJsy">
     			<a href="javascript:void(0);" class="weui-cell weui-cell_link addJsy" ng-click="addJsy()">
     				<div class="weui-cell__bd">
                         <span class="weui-icon-add_sm icon_xzjsy"></span>
@@ -66,25 +68,37 @@
     			</a>
 			</div>
 			
-			<div class="weui-cells__title">现场图片上传</div>
+			<div class="weui-cells__title">现场图片上传
+				<span class="weui-cells__ft union-btn" ng-init="editUploder=false" ng-hide="editUploder" 
+					ng-click="editUploder=!editUploder">
+					<span class="weui-icon-modify_sm"></span>编辑
+				</span>
+				<span class="weui-cells__ft union-btn" ng-hide="!editUploder" 
+					ng-click="editUploder=!editUploder">
+					<span class="weui-icon-success_sm"></span>完成
+				</span>
+			</div>
 			<div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
                         <div class="weui-uploader">
                             <div class="weui-uploader__bd">
                                 <ul class="weui-uploader__files" id="uploaderFiles" ng-repeat="xxtp in xxtps">
-									<li class="weui-uploader__file weui-uploader__file_status" ng-click="previewImage($index)" 
+									<li class="weui-uploader__file {{!xxtp.uploadSuccess?'weui-uploader__file_status':''}} uploaderFile {{editUploder?'shake-little':''}}" ng-click="uploadClick($index)" 
 										style="background-image:url('{{xxtp.uploadUrl}}');">
-                                        <div ng-hdie="xxtp.uploadSuccess" class="weui-uploader__file-content">
-                                            <i ng-show="xxtp.uploadError" class="weui-icon-warn"></i>
-											<span ng-show="!xxtp.uploadError && xxtp.uploadPercent<100"
-												ng-bind="xxtp.uploadPercent+'%'">
-											</span>
+										<div ng-hide="editUploder">
+                                            <div ng-hdie="xxtp.uploadSuccess" class="weui-uploader__file-content">
+                                                <i ng-show="xxtp.uploadError && !xxtp.uploadWaiting" class="weui-icon-warn"></i>
+                                                <i ng-show="xxtp.uploadWaiting" class="weui-loading"></i>
+                                            </div>
+                                        </div>
+										<div class="deleteUploadDiv" ng-hide="!editUploder" ng-click="deleteUpload($event, $index)">
+											<span class="weui-icon-delete1_sm deleteUpload"></span>
                                         </div>
                                     </li>
                                 </ul>
-                                <div class="weui-uploader__input-box" ng-hide="xxtps.length>=10">
-                                    <input id="uploaderInput" class="weui-uploader__input"
+                                <div class="weui-uploader__input-box" ng-hide="xxtps.length>=10 || editUploder">
+                                    <input class="weui-uploader__input"
 										type="button" accept="image/*" multiple="" ng-click="uploadImgLocal()">
                                 </div>
                             </div>
@@ -95,7 +109,6 @@
                     </div>
                 </div>
             </div>
-			
 			
 			<div class="weui-cells__title">事故责任</div>
 			<div class="weui-cells weui-cells_form">
@@ -112,6 +125,57 @@
                 </div>
             </div>
 			
+			
+			<div class="weui-cells__title">责任确认录音
+				<span class="weui-cells__ft union-btn" ng-init="editUploderVoice=false" ng-hide="editUploderVoice" 
+					ng-click="editUploderVoice=!editUploderVoice">
+					<span class="weui-icon-modify_sm"></span>编辑
+				</span>
+				<span class="weui-cells__ft union-btn" ng-hide="!editUploderVoice" 
+					ng-click="editUploderVoice=!editUploderVoice">
+					<span class="weui-icon-success_sm"></span>完成
+				</span>
+			</div>
+			<div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <div class="weui-uploader">
+                            <div class="weui-uploader__bd">
+                                <ul class="weui-uploader__files" id="uploaderFiles" ng-repeat="voice in voices">
+									<li class="weui-uploader__file uploaderFile 
+										{{!voice.uploadSuccess?'weui-uploader__file_status':''}} 
+										{{editUploderVoice?'shake-little':''}}" 
+										ng-click="uploadClick($index)" 
+										style="background-image:url('{{voice.uploadUrl}}');">
+										<!--
+										<div ng-hide="editUploder">
+                                            <div ng-hdie="xxtp.uploadSuccess" class="weui-uploader__file-content">
+                                                <i ng-show="xxtp.uploadError && !xxtp.uploadWaiting" class="weui-icon-warn"></i>
+                                                <i ng-show="xxtp.uploadWaiting" class="weui-loading"></i>
+                                            </div>
+                                        </div>
+										<div class="deleteUploadDiv" ng-hide="!editUploder" ng-click="deleteUpload($event, $index)">
+											<span class="weui-icon-delete1_sm deleteUpload"></span>
+                                        </div>
+										-->
+                                    </li>
+                                </ul>
+                                <div class="weui-btn weui-btn_default weui-uploader__voice-box
+									{{inVoice?'inVoiceBtn':''}}" 
+									ng-hide="voices.length>=3 || editUploderVoice"
+									ng-mousedown="startRecord();"
+									ng-touchstart="startRecord();">
+                                    <span ng-bind="!inVoice?'按住 说话':'松开 结束'"></span>
+                                </div>
+                            </div>
+                            <div class="weui-uploader__ft">
+								<div class="weui-textarea-counter"><span ng-bind="voices.length">0</span>/3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
 			<div class="weui-cells__title">事故描述</div>
     		<div class="weui-cells weui-cells_form">
 				<div class="weui-cell">
@@ -122,14 +186,41 @@
                     </div>
                 </div>
             </div>
+		
+    		<div class="weui-btn-area">
+    			<a href="javascript:;" class="weui-btn weui-btn_primary">确定</a>
+            </div>
+    		
+    		<div class="page__ft">
+    		</div>
+    		
+			<div ui-view></div>
         </div>
 		
-		<div class="weui-btn-area">
-			<a href="javascript:;" class="weui-btn weui-btn_primary">确定</a>
-        </div>
+		<script type="text/ng-template" id="toast_ok.html">
+			<div id="toast" style="opacity: 1; display: block;">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                    <p class="weui-toast__content">已完成</p>
+                </div>
+            </div>
+		</script>
 		
-		<div class="page__ft">
-		</div>
+		<script type="text/ng-template" id="toast_voice.html">
+			<div id="toast" style="opacity: 1; display: block;">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-icon-voice weui-icon_toast"></i>
+                    <p class="weui-toast__content" ng-bind="fail?fail:'录音中'"></p>
+                </div>
+            </div>
+		</script>
+		
+		<script type="text/ng-template" id="empty.html">
+			
+		</script>
+		
 		
 		<!--
 			<script src="${springPath}/static/plugins/jquery/dist/jquery.min.js"></script>
@@ -137,9 +228,10 @@
 		-->
 		<script src="${springPath}/static/js/weixin/zepto.min.js"></script>
 		<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+        <script src="${springPath}/static/js/weixin/angular-ui-router.js"></script>
 		<script src="${springPath}/static/js/common/wx-common.js"></script>
         <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
         <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
-		<script src="${springPath}/static/js/weixin/kckp.js"></script>
+		<script src="${springPath}/static/js/weixin/kckp.js?a=21252"></script>
 	</body>
 </html>
