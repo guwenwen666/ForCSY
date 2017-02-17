@@ -193,6 +193,7 @@ CREATE TABLE `b_driver_info` (
   `hphm` varchar(32) DEFAULT NULL COMMENT '号牌号码',
   `licenseImage` varchar(256) DEFAULT NULL COMMENT '驾驶证图片，多个图片用逗号隔开',
   `drivingImage` varchar(256) DEFAULT NULL COMMENT '行驶证图片，多张图片以逗号隔开',
+  `contact` varchar(32) DEFAULT NULL COMMENT '联系方式',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -212,6 +213,7 @@ CREATE TABLE `b_accident_info` (
   `latitude` varchar(128) DEFAULT NULL COMMENT '事故发生地点的纬度',
   `live_image` varchar(256) DEFAULT NULL COMMENT '现场拍照的事故图片，多个以逗号隔开，目前最多支持10张',
   `upload_time` date DEFAULT NULL COMMENT '事故上传时间',
+  `description` varchar(256) DEFAULT NULL COMMENT '事故描述',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
