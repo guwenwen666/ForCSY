@@ -17,7 +17,8 @@ body {
 }
 
 .weui-uploader__bd{
-	margin-right: 0px;
+/* 	margin-right: 0px; */
+	min-height: 30px;
 }
 
 .uploaderFile{
@@ -26,6 +27,17 @@ body {
 
 .uploaderFile:before{
 	border-radius: 5px;
+}
+
+.uploaderFile_voice{
+	background-image: url("../../img/weixin/voice.svg");
+	background-size: cover;
+	border: 1px solid #d9d9d9;
+}
+
+.uploaderFile_voice.playing{
+	background-image: url("../../img/weixin/voice_play.svg");
+	background-size: cover;
 }
 
 .page__ft{
@@ -99,6 +111,12 @@ body {
 
 .weui-uploader__voice-box{
 	margin-bottom: 9px;
+	margin-right: 9px;
+	clear: both;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
 }
 
 .weui-icon_toast.weui-icon-voice:before {

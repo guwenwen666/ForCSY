@@ -9,7 +9,7 @@
 	</head>
 	<body ng-app="myApp" ng-controller="myCtrl"
 		ng-init="inVoice=false;" 
-		ng-touchend="stopRecord();" 
+		ng-touchend="stopRecord();"
 		class="{{inVoice?'bodyInVoice':''}}" ontouchstart>
 		<div>
 			<div class="weui-cells__title">事故信息</div>
@@ -84,8 +84,12 @@
                     <div class="weui-cell__bd">
                         <div class="weui-uploader">
                             <div class="weui-uploader__bd">
-                                <ul class="weui-uploader__files" id="uploaderFiles" ng-repeat="xxtp in xxtps">
-									<li class="weui-uploader__file {{!xxtp.uploadSuccess?'weui-uploader__file_status':''}} uploaderFile {{editUploder?'shake-little':''}}" ng-click="uploadClick($index)" 
+                                <ul class="weui-uploader__files">
+									<li class="weui-uploader__file
+										{{!xxtp.uploadSuccess?'weui-uploader__file_status':''}} 
+										uploaderFile {{editUploder?'shake-little':''}}" 
+										ng-repeat="xxtp in xxtps" 
+										ng-click="picClick($index)"
 										style="background-image:url('{{xxtp.uploadUrl}}');">
 										<div ng-hide="editUploder">
                                             <div ng-hdie="xxtp.uploadSuccess" class="weui-uploader__file-content">
@@ -93,7 +97,7 @@
                                                 <i ng-show="xxtp.uploadWaiting" class="weui-loading"></i>
                                             </div>
                                         </div>
-										<div class="deleteUploadDiv" ng-hide="!editUploder" ng-click="deleteUpload($event, $index)">
+										<div class="deleteUploadDiv" ng-hide="!editUploder" ng-click="deletePic($event, $index)">
 											<span class="weui-icon-delete1_sm deleteUpload"></span>
                                         </div>
                                     </li>
@@ -126,7 +130,7 @@
                 </div>
             </div>
 			
-			
+			<!-- 录音责任代码 start -->
 			<div class="weui-cells__title">责任确认录音
 				<span class="weui-cells__ft union-btn" ng-init="editUploderVoice=false" ng-hide="editUploderVoice" 
 					ng-click="editUploderVoice=!editUploderVoice">
@@ -141,27 +145,28 @@
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
                         <div class="weui-uploader">
-                            <div class="weui-uploader__bd">
-                                <ul class="weui-uploader__files" id="uploaderFiles" ng-repeat="voice in voices">
-									<li class="weui-uploader__file uploaderFile 
-										{{!voice.uploadSuccess?'weui-uploader__file_status':''}} 
-										{{editUploderVoice?'shake-little':''}}" 
-										ng-click="uploadClick($index)" 
-										style="background-image:url('{{voice.uploadUrl}}');">
-										<!--
-										<div ng-hide="editUploder">
-                                            <div ng-hdie="xxtp.uploadSuccess" class="weui-uploader__file-content">
-                                                <i ng-show="xxtp.uploadError && !xxtp.uploadWaiting" class="weui-icon-warn"></i>
-                                                <i ng-show="xxtp.uploadWaiting" class="weui-loading"></i>
+                            <div class="weui-uploader__bd voiceUpload">
+								<div>
+                                    <ul class="weui-uploader__files">
+    									<li class="weui-uploader__file uploaderFile uploaderFile_voice 
+    										{{!voice.uploadSuccess?'weui-uploader__file_status':''}} 
+											{{!!voice.voicing?'playing':''}}
+    										{{editUploderVoice?'shake-little':''}}" 
+											ng-repeat="voice in voices" 
+    										ng-click="playVoice($index)">
+    										<div ng-hide="editUploderVoice">
+												{{voice.voicing}}
+                                                <div ng-hdie="voice.uploadSuccess" class="weui-uploader__file-content">
+                                                    <i ng-show="voice.uploadError && !voice.uploadWaiting" class="weui-icon-warn"></i>
+                                                    <i ng-show="voice.uploadWaiting" class="weui-loading"></i>
+                                                </div>
                                             </div>
-                                        </div>
-										<div class="deleteUploadDiv" ng-hide="!editUploder" ng-click="deleteUpload($event, $index)">
-											<span class="weui-icon-delete1_sm deleteUpload"></span>
-                                        </div>
-										-->
-                                    </li>
-                                </ul>
-                                <span ng-init="test=''" ng-bind="test"></span>
+    										<div class="deleteUploadDiv" ng-hide="!editUploderVoice" ng-click="deleteVoice($event, $index)">
+    											<span class="weui-icon-delete1_sm deleteUpload"></span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                                 <div class="weui-btn weui-btn_default weui-uploader__voice-box
 									{{inVoice?'inVoiceBtn':''}}" 
 									ng-hide="voices.length>=3 || editUploderVoice"
@@ -169,13 +174,14 @@
                                     <span ng-bind="!inVoice?'按住 出现提示后说话':'松开 结束'"></span>
                                 </div>
                             </div>
-                            <div class="weui-uploader__ft">
+							<div class="weui-uploader__ft">
 								<div class="weui-textarea-counter"><span ng-bind="voices.length">0</span>/3</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+			<!-- 录音责任代码 end -->
 			
 			<div class="weui-cells__title">事故描述</div>
     		<div class="weui-cells weui-cells_form">
@@ -233,6 +239,6 @@
 		<script src="${springPath}/static/js/common/wx-common.js"></script>
         <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
         <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
-		<script src="${springPath}/static/js/weixin/kckp.js?a=21252"></script>
+		<script src="${springPath}/static/js/weixin/kckp.js?a=13"></script>
 	</body>
 </html>
