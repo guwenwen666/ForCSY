@@ -3,6 +3,7 @@
  * @author wangqiang
  * @description
  */
+var userLocation = undefined;
 
 var app = angular.module("myApp", ["ngTouch","ui.router"]);
 
@@ -30,7 +31,7 @@ app.controller("toastVoiceController", function($scope, $stateParams) {
 	$scope.fail = $stateParams.fail;
 });
 
-app.controller("myCtrl", function($scope, $state ,$timeout) {
+app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http) {
 	
 	//根据localID, 获取xxtp的json数据
 	var getXxtpIndexByLocalId = function(localId){
@@ -202,29 +203,34 @@ app.controller("myCtrl", function($scope, $state ,$timeout) {
     	});
     };
     
+    //事故信息默认
+	$scope.occurrenceTime = new Date();
 	
-	//事故描述字段及时提醒绑定
-	$scope.getSgfsmsLenght = function() {
-		if(!$scope.sgfsms){
-			return 0;
-		}else{
-			return $scope.sgfsms.length;
+	$scope.positionInterval = $interval(function(){
+		//还未获取到地理位置
+		if(userLocation == undefined){
+			return;
 		}
-	};
+		//被用户拒绝了地理位置信息获取
+		else if(userLocation.fail){
+			$scope.position = "用户拒绝了位置请求!";
+			$interval.cancel($scope.positionInterval);
+		}
+		//正常获取到信息
+		else{
+			$scope.position = "经度:" + userLocation.longitude + ",纬度:" + userLocation.latitude;
+			$interval.cancel($scope.positionInterval);
+		}
+	}, 3000);
 	
+	//驾驶员信息索引预定
 	$scope.jsyxxIndex = function(number){
 		return String.fromCharCode(number);
 	};
-
-	//驾驶员加载信息
-	$scope.jsyxxs = [
-//	                 {name:"",hphm:"",phone:""},
-	                 {name:"",hphm:"",phone:""}
-	                 ];
 	
 	//新增驾驶员事件绑定
 	$scope.addJsy = function(){
-		$scope.jsyxxs.push({name:"",hphm:"",phone:""});
+		$scope.jsyxxs.push({name:"",hphm:"",contact:""});
 		
 		if($scope.jsyxxs.length >= 3){
 			$scope.disableAddJsy = false;
@@ -243,6 +249,31 @@ app.controller("myCtrl", function($scope, $state ,$timeout) {
 			$scope.disableAddJsy = true;
 		}
 	};
+	
+	//驾驶员加载信息
+	$scope.jsyxxs = [
+	                 {name:"name1",hphm:"hphm1",contact:"contact1"},
+	                 {name:"name2",hphm:"hphm2",contact:"contact2"}
+	                 ];
+	
+	//事故描述字段及时提醒绑定
+	$scope.getSgfsmsLenght = function() {
+		if(!$scope.sgfsms){
+			return 0;
+		}else{
+			return $scope.sgfsms.length;
+		}
+	};
+	
+	
+	/**测试信息*/
+	$scope.sgfsms = "测试描述信息";
+	$scope.duty = $scope.jsyxxs[0].name + "全责";
+	/****/
+	
+	
+	
+	
 	
 	//图片上传操作初始化数据
 	$scope.xxtps = [
@@ -335,6 +366,7 @@ app.controller("myCtrl", function($scope, $state ,$timeout) {
 		}
 	};
 	
+	
 	$scope.voices=[
 //	               {
 //						uploadUrl: 1,
@@ -355,7 +387,6 @@ app.controller("myCtrl", function($scope, $state ,$timeout) {
 //						serverId: undefined
 //					}
 	               ];
-	
 	
 	//监听语音播放完毕接口
 	wx.onVoicePlayEnd({
@@ -516,6 +547,53 @@ app.controller("myCtrl", function($scope, $state ,$timeout) {
 			});
 		}
 	};
+	
+	$scope.submitForm = function(){
+		
+		/******测试情况*****/
+		userLocation = userLocation==undefined?{}:userLocation;
+		/*******end*******/
+		
+		var xxtpsUrl = function(){
+			var xxtpsUrl = [];
+			for(var i=0; i<$scope.xxtps.length; i++){
+				xxtpsUrl.push($scope.xxtps[i].serverId);
+			}
+			return xxtpsUrl;
+		}();
+		
+		var voicesUrl = function(){
+			var voicesUrl = [];
+			for(var i=0; i<$scope.voices.length; i++){
+				voicesUrl.push($scope.voices[i].serverId);
+			}
+			return voicesUrl;
+		}();
+		
+		$http({
+			method: "post",
+			url: rootPath + "/wx/addKckpInfo",
+			params: {
+				eventInfo:{
+					longitude: userLocation.longitude,
+					latitude: userLocation.latitude,
+					occurrenceTime: $scope.occurrenceTime.getTime(),
+					duty: $scope.duty,
+					liveImage: xxtpsUrl.join(","),
+					liveVoice: voicesUrl.join(","),
+					description: $scope.sgfsms
+				},
+				driverInfos: $scope.jsyxxs
+			},
+		}).success(function(data,status,config,headers){
+			
+			console.log(data);
+			
+		}).error(function(data,status,hedaers,config){
+			
+			alert(JSON.stringify(data));
+		});
+	};
 });
 
 
@@ -544,27 +622,29 @@ $(function(){
         });
         
         wx.ready(function(rst){
-        	$("#position").click(function(){
-        		getLocation();
-        	});
+        	//页面初始化时,便开始请求用户位置信息
+        	getLocation();
         });
     });
 	
-	
+
 	function getLocation(){
 		wx.getLocation({
 		    type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
 		    success: function (res) {
-		    	wx.openLocation({
-		    	    latitude: res.latitude, // 纬度，浮点数，范围为90 ~ -90
-		    	    longitude: res.longitude, // 经度，浮点数，范围为180 ~ -180。
-		    	    name: '', // 位置名
-		    	    address: '', // 地址详情说明
-		    	    scale: 14, // 地图缩放级别,整形值,范围从1~28。默认为最大
-		    	    infoUrl: 'http://weixin.qq.com' // 在查看位置界面底部显示的超链接,可点击跳转
-		    	});
+		    	userLocation = res;
+//		    	wx.openLocation({
+//		    	    latitude: res.latitude, // 纬度，浮点数，范围为90 ~ -90
+//		    	    longitude: res.longitude, // 经度，浮点数，范围为180 ~ -180。
+//		    	    name: '', // 位置名
+//		    	    address: '', // 地址详情说明
+//		    	    scale: 14, // 地图缩放级别,整形值,范围从1~28。默认为最大
+//		    	    infoUrl: 'http://weixin.qq.com' // 在查看位置界面底部显示的超链接,可点击跳转
+//		    	});
+		    },
+		    fail: function (res){
+		    	userLocation.fail = true;
 		    }
 		});
 	}
-	
 });

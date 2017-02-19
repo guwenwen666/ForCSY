@@ -1,5 +1,8 @@
 package com.csy.module.wx.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,14 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.csy.module.wx.bean.result.WxAccessToken;
 import com.csy.module.wx.bean.result.WxError;
+import com.csy.module.wx.entity.BAccidentInfo;
+import com.csy.module.wx.entity.BDriverInfo;
 import com.csy.module.wx.entity.BWxUser;
+import com.csy.module.wx.service.service.BAccidentInfoService;
 import com.csy.module.wx.service.service.BWxUserService;
 import com.csy.util.wx.AccessTokenUtil;
 
@@ -22,8 +34,13 @@ import com.csy.util.wx.AccessTokenUtil;
 @RequestMapping("/wx")
 public class KckpController {
 	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private BWxUserService wxUserService;
+	
+	@Autowired
+	private BAccidentInfoService accidentService;
 	
 	/**
 	 * 首先进入静默授权页面
@@ -41,7 +58,7 @@ public class KckpController {
 	public ModelAndView kckpTest(HttpServletRequest request,
 			HttpServletResponse response){
 		HttpSession session = request.getSession(true);
-		if(session.getAttribute("bWxUser") == null){
+		if(session.getAttribute("bWxUser") != null){
 			
 		}else{
 			BWxUser bWxUser = wxUserService.selectByPrimaryKey("orbiHuLPLAwip8l4fl2C-kmTexSg");
@@ -118,4 +135,48 @@ public class KckpController {
 			}
 		}
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/addKckpInfo")
+	public void addKckpInfo( HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam("eventInfo") String s_bAccidentInfo, 
+			@RequestParam("driverInfos") String s_bDriverInfos ) throws IOException{
+		//返回的json数据
+		JSONObject rst = null;
+		
+		BWxUser wxUser = (BWxUser)request.getSession(true).getAttribute("bWxUser");
+		if(wxUser==null){
+			rst = new JSONObject();
+			rst.put("errMsg", "未抓取到上传用户信息");
+		}else{
+			try {
+				//获取事件对象
+				JSONObject bAccidentInfoJSON = JSONObject.fromObject(s_bAccidentInfo);
+				BAccidentInfo baccidentInfo = (BAccidentInfo)JSONObject.toBean(bAccidentInfoJSON, BAccidentInfo.class);
+				//额外的事件信息
+				baccidentInfo.setUploadTime(new Date());
+				baccidentInfo.setFkWxOpenid(wxUser.getOpenid());
+				
+				//获取驾驶人员集合
+				JSONArray driverInfosJSONArray = JSONArray.fromObject("[" + s_bDriverInfos + "]");
+				ArrayList<BDriverInfo> driverInfos = (ArrayList<BDriverInfo>)JSONArray.toCollection(driverInfosJSONArray, BDriverInfo.class);
+				
+				rst = accidentService.insertAccident(baccidentInfo, driverInfos);
+			} catch (Exception e) {
+				rst = new JSONObject();
+				rst.put("errMsg", e.getMessage());
+				e.printStackTrace();
+				logger.error(e.getMessage());
+			}
+		}
+		response.getWriter().print(rst);
+	};
+	
+	
+	
+	
+	
+	
+	
 }
