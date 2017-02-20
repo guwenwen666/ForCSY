@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.csy.module.wx.dao.BAccidentDriverMapper;
 import com.csy.module.wx.dao.BAccidentInfoMapper;
 import com.csy.module.wx.dao.BDriverInfoMapper;
+import com.csy.module.wx.dto.KckpUploadInfo;
 import com.csy.module.wx.entity.BAccidentDriver;
 import com.csy.module.wx.entity.BAccidentInfo;
 import com.csy.module.wx.entity.BAccidentInfoExample;
@@ -35,8 +36,9 @@ public class BAccidentInfoServiceImpl extends BaseService<BAccidentInfo, BAccide
 	private BAccidentDriverMapper accidentDriverDao;
 	
 	@Override
-	public JSONObject insertAccident(BAccidentInfo accident,
-			List<BDriverInfo> drivers) {
+	public JSONObject insertAccident(KckpUploadInfo accident) {
+		
+		List<BDriverInfo> drivers = accident.getJsyxxs();
 		
 		accident.setId(UUID.randomUUID().toString());
 		accidentDao.insertSelective(accident);

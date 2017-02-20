@@ -16,6 +16,10 @@ body {
 	user-select: none;
 }
 
+input[name^="jsyxxHphm"]{
+	text-transform:uppercase;
+}
+
 .weui-uploader__bd{
 /* 	margin-right: 0px; */
 	min-height: 30px;
