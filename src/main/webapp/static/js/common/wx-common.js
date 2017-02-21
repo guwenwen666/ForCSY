@@ -5,8 +5,8 @@ var rootPath = function(){
 //angularJS拓展
 //拓展1： ngTouch拓展
 "use strict";
-angular.module("ngTouch", [])
-.directive("ngTouchstart", function () {
+var controller = angular.module("ngTouch", []);
+controller.directive("ngTouchstart", function () {
     return {
         controller: ["$scope", "$element", function ($scope, $element) {
             $element.bind("touchstart", onTouchStart);

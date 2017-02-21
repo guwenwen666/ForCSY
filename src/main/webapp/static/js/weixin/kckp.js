@@ -4,76 +4,46 @@
  * @description
  */
 
-var app = angular.module("myApp", ["ngTouch","ui.router"]);
+var app = angular.module("myApp", ["ngTouch","ui.router","validation.rule","validation"]);
 
-app.directive('ngMin', function () {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function (scope, elem, attr, ctrl) {
-            scope.$watch(attr.ngMin, function () {
-                ctrl.$setViewValue(ctrl.$viewValue);
-            });
-            var minValidator = function (value) {
+app.config(function($validationProvider){
+	//成功时,不需要显示信息
+	$validationProvider.showSuccessMessage = false;
+	
+	//失焦时验证
+	$validationProvider.setValidMethod("submit");
+	
+	/**
+	 * Add your Msg Element
+     * @param {DOMElement} element - Your input element
+     * @return void
+     */
+//	$validationProvider.addMsgElement = function(element) {
+//      // Insert my own Msg Element
+//      element.parent().append('<span></span>');
+//    };
 
-            	function isEmpty(value) {
-            	  return angular.isUndefined(value) || value === '' || value === null || value !== value;
-            	}
-            	
-            	var min;
-            	if(attr.min != undefined){
-            		min = attr.min;
-            	}else{
-            		min = scope.$eval(attr.ngMin) || 0;
-            	}
-            	
-                if (!isEmpty(value) && value < min) {
-                    ctrl.$setValidity('ngMin', false);
-                    return undefined;
-                } else {
-                    ctrl.$setValidity('ngMin', true);
-                    return value;
-                }
-            };
- 
-            ctrl.$parsers.push(minValidator);
-            ctrl.$formatters.push(minValidator);
-        }
+	 $validationProvider.validCallback = function(element) {
+		 $(element[0]).parents(".weui-cell").removeClass('weui-cell_warn');
+     };
+     $validationProvider.invalidCallback = function(element) {
+//    	 if(element[0] == document.activeElement){
+//    		 $("div#formInValidErrorMsg").html("");
+//    	 }else{
+//        	 
+//    	 }
+    	 $(element[0]).parents(".weui-cell").addClass('weui-cell_warn');
+     };
+	
+    /**
+      * Function to help validator get your Msg Element
+      * @param {DOMElement} element - Your input element
+      * @return {DOMElement}
+      */
+    $validationProvider.getMsgElement = function(element) {
+    	return angular.element($("div#formInValidErrorMsg"));
     };
-});
- 
-app.directive('ngMax', function () {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function (scope, elem, attr, ctrl) {
-            scope.$watch(attr.ngMax, function () {
-                ctrl.$setViewValue(ctrl.$viewValue);
-            });
-            var maxValidator = function (value) {
-            	
-            	function isEmpty(value) {
-        		  return angular.isUndefined(value) || value === '' || value === null || value !== value;
-        		}
-            	var max;
-            	if(attr.max != undefined){
-            		max = attr.max;
-            	}else{
-            		max = scope.$eval(attr.ngMax) || Infinity;
-            	}
-                if (!isEmpty(value) && value > max) {
-                    ctrl.$setValidity('ngMax', false);
-                    return undefined;
-                } else {
-                    ctrl.$setValidity('ngMax', true);
-                    return value;
-                }
-            };
- 
-            ctrl.$parsers.push(maxValidator);
-            ctrl.$formatters.push(maxValidator);
-        }
-    };
+
 });
 
 app.config(function ($stateProvider, $urlRouterProvider) {
@@ -100,7 +70,7 @@ app.controller("toastVoiceController", function($scope, $stateParams) {
 	$scope.fail = $stateParams.fail;
 });
 
-app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http) {
+app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $injector) {
 	
 	//根据localID, 获取xxtp的json数据
 	var getXxtpIndexByLocalId = function(localId){
@@ -287,12 +257,12 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http) {
 				    	$scope.info.longitude = res.longitude;
 				    	$scope.info.latitude = res.latitude;
 				    	
-				    	$scope.info.position = "经度:" + res.longitude + ",纬度:" + res.latitude;
+				    	$scope.position = "经度:" + res.longitude + ",纬度:" + res.latitude;
 			    	});
 			    },
 			    fail: function (res){
 			    	$scope.$apply(function(){
-						$scope.info.position = "用户拒绝了位置请求!";
+						$scope.position = "用户拒绝了位置请求!";
 			    	});
 			    }
 			});
@@ -361,24 +331,7 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http) {
 	};
 	
 	//图片上传操作初始化数据
-	$scope.xxtps = [
-//		               {
-//							uploadUrl: "/ForCsy/mp/static/img/weixin/default.png",
-//							uploadSuccess: false,
-//							uploadError: 1,
-//							uploadWaiting: false,
-//							uploading: false,
-//							serverId: undefined
-//						},
-//			               {
-//							uploadUrl: "/ForCsy/mp/static/img/weixin/default.png",
-//							uploadSuccess: true,
-//							uploadError: 0,
-//							uploadWaiting: false,
-//							uploading: false,
-//							serverId: undefined
-//						}
-	                ];
+	$scope.xxtps = [];
 	//删除已经上传的图片
 	$scope.deletePic = function($event, index){
 		var rst = window.confirm("确定要删除该图片吗?");
@@ -454,26 +407,7 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http) {
 		}
 	};
 	
-	$scope.voices=[
-//	               {
-//						uploadUrl: 1,
-//						uploadSuccess: true,
-//						uploadError: 0,
-//						uploadWaiting: false,
-//						uploading: false,
-//						voicing: false,
-//						serverId: undefined
-//					},
-//	               {
-//						uploadUrl: 2,
-//						uploadSuccess: true,
-//						uploadError: 0,
-//						uploadWaiting: false,
-//						uploading: false,
-//						voicing: false,
-//						serverId: undefined
-//					}
-	               ];
+	$scope.voices=[];
 	
 	//删除已经上传的语音操作
 	$scope.deleteVoice = function($event, index){
@@ -625,10 +559,6 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http) {
 	};
 	
 	$scope.submitForm = function(info){
-		var registerForm = $scope.registerForm;
-		
-		console.log(registerForm);
-		console.log(registerForm["jsyxx0"].$invalid);
 		
 		var submitInfo = {};
 		angular.copy(info,submitInfo);
@@ -654,20 +584,22 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http) {
 		submitInfo.liveVoice = voicesUrl.join(",");
 		submitInfo.occurrenceTime = submitInfo.occurrenceTime.getTime();
 		
-		return;
-		
-		$http({
-			method: "post",
-			url: rootPath + "/wx/addKckpInfo",
-			data: submitInfo
-		}).success(function(data,status,config,headers){
-			
-			console.log(data);
-			
-		}).error(function(data,status,hedaers,config){
-			
-			alert(JSON.stringify(data));
-		});
+		if($injector.get("$validation").checkValid()){
+			$http({
+				method: "post",
+				url: rootPath + "/wx/addKckpInfo",
+				data: submitInfo
+			}).success(function(data,status,config,headers){
+				alert(JSON.stringify(data));
+				console.log(data);
+				
+			}).error(function(data,status,hedaers,config){
+				
+				alert(JSON.stringify(data));
+			});
+		}else{
+			$injector.get("$validation").validate($scope.registerForm);
+		}
 	};
 });
 
