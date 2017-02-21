@@ -11,7 +11,7 @@ app.config(function($validationProvider){
 	$validationProvider.showSuccessMessage = false;
 	
 	//失焦时验证
-	$validationProvider.setValidMethod("submit");
+	$validationProvider.setValidMethod("watch");
 	
 	/**
 	 * Add your Msg Element
@@ -27,14 +27,18 @@ app.config(function($validationProvider){
 		 $(element[0]).parents(".weui-cell").removeClass('weui-cell_warn');
      };
      $validationProvider.invalidCallback = function(element) {
+    	 //如果当前处于焦点,则清楚掉
 //    	 if(element[0] == document.activeElement){
 //    		 $("div#formInValidErrorMsg").html("");
-//    	 }else{
-//        	 
 //    	 }
     	 $(element[0]).parents(".weui-cell").addClass('weui-cell_warn');
      };
 	
+//     $validationProvider.addMsgElement = function(element) {
+//    	
+//     	$("body").append("<div class='formInValidErrorMsg' ng-show='{{"+ element[0].name +"Focus}}' name='"+ element[0].name +"'></div>");
+//     };
+     
     /**
       * Function to help validator get your Msg Element
       * @param {DOMElement} element - Your input element
@@ -71,6 +75,9 @@ app.controller("toastVoiceController", function($scope, $stateParams) {
 });
 
 app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $injector) {
+	
+	//$validationProvider验证对象
+	var $validationProvider = $injector.get("$validation");
 	
 	//根据localID, 获取xxtp的json数据
 	var getXxtpIndexByLocalId = function(localId){
@@ -317,16 +324,16 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 	
 	//驾驶员加载信息
 	$scope.info.jsyxxs = [
-	                 {name:"",hphm:"",contact:""},
-	                 {name:"",hphm:"",contact:""}
+	                 {name:"王去1",hphm:"沪A12345",contact:"15221054129"},
+	                 {name:"王去2",hphm:"沪A12345",contact:"15221054129"}
 	                 ];
 	
 	//事故描述字段及时提醒绑定
 	$scope.getSgfsmsLenght = function() {
-		if(!$scope.info.sgfsms){
+		if(!$scope.info.description){
 			return 0;
 		}else{
-			return $scope.info.sgfsms.length;
+			return $scope.info.description.length;
 		}
 	};
 	
@@ -558,47 +565,58 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 		}
 	};
 	
-	$scope.submitForm = function(info){
-		
-		var submitInfo = {};
-		angular.copy(info,submitInfo);
-		
-		var xxtpsUrl = function(){
-			var xxtpsUrl = [];
-			for(var i=0; i<$scope.xxtps.length; i++){
-				xxtpsUrl.push($scope.xxtps[i].serverId);
-			}
-			return xxtpsUrl;
-		}();
-		
-		var voicesUrl = function(){
-			var voicesUrl = [];
-			for(var i=0; i<$scope.voices.length; i++){
-				voicesUrl.push($scope.voices[i].serverId);
-			}
-			return voicesUrl;
-		}();
+	$scope.form = {
+		checkValid: function(form){
+			return $validationProvider.checkValid(!!form?form:undefined);
+		},
+		submit: function(info){
+			//禁止重复提交
+			if($scope.submitted) return;
+			
+			var submitInfo = {};
+			angular.copy(info,submitInfo);
+			
+			var xxtpsUrl = function(){
+				var xxtpsUrl = [];
+				for(var i=0; i<$scope.xxtps.length; i++){
+					xxtpsUrl.push($scope.xxtps[i].serverId);
+				}
+				return xxtpsUrl;
+			}();
+			
+			var voicesUrl = function(){
+				var voicesUrl = [];
+				for(var i=0; i<$scope.voices.length; i++){
+					voicesUrl.push($scope.voices[i].serverId);
+				}
+				return voicesUrl;
+			}();
 
-		//数据提交前的封装
-		submitInfo.liveImage = xxtpsUrl.join(",");
-		submitInfo.liveVoice = voicesUrl.join(",");
-		submitInfo.occurrenceTime = submitInfo.occurrenceTime.getTime();
-		
-		if($injector.get("$validation").checkValid()){
-			$http({
-				method: "post",
-				url: rootPath + "/wx/addKckpInfo",
-				data: submitInfo
-			}).success(function(data,status,config,headers){
-				alert(JSON.stringify(data));
-				console.log(data);
+			//数据提交前的封装
+			submitInfo.liveImage = xxtpsUrl.join(",");
+			submitInfo.liveVoice = voicesUrl.join(",");
+			submitInfo.occurrenceTime = submitInfo.occurrenceTime.getTime();
+			
+			if($validationProvider.checkValid($scope.registerForm)){
+				//记录成功提交
+				$scope.submitted = true;
 				
-			}).error(function(data,status,hedaers,config){
-				
-				alert(JSON.stringify(data));
-			});
-		}else{
-			$injector.get("$validation").validate($scope.registerForm);
+				$http({
+					method: "post",
+					url: rootPath + "/wx/addKckpInfo",
+					data: submitInfo
+				}).success(function(data,status,config,headers){
+					
+					alert(JSON.stringify(data));
+					console.log(data);
+					
+				}).error(function(data,status,hedaers,config){
+					
+					alert(JSON.stringify(data));
+				});
+			}else{
+				$validationProvider.validate($scope.registerForm);
+			}
 		}
 	};
 });
