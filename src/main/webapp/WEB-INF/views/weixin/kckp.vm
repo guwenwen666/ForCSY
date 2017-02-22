@@ -7,12 +7,12 @@
         <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.1/weui.min.css"/>
         <link rel="stylesheet" href="${springPath}/static/css/weixin/kckp.css"/>
 	</head>
-	<body ng-app="myApp" ng-controller="myCtrl"
-		ng-init="inVoice=false;" 
-		ng-touchend="stopRecord();"
-		class="{{inVoice?'bodyInVoice':''}}" ontouchstart>
+	<body ng-app="myApp" ng-controller="myCtrl" 
+    		ng-init="inVoice=false;" 
+    		ng-touchend="stopRecord();" 
+    		class="{{inVoice?'bodyInVoice':''}}" ontouchstart>
 		<div class="formInValidErrorMsg" id="formInValidErrorMsg"></div>
-		<form name="registerForm" novalidate>
+		<form name="registerForm" ng-hide="hideContent" novalidate>
 			<div class="weui-cells__title">事故信息</div>
     		<div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
@@ -170,7 +170,7 @@
                                     <ul class="weui-uploader__files">
     									<li class="weui-uploader__file uploaderFile uploaderFile_voice 
     										{{!voice.uploadSuccess?'weui-uploader__file_status':''}} 
-											{{!!voice.voicing?'playing':''}}
+											{{!!voice.voicing?'playing':''}} 
     										{{editUploderVoice?'shake-little':''}}" 
 											ng-repeat="voice in voices" 
     										ng-click="playVoice($index)">
@@ -217,17 +217,21 @@
 					ng-disabled="!form.checkValid(registerForm)" ng-class="{'weui-btn_disabled':!form.checkValid(registerForm)}" 
 				-->
     			<a href="javascript:;" class="weui-btn weui-btn_primary {{submitted?'weui-btn_loading':''}}" 
-					ng-disabled="submitted" ng-class="{'weui-btn_disabled':submitted}" 
+					ng-disabled="submitted || submitting" ng-class="{'weui-btn_disabled':(submitted || submitting)}" 
 					ng-click="form.submit(info)">
-					<i class="weui-loading" ng-show="submitted"></i>{{submitted?'正在提交...':'提交'}}
+					<i class="weui-loading" ng-show="submitting"></i>
+					<span ng-if="submitted">已提交</span>
+					<span ng-if="submitting">正在提交...</span>
+					<span ng-if="!(submitted || submitting)">提交</span>
 				</a>
             </div>
     		
     		<div class="page__ft">
     		</div>
     		
-			<div ui-view></div>
         </form>
+		
+		<div ui-view></div>
 		
 		<script type="text/ng-template" id="toast_ok.html">
 			<div id="toast" style="opacity: 1; display: block;">
@@ -249,10 +253,42 @@
             </div>
 		</script>
 		
-		<script type="text/ng-template" id="empty.html">
+		<script type="text/ng-template" id="formRst.html">
+			<div class="forRst msg_success js_show" ng-show="!errMsg">
+                <div class="weui-msg">
+                    <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
+                    <div class="weui-msg__text-area">
+                        <h2 class="weui-msg__title">操作成功</h2>
+                        <p class="weui-msg__desc">已提交完毕，您现在可以在提交记录中查看。</p>
+                    </div>
+                    <div class="weui-msg__opr-area">
+                        <p class="weui-btn-area">
+                            <a href="javascript:history.back();" class="weui-btn weui-btn_primary">查看提交记录</a>
+                            <a href="javascript:history.back();" class="weui-btn weui-btn_default">点击返回主页</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
 			
-		</script>
+			<div class="forRst msg_warn js_show" ng-show="!!errMsg">
+                <div class="weui-msg">
+                    <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg"></i></div>
+                    <div class="weui-msg__text-area">
+                        <h2 class="weui-msg__title">操作失败</h2>
+                        <p class="weui-msg__desc">{{errMsg}}</p>
+                    </div>
+                    <div class="weui-msg__opr-area">
+                        <p class="weui-btn-area">
+                            <a href="javascript:void(0);" class="weui-btn weui-btn_primary" ng-click="rtnForm()";>返回表单重试</a>
+							<a href="javascript:history.back();" class="weui-btn weui-btn_default">点击返回主页</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </script>
 		
+		<script type="text/ng-template" id="empty.html">
+        </script>
 		
 		<!--
 			<script src="${springPath}/static/plugins/jquery/dist/jquery.min.js"></script>

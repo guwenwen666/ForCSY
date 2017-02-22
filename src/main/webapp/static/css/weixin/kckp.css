@@ -6,7 +6,6 @@ body,html {
 body {
     font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
     background-color: #f8f8f8;
-    padding: 10px 0px 0px 0px;
 }
 
 .bodyInVoice{
@@ -20,6 +19,16 @@ input[name^="jsyxxHphm"]{
 	text-transform:uppercase;
 }
 
+.forRst{
+    position: relative;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #fff;
+}
+
 .formInValidErrorMsg{
 	position: fixed;
 	top: 0px;
@@ -31,6 +40,10 @@ input[name^="jsyxxHphm"]{
 	width: 100%;
 	text-align: center;
 } 
+
+form[name='registerForm']{
+	margin-top: 10px;
+}
 
 .weui-uploader__bd{
 /* 	margin-right: 0px; */

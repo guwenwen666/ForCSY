@@ -83,5 +83,8 @@
 		<aop:advisor pointcut-ref="pc" advice-ref="userTxAdvice" />
 	</aop:config>
 	
+	<!-- 文件上传主线程 -->
+	<bean id="wxFileStoreMain" class="com.csy.util.wx.WxFileStoreMain" init-method="startThread"></bean>
+	
 	<import resource="classpath:task-beans.xml"/>
 </beans>

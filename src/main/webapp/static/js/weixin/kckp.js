@@ -51,22 +51,35 @@ app.config(function($validationProvider){
 });
 
 app.config(function ($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('');
 	
 	$stateProvider.state('toast_ok', {
 		url: '/toast_ok',
+    	replace: true,
 		templateUrl: 'toast_ok.html'
     }).state('toast_voice', {
     	url: '/toast_voice',
     	params : {
-    		'fail': null
+    		'fail': undefined
     	},
     	reload: true,
+    	replace: true,
     	templateUrl: 'toast_voice.html',
     	controller: 'toastVoiceController'
-    }).state('/', {
+    }).state('formRst',{
+    	url: '/forRst',
+    	params : {
+    		'errMsg': undefined
+    	},
+    	replace: true,
+    	transclude: true,
+    	templateUrl: 'formRst.html',
+    	controller: 'formRstController'
+    }).state('/',{
     	url: '/',
-    	templateUrl: 'empty.html'
+    	replace: true,
+    	templateUrl: 'empty.html',
+    	controller: 'myCtrl'
     });
 });
 
@@ -74,7 +87,21 @@ app.controller("toastVoiceController", function($scope, $stateParams) {
 	$scope.fail = $stateParams.fail;
 });
 
+app.controller("formRstController", function($scope, $stateParams, $state) {
+	$scope.errMsg = $stateParams.errMsg;
+	//提交反馈页面禁止刷新
+	if($scope.errMsg === undefined){
+		$state.go("/");
+		return;
+	}
+	$scope.rtnForm = function(){
+		$state.go("/");
+	};
+});
+
 app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $injector) {
+	
+	$scope.hideContent = false;
 	
 	//$validationProvider验证对象
 	var $validationProvider = $injector.get("$validation");
@@ -324,8 +351,8 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 	
 	//驾驶员加载信息
 	$scope.info.jsyxxs = [
-	                 {name:"王去1",hphm:"沪A12345",contact:"15221054129"},
-	                 {name:"王去2",hphm:"沪A12345",contact:"15221054129"}
+	                 {name:"",hphm:"",contact:""},
+	                 {name:"",hphm:"",contact:""}
 	                 ];
 	
 	//事故描述字段及时提醒绑定
@@ -571,7 +598,7 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 		},
 		submit: function(info){
 			//禁止重复提交
-			if($scope.submitted) return;
+			if($scope.submitted || $scope.submitting) return;
 			
 			var submitInfo = {};
 			angular.copy(info,submitInfo);
@@ -598,20 +625,28 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 			submitInfo.occurrenceTime = submitInfo.occurrenceTime.getTime();
 			
 			if($validationProvider.checkValid($scope.registerForm)){
-				//记录成功提交
-				$scope.submitted = true;
-				
+				//记录开始提交
+				$scope.submitting = true;
 				$http({
 					method: "post",
 					url: rootPath + "/wx/addKckpInfo",
 					data: submitInfo
 				}).success(function(data,status,config,headers){
+					$scope.submitting = false;
 					
-					alert(JSON.stringify(data));
+					if(!!data && !data.errMsg){
+						$scope.submitted = true;
+						//录音中弹出框
+						$scope.hideContent = true;
+						$state.go("formRst", data);
+					}
 					console.log(data);
-					
 				}).error(function(data,status,hedaers,config){
-					
+					$scope.submitting = false;
+					//录音中弹出框
+					$scope.hideContent = true;
+					$state.go("formRst",{errMsg:"系统异常! 错误代码:400"});
+					console.log(data);
 					alert(JSON.stringify(data));
 				});
 			}else{
