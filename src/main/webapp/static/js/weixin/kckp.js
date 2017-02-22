@@ -309,7 +309,10 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 			        //语音仍然在
 			        if(index > -1){
 			        	$scope.$apply(function(){
-			        		$scope.voices[index].voicing = false;
+			        		var voice = {};
+			        		angular.copy($scope.voices[index],voice);
+			        		voice.voicing = false;
+			        		$scope.voices[index]=voice;
 			        	});
 			        }
 			        $scope.voicingID = undefined;
@@ -486,7 +489,6 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 	        		wx.playVoice({
 	        			localId: paramJson.uploadUrl
 	        		});
-	        		
 	        		$scope.voicingID = paramJson.uploadUrl;
 	        		paramJson.voicing = true;
 	        	};

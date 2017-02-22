@@ -18,6 +18,7 @@ import com.csy.module.wx.entity.BDriverInfo;
 import com.csy.module.wx.service.service.BAccidentInfoService;
 import com.csy.util.StringUtils;
 import com.csy.util.spring.BaseService;
+import com.csy.util.wx.en.WxFileEnum;
 import com.csy.util.wx.queue.FileQueue;
 import com.csy.util.wx.queue.FileQueue.FileDescription;
 
@@ -76,7 +77,7 @@ public class BAccidentInfoServiceImpl extends BaseService<BAccidentInfo, BAccide
 			for(String liveImage : liveImages){
 				String newLiveImage = new StringBuffer().append(UUID.randomUUID().toString()).append(".jpg").toString();
 				FileDescription fileDetail = FileQueue.getInstance()
-						.new FileDescription(liveImage, accident.getFkWxOpenid(), newLiveImage ,accident.getUploadTime());
+						.new FileDescription(liveImage, accident.getFkWxOpenid(), newLiveImage, WxFileEnum.IMAGE, accident.getUploadTime());
 				FileQueue.getInstance().add(fileDetail);
 				newLiveImages.add(newLiveImage);
 			}
@@ -87,9 +88,9 @@ public class BAccidentInfoServiceImpl extends BaseService<BAccidentInfo, BAccide
 			String[] liveVoices = accident.getLiveVoice().split(",");
 			List<String> newLiveVoices = new ArrayList<String>();
 			for(String liveVoice : liveVoices){
-				String newLiveVoice = new StringBuffer().append(UUID.randomUUID().toString()).append(".amr").toString();
+				String newLiveVoice = new StringBuffer().append(UUID.randomUUID().toString()).append(".mp3").toString();
 				FileDescription fileDetail = FileQueue.getInstance()
-						.new FileDescription(liveVoice, accident.getFkWxOpenid(), newLiveVoice ,accident.getUploadTime());
+						.new FileDescription(liveVoice, accident.getFkWxOpenid(), newLiveVoice ,WxFileEnum.VOICE, accident.getUploadTime());
 				FileQueue.getInstance().add(fileDetail);
 				newLiveVoices.add(newLiveVoice.toString());
 			}

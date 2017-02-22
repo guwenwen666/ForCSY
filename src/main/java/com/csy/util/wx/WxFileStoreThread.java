@@ -39,13 +39,14 @@ public class WxFileStoreThread extends Thread{
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			FileQueue.FileDescription fileDetail = FileQueue.getInstance().get();
 			if(fileDetail != null){
 				boolean b = false;
-				while (!b) {
+				int i=0;
+				//十次执行都失败的话 就放弃该数据
+				while (!b && i<3) {
 					String filePath = RESOURCE_PATH + fileDetail.getStorePath();
 					try {
 						String fileDownPath = WX_DOWNLOAD_PATH + "?access_token=" + WxConfig.getInstance().getAccess_token()
@@ -58,46 +59,62 @@ public class WxFileStoreThread extends Thread{
 						connection.setReadTimeout(1000);
 						connection.connect();
 						InputStream is = connection.getInputStream();
-						b = FileUtils.saveFile(is, filePath, fileDetail.getFileName());
+						
+						//文件存储时,先存储.amr格式,后续再进行格式转换为mp3
+						b = FileUtils.saveFile(is, filePath, fileDetail.getFileName().replace(".mp3", ".amr"));
 					} catch (Exception e) {
 						logger.error("文件下载失败:{文件名"+fileDetail.getServerId()+"},错误信息:"+e.getMessage());
 						e.printStackTrace();
 					}
-					
+					if(!b){
+						i++;
+						continue;
+					}
 					//如果是语音文件需要进行转换成mp3格式
-					if(fileDetail.getFileName().endsWith(".amr")){
-						String sourcePath = filePath + File.separator + fileDetail.getFileName();
-						String targetPath = sourcePath.replace(".amr", ".mp3");
+					if(fileDetail.getFileName().endsWith(".mp3")){
+						String targetPath = filePath + File.separator + fileDetail.getFileName();
+						String sourcePath = targetPath.replace(".mp3", ".amr");
 						changeToMp3(sourcePath, targetPath);
 					}
-					
+				}
+				
+				//如果是多次下载失败的数据
+				if(!b){
+					FileQueue.fileStoreError(fileDetail);
+				}else{
+					FileQueue.fileStoreSuccess(fileDetail);
 				}
 			}
 		}
 	}
 	
+	/**
+	 * 音频转换需要调用exe文件.多线程情况下禁止调用
+	 */
 	public static void changeToMp3(String sourcePath, String targetPath) {
-		File source = new File(sourcePath);
-		File target = new File(targetPath);
-		AudioAttributes audio = new AudioAttributes();
-		Encoder encoder = new Encoder();
-		audio.setCodec("libmp3lame");
-		EncodingAttributes attrs = new EncodingAttributes();
-		attrs.setFormat("mp3");
-		attrs.setAudioAttributes(audio);
-		try {
-			encoder.encode(source, target, attrs);
-			source.delete();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (InputFormatException e) {
-			e.printStackTrace();
-		} catch (EncoderException e) {
-			if(e.getMessage().indexOf("bitrate: N/A") > -1){
+		synchronized (RESOURCE_PATH) {
+			File source = new File(sourcePath);
+			File target = new File(targetPath);
+			AudioAttributes audio = new AudioAttributes();
+			Encoder encoder = new Encoder();
+			audio.setCodec("libmp3lame");
+			EncodingAttributes attrs = new EncodingAttributes();
+			attrs.setFormat("mp3");
+			attrs.setAudioAttributes(audio);
+			try {
+				encoder.encode(source, target, attrs);
 				source.delete();
-			}else{
+			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
-				logger.info("微信amr转mp3失败:" + e.getMessage());
+			} catch (InputFormatException e) {
+				e.printStackTrace();
+			} catch (EncoderException e) {
+				if(e.getMessage().indexOf("bitrate: N/A") > -1){
+					source.delete();
+				}else{
+					e.printStackTrace();
+					logger.info("微信amr转mp3失败:" + e.getMessage());
+				}
 			}
 		}
 	}
