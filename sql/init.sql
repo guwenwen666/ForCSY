@@ -31,3 +31,11 @@ INSERT INTO `b_xtpz_dmx` (`id`,`dmlxbh`,`dmxywm`,`dmxzwm`,`dmxz`,`p_dmxywm`,`sfx
 INSERT INTO `b_xtpz_dmx` (`id`,`dmlxbh`,`dmxywm`,`dmxzwm`,`dmxz`,`p_dmxywm`,`sfxs`,`sfky`,`sfmr`,`xssx`,`dmxms`,`dmxkz`) VALUES (NULL,'10001','其他','其他','5',NULL,1,1,0,6,'其他',NULL);
 
 
+/*-----------------------系统配置表初始化--------------------------------*/
+/*用于配置常用省份=---其中id的值是关联dmx中简称省份的id值*/
+delete from b_qj_xtpz where name = 'cysf';
+INSERT INTO `b_qj_xtpz` (`id`,`name`,`name_cn`,`val`,`expand`,`description`) VALUES (null,'cysf','常用省份','鲁',null,null);
+
+
+
+

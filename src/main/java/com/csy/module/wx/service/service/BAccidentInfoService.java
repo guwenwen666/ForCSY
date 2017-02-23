@@ -1,13 +1,18 @@
 package com.csy.module.wx.service.service;
 
+import java.util.Map;
+
 import com.csy.module.wx.dto.KckpUploadInfo;
 import com.csy.module.wx.entity.BAccidentInfo;
 import com.csy.module.wx.entity.BAccidentInfoExample;
 import com.csy.util.spring.BaseDao;
+import com.github.pagehelper.PageInfo;
 
 import net.sf.json.JSONObject;
 
 public interface BAccidentInfoService extends BaseDao<BAccidentInfo, BAccidentInfoExample>{
 	
 	JSONObject insertAccident(KckpUploadInfo uploadInfo);
+	
+	PageInfo selectPageInfo(int pageNum, int pageSize, Map<String, Object> map);
 }

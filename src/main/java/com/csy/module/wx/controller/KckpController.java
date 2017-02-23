@@ -24,6 +24,7 @@ import com.csy.module.wx.entity.BWxUser;
 import com.csy.module.wx.service.service.BAccidentInfoService;
 import com.csy.module.wx.service.service.BWxUserService;
 import com.csy.util.wx.AccessTokenUtil;
+import com.github.pagehelper.PageInfo;
 
 import net.sf.json.JSONObject;
 
@@ -32,12 +33,21 @@ import net.sf.json.JSONObject;
 public class KckpController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+	private static final int PAGE_INDEX = 1;
+	private static final int PAGE_SIZE = 10;
 	@Autowired
 	private BWxUserService wxUserService;
-	
 	@Autowired
 	private BAccidentInfoService accidentService;
+	
+	/**
+	 * 微信主界面
+	 * @return
+	 */
+	@RequestMapping("/index")
+	public ModelAndView kckpIndex(){
+		return new ModelAndView("/index");
+	}
 	
 	/**
 	 * 首先进入静默授权页面
@@ -45,7 +55,7 @@ public class KckpController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping("/index")
+	@RequestMapping("/baseAuthorize")
 	public ModelAndView baseAuthorize(HttpServletRequest request, 
 			HttpServletResponse response){
 		return new ModelAndView("/weixin/baseAuthorize");
@@ -62,6 +72,26 @@ public class KckpController {
 			request.getSession(true).setAttribute("bWxUser", bWxUser);
 		}
 		return new ModelAndView("/weixin/kckp");
+	}
+	
+	/**
+	 * 微信主界面
+	 * @return
+	 */
+	@RequestMapping("/myRecord")
+	public ModelAndView kckpIndex(HttpServletRequest request,HttpServletResponse response){
+		return new ModelAndView("/weixin/myRecord");
+	}
+	
+	@RequestMapping("/getKckpPageInfo")
+	public void getKckpPageInfo(HttpServletRequest request, HttpServletResponse response, Integer pageNum) throws IOException{
+		HttpSession session = request.getSession(true);
+		BWxUser wxUser = (BWxUser)session.getAttribute("bWxUser");
+		if(pageNum==null) pageNum = PAGE_INDEX;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("fk_wx_openid", wxUser.getOpenid());
+		PageInfo page = accidentService.selectPageInfo(pageNum, PAGE_SIZE, map);
+		response.getWriter().print(JSONObject.fromObject(page));
 	}
 	
 	/**

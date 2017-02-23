@@ -2,6 +2,7 @@ package com.csy.module.wx.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import com.csy.util.spring.BaseService;
 import com.csy.util.wx.en.WxFileEnum;
 import com.csy.util.wx.queue.FileQueue;
 import com.csy.util.wx.queue.FileQueue.FileDescription;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import net.sf.json.JSONObject;
 
@@ -67,6 +70,16 @@ public class BAccidentInfoServiceImpl extends BaseService<BAccidentInfo, BAccide
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("errMsg", "");
 		return jsonObject;
+	}
+
+	@Override
+	public PageInfo selectPageInfo(int pageNum, int pageSize, Map<String, Object> map) {
+		BAccidentInfoExample infoExample = new BAccidentInfoExample();
+		infoExample.setOrderByClause("occurrence_time");
+		infoExample.createCriteria().andFkWxOpenidEqualTo((String)map.get("fk_wx_openid"));
+		PageHelper.startPage(pageNum, pageSize);
+		PageInfo accidentInfos = new PageInfo(accidentDao.selectByExample(infoExample));
+		return accidentInfos;
 	}
 	
 	private void wxfileUpload(KckpUploadInfo accident){

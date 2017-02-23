@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>快处快赔测试页面</title>
+		<title>授权页面</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
         <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.1/weui.min.css"/>
@@ -11,7 +11,6 @@
 		
 	</head>
 	<body ontouchstart>
-		userinfoAuthorize
 		<input id="wx_appid" value="${wx_appid}" type="text"/>
 		<!--
 			<script src="${springPath}/static/js/weixin/zepto.min.js"></script>

@@ -185,13 +185,27 @@ DROP TABLE IF EXISTS `b_accident_info`;
 CREATE TABLE `b_accident_info` (
   `id` varchar(64) NOT NULL COMMENT '事故id',
   `fk_wx_openid` varchar(64) NOT NULL COMMENT '上传者微信openID',
-  `occurrence_time` date DEFAULT NULL COMMENT '事故发生的时间',
+  `occurrence_time` datetime DEFAULT NULL COMMENT '事故发生的时间',
   `longitude` varchar(128) DEFAULT NULL COMMENT '事故发生的地点的经度',
   `latitude` varchar(128) DEFAULT NULL COMMENT '事故发生地点的纬度',
   `duty` varchar(32) DEFAULT NULL COMMENT '事故责任',
   `live_image` varchar(1024) DEFAULT NULL COMMENT '现场拍照的事故图片，多个以逗号隔开，目前最多支持10张',
   `live_voice` varchar(1024) DEFAULT NULL COMMENT '现场拍照的事故录音，多个以逗号隔开，目前最多支持3个录音',
-  `upload_time` date DEFAULT NULL COMMENT '事故上传时间',
+  `upload_time` datetime DEFAULT NULL COMMENT '事故上传时间',
   `description` varchar(256) DEFAULT NULL COMMENT '事故描述',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='事故信息表';
+
+-- ----------------------------
+-- Table structure for `b_xtpz`
+-- ----------------------------
+DROP TABLE IF EXISTS `b_qj_xtpz`;
+CREATE TABLE `b_qj_xtpz` (
+  `id` int(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(32) NOT NULL COMMENT '变量名',
+  `name_cn` varchar(32) DEFAULT NULL COMMENT '变量中文名',
+  `val` varchar(128) DEFAULT NULL COMMENT '变量对应的配置值',
+  `expand` varchar(128) DEFAULT NULL COMMENT '代码项扩展',
+  `description` varchar(256) DEFAULT NULL COMMENT '代码项描述',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
