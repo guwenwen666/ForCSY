@@ -13,37 +13,13 @@ app.config(function($validationProvider){
 	//失焦时验证
 	$validationProvider.setValidMethod("watch");
 	
-	/**
-	 * Add your Msg Element
-     * @param {DOMElement} element - Your input element
-     * @return void
-     */
-//	$validationProvider.addMsgElement = function(element) {
-//      // Insert my own Msg Element
-//      element.parent().append('<span></span>');
-//    };
-
-	 $validationProvider.validCallback = function(element) {
-		 $(element[0]).parents(".weui-cell").removeClass('weui-cell_warn');
-     };
-     $validationProvider.invalidCallback = function(element) {
-    	 //如果当前处于焦点,则清楚掉
-//    	 if(element[0] == document.activeElement){
-//    		 $("div#formInValidErrorMsg").html("");
-//    	 }
-    	 $(element[0]).parents(".weui-cell").addClass('weui-cell_warn');
-     };
+	$validationProvider.validCallback = function(element) {
+		$(element[0]).parents(".weui-cell").removeClass('weui-cell_warn');
+	};
+	$validationProvider.invalidCallback = function(element) {
+		$(element[0]).parents(".weui-cell").addClass('weui-cell_warn');
+	};
 	
-//     $validationProvider.addMsgElement = function(element) {
-//    	
-//     	$("body").append("<div class='formInValidErrorMsg' ng-show='{{"+ element[0].name +"Focus}}' name='"+ element[0].name +"'></div>");
-//     };
-     
-    /**
-      * Function to help validator get your Msg Element
-      * @param {DOMElement} element - Your input element
-      * @return {DOMElement}
-      */
     $validationProvider.getMsgElement = function(element) {
     	return angular.element($("div#formInValidErrorMsg"));
     };
@@ -77,9 +53,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     	controller: 'formRstController'
     }).state('/',{
     	url: '/',
-    	replace: true,
-    	templateUrl: 'empty.html',
-    	controller: 'myCtrl'
+    	template: ''
     });
 });
 
@@ -92,7 +66,6 @@ app.controller("formRstController", function($scope, $stateParams, $state) {
 	//提交反馈页面禁止刷新
 	if($scope.errMsg === undefined){
 		$state.go("/");
-		return;
 	}
 	$scope.rtnForm = function(){
 		$state.go("/");
@@ -100,8 +73,6 @@ app.controller("formRstController", function($scope, $stateParams, $state) {
 });
 
 app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $injector) {
-	
-	$scope.hideContent = false;
 	
 	//$validationProvider验证对象
 	var $validationProvider = $injector.get("$validation");
@@ -276,13 +247,10 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 	$scope.info.occurrenceTime = new Date();
 	
 	$scope.positionInterval = $interval(function(){
-		
 		//如果微信初始化成功
 		if(!!wx.initOk){
-			
 			//停止定时器
 			$interval.cancel($scope.positionInterval);
-			
 			//首先获取用户地理位置信息
 			wx.getLocation({
 			    type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
@@ -300,7 +268,6 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 			    	});
 			    }
 			});
-			
 			//接下来去绑定wx.onVoiceRecordEnd回调函数
 			wx.onVoicePlayEnd({
 			    success: function (res) {
@@ -322,8 +289,7 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 			//微信控件加载失败
 			$interval.cancel($scope.positionInterval);
 		}
-		
-	}, 1000);
+	}, 1000, 20);
 	
 	//驾驶员信息索引预定
 	$scope.jsyxxIndex = function(number){
@@ -402,7 +368,6 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 	
 	//图片上传到本地
 	$scope.uploadImgLocal = function(){
-		
 		wx.chooseImage({
 		    count: 9, 
 		    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -635,21 +600,15 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 					data: submitInfo
 				}).success(function(data,status,config,headers){
 					$scope.submitting = false;
-					
 					if(!!data && !data.errMsg){
 						$scope.submitted = true;
-						//录音中弹出框
-						$scope.hideContent = true;
-						$state.go("formRst", data);
 					}
+					$state.go("formRst", data);
 					console.log(data);
 				}).error(function(data,status,hedaers,config){
 					$scope.submitting = false;
-					//录音中弹出框
-					$scope.hideContent = true;
 					$state.go("formRst",{errMsg:"系统异常! 错误代码:400"});
 					console.log(data);
-					alert(JSON.stringify(data));
 				});
 			}else{
 				$validationProvider.validate($scope.registerForm);
