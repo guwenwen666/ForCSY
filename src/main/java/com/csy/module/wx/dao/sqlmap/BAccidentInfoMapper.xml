@@ -290,4 +290,17 @@
       description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="selectBysj" resultMap="BaseResultMap" parameterType="com.csy.module.wx.entity.BAccidentInfo" >
+    select 
+    <include refid="Base_Column_List" />
+    from b_accident_info
+    <where>
+    	<if test="description != null and description != ''" >
+        	and occurrence_time &gt;= #{description,jdbcType=VARCHAR}
+      	</if>
+      	<if test="liveVoice != null and liveVoice != ''" >
+        	and occurrence_time &lt;= #{liveVoice,jdbcType=VARCHAR}
+      	</if>
+    </where>
+  </select>
 </mapper>

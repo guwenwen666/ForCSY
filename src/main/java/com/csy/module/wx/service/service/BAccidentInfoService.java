@@ -1,7 +1,8 @@
 package com.csy.module.wx.service.service;
 
 import java.util.Map;
-
+import java.util.List;
+import com.csy.module.wx.dto.DriverAccident;
 import com.csy.module.wx.dto.KckpUploadInfo;
 import com.csy.module.wx.entity.BAccidentInfo;
 import com.csy.module.wx.entity.BAccidentInfoExample;
@@ -15,4 +16,6 @@ public interface BAccidentInfoService extends BaseDao<BAccidentInfo, BAccidentIn
 	JSONObject insertAccident(KckpUploadInfo uploadInfo);
 	
 	PageInfo selectPageInfo(int pageNum, int pageSize, Map<String, Object> map);
+	
+	public List<DriverAccident> selectByExample(DriverAccident accidentInfo);
 }

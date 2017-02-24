@@ -8,11 +8,11 @@ $(function() {
 	$('#fullpage').fullpage({
 		'verticalCentered' : false,
 		'css3' : true,
-		'anchors' : [ "head",'loginWindow', 'pic2', 'pic3', 'pic4' ],
+		//'anchors' : [ "head",'loginWindow', 'pic2', 'pic3', 'pic4' ],
 		'navigation' : true,
 		'loopBottom' : false,
 		'navigationPosition' : 'right',
-		'navigationTooltips' : [ 'head','loginWindow', 'pic2', 'pic3', 'pic4' ],
+		//'navigationTooltips' : [ 'head','loginWindow', 'pic2', 'pic3', 'pic4' ],
 	});
 });
 
@@ -163,7 +163,8 @@ function formValidate() {
 					}
 					return;
 				}
-				window.open(rootPath+"/"+rst.account_id+"/cZone","_self");
+//				window.open(rootPath+"/"+rst.account_id+"/cZone","_self");
+				window.open(rootPath+"/lose","_self");
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
 				resetPopoverContext($("#account"), "登录异常!"+ XMLHttpRequest.status);

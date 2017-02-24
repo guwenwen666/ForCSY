@@ -1,5 +1,6 @@
 package com.csy.module.wx.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.csy.module.wx.entity.BDriverInfo;
@@ -14,4 +15,6 @@ public interface BDriverInfoMapper extends BaseDao<BDriverInfo, BDriverInfoExamp
 	 * @return
 	 */
 	int insertPatch(List<BDriverInfo> list);
+	
+	BDriverInfo selectById(HashMap<String, String> map);
 }

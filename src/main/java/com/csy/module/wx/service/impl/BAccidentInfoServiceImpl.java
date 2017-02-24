@@ -1,21 +1,26 @@
 package com.csy.module.wx.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.csy.module.wx.dao.BAccidentDriverMapper;
 import com.csy.module.wx.dao.BAccidentInfoMapper;
 import com.csy.module.wx.dao.BDriverInfoMapper;
+import com.csy.module.wx.dao.BWxUserMapper;
+import com.csy.module.wx.dto.DriverAccident;
 import com.csy.module.wx.dto.KckpUploadInfo;
 import com.csy.module.wx.entity.BAccidentDriver;
 import com.csy.module.wx.entity.BAccidentInfo;
 import com.csy.module.wx.entity.BAccidentInfoExample;
 import com.csy.module.wx.entity.BDriverInfo;
+import com.csy.module.wx.entity.BWxUser;
 import com.csy.module.wx.service.service.BAccidentInfoService;
 import com.csy.util.StringUtils;
 import com.csy.util.spring.BaseService;
@@ -24,7 +29,7 @@ import com.csy.util.wx.queue.FileQueue;
 import com.csy.util.wx.queue.FileQueue.FileDescription;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-
+import com.csy.util.TimeFormatUtil;
 import net.sf.json.JSONObject;
 
 /**
@@ -34,13 +39,15 @@ import net.sf.json.JSONObject;
 @Service
 public class BAccidentInfoServiceImpl extends BaseService<BAccidentInfo, BAccidentInfoExample> 
 	implements BAccidentInfoService{
-
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private BAccidentInfoMapper accidentDao;
 	@Autowired
 	private BDriverInfoMapper driverDao;
 	@Autowired
 	private BAccidentDriverMapper accidentDriverDao;
+	@Autowired
+	private BWxUserMapper wxUserDao;
 	
 	@Override
 	public JSONObject insertAccident(KckpUploadInfo accident) {
@@ -109,5 +116,78 @@ public class BAccidentInfoServiceImpl extends BaseService<BAccidentInfo, BAccide
 			}
 			accident.setLiveVoice(StringUtils.join(newLiveVoices));
 		}
+	}
+	/**
+	 * 说明：根据事故发生时间和微信号、号牌号码查询事故、驾驶员、微信信息
+	 */
+	public List<DriverAccident> selectByExample(DriverAccident accidentInfo) {
+		List<DriverAccident> list = new ArrayList<DriverAccident>();
+		List<BAccidentInfo> bAccidentInfos = new ArrayList<BAccidentInfo>();
+		BAccidentInfo bAccidentInfo = new BAccidentInfo();//事故对象
+		BWxUser user1 = new BWxUser();//微信用户对象
+		HashMap<String, String> map = new HashMap<String, String>();
+		if(accidentInfo.getKssj() != null  && accidentInfo.getKssj() != ""){
+			bAccidentInfo.setDescription(accidentInfo.getKssj());
+		}
+		if(accidentInfo.getJssj() != null  && accidentInfo.getJssj() != ""){
+			bAccidentInfo.setLiveVoice(accidentInfo.getJssj());
+		}
+		if(accidentInfo.getHphm() != null  && accidentInfo.getHphm() != ""){
+			map.put("hphm",accidentInfo.getHphm());
+		}
+		bAccidentInfos = accidentDao.selectBysj(bAccidentInfo);
+		if(bAccidentInfos.size() > 0){
+			for(BAccidentInfo info : bAccidentInfos){
+				List<BDriverInfo> bDriverInfos = new ArrayList<BDriverInfo>();
+				BWxUser user = new BWxUser();//微信用户对象
+				DriverAccident accident = new DriverAccident();//返回所有信息对象
+				//微信
+				if(info.getFkWxOpenid() != null && info.getFkWxOpenid() != ""){
+					user1.setOpenid(info.getFkWxOpenid());
+					if(accidentInfo.getWxzh() != null  && accidentInfo.getWxzh() != ""){
+						user1.setNickname(accidentInfo.getWxzh());
+					}
+					user = wxUserDao.selectByParam(user1);
+					if(null != user && !user.getOpenid().isEmpty()){
+						accident.setWxzh(user.getNickname());
+						if(user.getHeadimgurl() != null && user.getHeadimgurl() != ""){
+							if(user.getHeadimgurl().substring(user.getHeadimgurl().lastIndexOf("/")+1).equals("0")){
+								accident.setWxtx(user.getHeadimgurl().substring(0, user.getHeadimgurl().lastIndexOf("/")+1)+46);
+							}
+						}
+					}else{
+						break;
+					}
+				}else{
+					logger.error("事故信息表没有关联微信用户表");
+				}
+				accident.setSgsj(TimeFormatUtil.dateToString(info.getOccurrenceTime()));
+				accident.setSgzr(info.getDuty());
+				accident.setSgms(info.getDescription());
+				accident.setSgjd(info.getLongitude());
+				accident.setSgwd(info.getLatitude());
+				accident.setLiveImage(info.getLiveImage());
+				accident.setLiveVoice(info.getLiveVoice());
+				accident.setWxid(info.getFkWxOpenid());
+				//驾驶员
+				if(info.getId() != null && info.getId() != ""){
+					List<BAccidentDriver> accidentDrivers =  accidentDriverDao.selectAll(info.getId());
+					for(BAccidentDriver accidentDriver : accidentDrivers){
+						map.put("id",accidentDriver.getFkDriverId());
+						BDriverInfo bDriverInfo = driverDao.selectById(map);
+						if(null != bDriverInfo){
+							bDriverInfos.add(bDriverInfo);
+						}
+					}
+					accident.setbDriverInfos(bDriverInfos);
+				}else{
+					logger.error("事故信息表没有关联事故驾驶员关联表");
+				}
+				if(!accident.getbDriverInfos().isEmpty()){
+					list.add(accident);
+				}
+			}
+		}
+		return list;
 	}
 }

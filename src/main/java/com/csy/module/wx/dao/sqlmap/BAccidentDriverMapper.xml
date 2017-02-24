@@ -192,5 +192,10 @@
    	#{item.duty}
    </foreach>
   </insert>
-  
+   <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from b_accident_driver
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
 </mapper>

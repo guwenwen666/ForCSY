@@ -22,10 +22,10 @@
 										</span>
 			                            <div class="xs-popover-content">
 											<div class="list-group">
-												<a href="${springPath}/${user.id}/cZone" class="list-group-item">个人中心</a>
+												<!-- <a href="${springPath}/${user.id}/cZone" class="list-group-item">个人中心</a>
 												<a href="${springPath}/setting/profile" class="list-group-item">帐号设置</a>
-												<a href="${springPath}/index" class="list-group-item">意见反馈</a>
-												<a href="${springPath}/logout" class="list-group-item">注销登录</a>
+												<a href="${springPath}/index" class="list-group-item">意见反馈</a> -->
+												<a href="${springPath}/login" class="list-group-item">注销登录</a>
 											</div>
 			                            </div>
 		                            </div>

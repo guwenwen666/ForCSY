@@ -17,4 +17,6 @@ public interface BAccidentDriverMapper extends BaseDao<BAccidentDriver, BAcciden
 	 * @return
 	 */
 	int insertPatch(@Param("list") List<BAccidentDriver> list);
+	
+	List<BAccidentDriver> selectAll(String id);
 }

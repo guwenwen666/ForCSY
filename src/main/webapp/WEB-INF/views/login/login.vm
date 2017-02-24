@@ -18,14 +18,14 @@
 	<body>
 		
 		<div id="fullpage" class="fullpage">
-			<div class="section fp-auto-height">
+			<div class="section fp-auto-height" style="display: none;">
 				#parse("/include/head/commonTopWithNoLink.vm")
 			</div>
-            <div class="section" style="background-image:url('${springPath}/static/img/login/login/T1.jpg');">
+            <div class="section" style="background-image:url('${springPath}/static/img/login/login/login.jpg');">
 				<div class="container box-content">
 					<div class="row">
 						<div class="col-md-offset-1 col-md-5 hidden-xs">
-							<img width="100%;" src="${springPath}/static/img/login/login/T1_1.png" />
+							<img width="100%;" style="display: none;" src="${springPath}/static/img/login/login/T1_1.png" />
                         </div>
 						<div class="col-md-offset-1 col-md-3 col-xs-12" style="min-width:300px;">
 							<div class="loginBox">
@@ -35,7 +35,7 @@
             						<li class="active">
             							<a href="#accountLogin" data-toggle="tab">帐号登录</a>
             						</li>
-            						<li class="disabled safeLogin">
+            						<li class="disabled safeLogin" style="display: none;">
             							<a href="#safeLogin" data-toggle="tab">安全登录</a>
             						</li>
             					</ul>
@@ -68,7 +68,7 @@
 													<input type="checkbox" style="float:left;margin-right:5px;" id="rememberAccount" name="rememberAccount" />
 													<label style="color:#fff;float:left;font-weight:500;" for="rememberAccount">记住我</label>
                                                 </div>
-                                                <div class="col-xs-6 text-right">
+                                                <div class="col-xs-6 text-right" style="display: none;">
                                                     <a href="#" style="color:#fff;">忘记密码?</a>
                                                 </div>
                                             </div>
@@ -76,7 +76,7 @@
                                 				<button type="submit" class="btn btn-default btn-md col-xs-12">登录</button>
                                 			</div>
 											<div class="form-group" style="margin-top:10px;">
-												<div class="col-xs-12" style="color:#fff;">
+												<div class="col-xs-12" style="color:#fff;display: none;">
 													还没有帐号? <a href="${springPath}/register" style="color:#FFA00A;">去注册</a>
                                                 </div>
                                 			</div>
@@ -92,18 +92,18 @@
                 </div>
 				
 			</div>
-            <div class="section" style="background-image:url('${springPath}/static/img/login/login/T2.jpg');">
+            <!--<div class="section" style="background-image:url('${springPath}/static/img/login/login/T2.jpg');">
 			</div>
             <div class="section" style="background-image:url('${springPath}/static/img/login/login/T3.jpg');">
-				<!--
+				
 					<div class="slide">第三屏的第一屏</div>
                     <div class="slide">第三屏的第二屏</div>
                     <div class="slide">第三屏的第三屏</div>
                     <div class="slide">第三屏的第四屏</div>
-				-->
+				
             </div>
             <div class="section" style="background-image:url('${springPath}/static/img/login/login/T4.jpg');">
-			</div>
+			</div> -->
         </div>
 		
 		<script src="${springPath}/static/plugins/jquery/dist/jquery.min.js"></script>

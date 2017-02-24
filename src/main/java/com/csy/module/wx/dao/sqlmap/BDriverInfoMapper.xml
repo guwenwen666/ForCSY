@@ -273,5 +273,13 @@
    	#{item.contact}
    </foreach>
   </insert>
-  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from b_driver_info
+    where id = #{id,jdbcType=VARCHAR}
+    <if test="hphm!=null and hphm!=''" >
+       and hphm like concat(concat('%',#{hphm,jdbcType=VARCHAR}),'%')
+    </if>
+  </select>
 </mapper>
