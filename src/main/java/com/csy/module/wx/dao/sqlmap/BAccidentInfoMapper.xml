@@ -302,5 +302,6 @@
         	and occurrence_time &lt;= #{liveVoice,jdbcType=VARCHAR}
       	</if>
     </where>
+    order by occurrence_time desc
   </select>
 </mapper>
