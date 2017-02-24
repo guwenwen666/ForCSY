@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>我的快处快赔</title>
+		<title>我的报案记录</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
         <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.1/weui.min.css"/>
         <link rel="stylesheet" href="${springPath}/static/css/weixin/myRecord.css"/>
 	</head>
 	<body ng-app="myApp" ontouchstart>
+		
+		<div ui-view></div>
+		
 		<div ng-controller="myCtrl">
-			
 			<div ng-repeat="page in pages" class="page">
     			<div class="weui-panel" ng-repeat="info in page.list">
                     <div class="weui-panel__hd" ng-bind="formatterTime(info.occurrenceTime)"></div>
@@ -17,7 +19,7 @@
                         <div class="weui-media-box weui-media-box_text weui-cell weui-cell_access">
 							<div class="weui-cell__bd">
 								<h4 class="weui-media-box__title" title="{{info.position}}" 
-    								ng-init="formatterPosition(info)" ng-bind="info.position"></h4>
+    								ng-init="info.position='获取中，请稍候...';formatterPosition(info)" ng-bind="info.position"></h4>
                                 <p class="weui-media-box__desc" ng-bind="info.description || '无事故描述信息'"></p>
                             </div>
 							<div class="weui-cell__ft">
@@ -25,6 +27,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
+			
+			<div class="weui-loadmore" ng-show="loading">
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
             </div>
 			
 			<div class="weui-loadmore weui-loadmore_line" ng-show="noMoreData">
@@ -43,9 +50,10 @@
                 <div class="weui-form-preview__bd">
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">事件时间</label>
-                        <span class="weui-form-preview__value"></span>
+                        <span class="weui-form-preview__value" ng-bind="formatterTime(info.occurrenceTime)"></span>
                     </div>
                 </div>
+				<div class="weui-form-preview__hd"></div>
                 <div class="weui-form-preview__bd">
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">事件地点</label>
@@ -61,6 +69,7 @@
                     </div>
                 </div>
             </div>
+			
 			<br/>
 			<div class="weui-form-preview">
                 <div class="weui-form-preview__bd">
@@ -69,7 +78,7 @@
                         <span class="weui-form-preview__value"></span>
                     </div>
                 </div>
-					
+				<div class="weui-form-preview__hd"></div>
                 <div class="weui-form-preview__bd">
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">号牌号码</label>
@@ -81,6 +90,7 @@
                     </div>
                 </div>
 			</div>
+			
 			<br/>
 			<div class="weui-form-preview">
                 <div class="weui-form-preview__bd">
@@ -92,6 +102,7 @@
                     </div>
                 </div>
             </div>
+			
 			<br/>
 			<div class="weui-form-preview">
                 <div class="weui-form-preview__bd">

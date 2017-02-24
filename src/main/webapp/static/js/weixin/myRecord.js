@@ -5,25 +5,30 @@
  */
 var app = angular.module("myApp", ["ui.router"]);
 
-
 app.config(function ($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.otherwise('');
+	$urlRouterProvider.otherwise('/');
 	
 	$stateProvider.state('detail', {
 		url: '/detail',
-    	replace: true,
-		templateUrl: 'detail.html'
+    	params: {data: undefined},
+		templateUrl: 'detail.html',
+		controller: 'detail'
     }).state('/',{
     	url: '/',
-    	template: '',
-    	controller: 'detail'
+    	template: ''
     });
 });
 
-app.controller("detail", function($scope, $stateParams){
+app.controller("detail", function($scope, $stateParams, $state){
+	if(!$stateParams.data){
+		$state.go("/");
+	}
 	
-	debugger;
+	$scope.formatterTime = function(date){
+		return new Date(date.time).format("yyyy-MM-dd hh:mm:ss");
+	};
 	
+	$scope.info = $stateParams.data;
 });
 
 app.controller("myCtrl", function($scope, $http, $state){
@@ -50,7 +55,6 @@ app.controller("myCtrl", function($scope, $http, $state){
 					$scope.noMoreData = true;
 				}
 			}
-			console.log(data);
 		}).error(function(data,status,hedaers,config){
 			console.log(data);
 		});
@@ -76,9 +80,15 @@ app.controller("myCtrl", function($scope, $http, $state){
 				}
 			});
 		});
+		//若服务请求失败，则运行以下函数
+		geocoder.setError(function() {
+			$scope.$apply(function(){
+				info.position = "经度:"+info.longitude+",纬度:"+info.latitude;
+			});
+		});
 	};
 	
 	$scope.detail = function(info){
-		$state.go("detail", info);
+		$state.go("detail", {data:info});
 	};
 });

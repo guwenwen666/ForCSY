@@ -82,7 +82,7 @@ public class BAccidentInfoServiceImpl extends BaseService<BAccidentInfo, BAccide
 	@Override
 	public PageInfo selectPageInfo(int pageNum, int pageSize, Map<String, Object> map) {
 		BAccidentInfoExample infoExample = new BAccidentInfoExample();
-		infoExample.setOrderByClause("occurrence_time");
+		infoExample.setOrderByClause("occurrence_time desc");
 		infoExample.createCriteria().andFkWxOpenidEqualTo((String)map.get("fk_wx_openid"));
 		PageHelper.startPage(pageNum, pageSize);
 		PageInfo accidentInfos = new PageInfo(accidentDao.selectByExample(infoExample));

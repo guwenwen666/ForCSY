@@ -32,9 +32,9 @@ INSERT INTO `b_xtpz_dmx` (`id`,`dmlxbh`,`dmxywm`,`dmxzwm`,`dmxz`,`p_dmxywm`,`sfx
 
 
 /*-----------------------系统配置表初始化--------------------------------*/
-/*用于配置常用省份=---其中id的值是关联dmx中简称省份的id值*/
+
 delete from b_qj_xtpz where name = 'cysf';
-INSERT INTO `b_qj_xtpz` (`id`,`name`,`name_cn`,`val`,`expand`,`description`) VALUES (null,'cysf','常用省份','鲁','890',null);
+INSERT INTO `b_qj_xtpz` (`id`,`name`,`name_cn`,`val`,`expand`,`description`) VALUES (null,'cysf','常用省份','鲁',null,'用于配置常用省份=---其中id的值是关联dmx中简称省份的id值');
 /**
  * date: 2017-02-17
  * author: wangyonghui
@@ -79,5 +79,6 @@ INSERT INTO `b_xtpz_dmx` (`id`,`dmlxbh`,`dmxywm`,`dmxzwm`,`dmxz`,`p_dmxywm`,`sfx
 INSERT INTO `b_xtpz_dmx` (`id`,`dmlxbh`,`dmxywm`,`dmxzwm`,`dmxz`,`p_dmxywm`,`sfxs`,`sfky`,`sfmr`,`xssx`,`dmxms`,`dmxkz`) VALUES ('901','8','贵','贵','27',NULL,1,1,0,27,'贵',NULL);
 INSERT INTO `b_xtpz_dmx` (`id`,`dmlxbh`,`dmxywm`,`dmxzwm`,`dmxz`,`p_dmxywm`,`sfxs`,`sfky`,`sfmr`,`xssx`,`dmxms`,`dmxkz`) VALUES ('902','8','桂','桂','28',NULL,1,1,0,28,'桂',NULL);
 
-
+delete from b_qj_xtpz where name = 'wxResource';
+INSERT INTO `b_qj_xtpz` (`id`,`name`,`name_cn`,`val`,`expand`,`description`) VALUES (null,'wxResource','微信存储资源路径','http://127.0.0.1:8090/wxfile',null,'微信存储资源路径');
 

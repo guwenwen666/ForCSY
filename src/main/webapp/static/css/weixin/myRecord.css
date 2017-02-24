@@ -20,3 +20,7 @@ body {
 .weui-loadmore_line .weui-loadmore__tips{
 	background-color: transparent;
 }
+
+.weui-form-preview__hd{
+	padding: 0px 15px;
+}
