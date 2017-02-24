@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,6 +24,7 @@ import com.csy.module.wx.dto.KckpUploadInfo;
 import com.csy.module.wx.entity.BWxUser;
 import com.csy.module.wx.service.service.BAccidentInfoService;
 import com.csy.module.wx.service.service.BWxUserService;
+import com.csy.util.XtpzUtil;
 import com.csy.util.wx.AccessTokenUtil;
 import com.github.pagehelper.PageInfo;
 
@@ -146,7 +148,8 @@ public class KckpController {
 	 * @return
 	 */
 	@RequestMapping("/myRecord")
-	public ModelAndView kckpIndex(HttpServletRequest request,HttpServletResponse response){
+	public ModelAndView kckpIndex(HttpServletRequest request,HttpServletResponse response, ModelMap map){
+		map.put("wxResource", XtpzUtil.getXtpzByName("wxResource").getVal());
 		return new ModelAndView("/weixin/myRecord");
 	}
 	

@@ -293,7 +293,7 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 	
 	//驾驶员信息索引预定
 	$scope.jsyxxIndex = function(number){
-		return String.fromCharCode(number);
+		return String.fromCharCode(number+65);
 	};
 	
 	//新增驾驶员事件绑定

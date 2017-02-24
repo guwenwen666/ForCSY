@@ -39,7 +39,7 @@
 			
 			<div ng-repeat="jsyxx in info.jsyxxs">
 				<div class="weui-cells__title">
-					<span ng-bind="jsyxxIndex($index+65)"></span>&nbsp;驾驶员信息
+					<span ng-bind="jsyxxIndex($index)"></span>&nbsp;驾驶员信息
                     <span class="weui-cells__ft union-btn" ng-hide="$index==0" ng-click="deleteJsy($index);">
 						<span class="weui-icon-delete_sm"></span>删除
 					</span>	

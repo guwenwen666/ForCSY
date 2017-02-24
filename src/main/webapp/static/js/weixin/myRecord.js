@@ -22,13 +22,34 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 app.controller("detail", function($scope, $stateParams, $state){
 	if(!$stateParams.data){
 		$state.go("/");
+		return;
 	}
+	var info = $stateParams.data;
+	var resoure_prev = $("#wxResource").val() + "/" + new Date(info.occurrenceTime.time)
+			.format("yyyy-MM-dd")+"/"+ info.fkWxOpenid + "/";
 	
+	$scope.info = info;
+	//日期格式化
 	$scope.formatterTime = function(date){
 		return new Date(date.time).format("yyyy-MM-dd hh:mm:ss");
 	};
+	//驾驶员信息索引预定
+	$scope.jsyxxIndex = function(number){
+		return String.fromCharCode(number+65);
+	};
 	
-	$scope.info = $stateParams.data;
+	//图片资源转换
+	$scope.imgUrls = !info.liveImage?[]:info.liveImage.split(",");
+	$.each($scope.imgUrls, function(index,item){
+		$scope.imgUrls[index] = resoure_prev + item;
+	});
+	
+	$scope.voiceUrls = !info.liveVoice?[]:info.liveVoice.split(",");
+	$.each($scope.voiceUrls, function(index,item){
+		$scope.voiceUrls[index] = resoure_prev + item;
+	});
+	
+	console.log($scope.info);
 });
 
 app.controller("myCtrl", function($scope, $http, $state){
@@ -39,6 +60,7 @@ app.controller("myCtrl", function($scope, $http, $state){
 	
 	/*图片加载类*/
 	$scope.loadPage = function(pageIndex){
+		$scope.infosLoading = true;
 		$http({
 			method: "post",
 			url: rootPath + "/wx/getKckpPageInfo",
@@ -46,6 +68,7 @@ app.controller("myCtrl", function($scope, $http, $state){
 				pageNum: pageIndex
 			}
 		}).success(function(data,status,config,headers){
+			$scope.infosLoading = false;
 			//有数据的时候才进行填充
 			if(data.list.length>0){
 				$scope.pages[data.pageNum-1] = data;
@@ -56,6 +79,7 @@ app.controller("myCtrl", function($scope, $http, $state){
 				}
 			}
 		}).error(function(data,status,hedaers,config){
+			$scope.infosLoading = false;
 			console.log(data);
 		});
 	};

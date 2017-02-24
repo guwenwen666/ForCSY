@@ -8,6 +8,10 @@
         <link rel="stylesheet" href="${springPath}/static/css/weixin/myRecord.css"/>
 	</head>
 	<body ng-app="myApp" ontouchstart>
+		<!--常用链接地址隐藏域-->
+		<div style="display:none;">
+			<input type="hidden" id="wxResource" value="${wxResource}"/>
+        </div>
 		
 		<div ui-view></div>
 		
@@ -29,9 +33,9 @@
                 </div>
             </div>
 			
-			<div class="weui-loadmore" ng-show="loading">
+			<div class="weui-loadmore" ng-show="infosLoading">
                 <i class="weui-loading"></i>
-                <span class="weui-loadmore__tips">正在加载</span>
+                <span class="weui-loadmore__tips">正在加载...</span>
             </div>
 			
 			<div class="weui-loadmore weui-loadmore_line" ng-show="noMoreData">
@@ -39,7 +43,7 @@
             </div>
 			
 			<a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link center" 
-				ng-click="loadPage(pageNum)" ng-hide="noMoreData">
+				ng-click="loadPage(pageNum)" ng-hide="noMoreData || infosLoading">
                 <div class="weui-cell__bd">查看更多</div>
             </a>
         </div>
@@ -57,38 +61,40 @@
                 <div class="weui-form-preview__bd">
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">事件地点</label>
-                        <span class="weui-form-preview__value"></span>
+                        <span class="weui-form-preview__value" ng-bind="info.position"></span>
                     </div>
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">事故责任</label>
-                        <span class="weui-form-preview__value"></span>
+                        <span class="weui-form-preview__value" ng-bind="info.duty"></span>
                     </div>
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">事故描述</label>
-                        <span class="weui-form-preview__value"></span>
+                        <span class="weui-form-preview__value" ng-bind="info.description"></span>
                     </div>
                 </div>
             </div>
 			
 			<br/>
 			<div class="weui-form-preview">
-                <div class="weui-form-preview__bd">
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">{{}}方姓名</label>
-                        <span class="weui-form-preview__value"></span>
+				<div ng-repeat="jsyxx in info.jsyxxs">
+                    <div class="weui-form-preview__bd">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label"><span ng-bind="jsyxxIndex($index)"></span>方姓名</label>
+                            <span class="weui-form-preview__value" ng-bind="jsyxx.name"></span>
+                        </div>
                     </div>
-                </div>
-				<div class="weui-form-preview__hd"></div>
-                <div class="weui-form-preview__bd">
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">号牌号码</label>
-                        <span class="weui-form-preview__value"></span>
+    				<div class="weui-form-preview__hd"></div>
+                    <div class="weui-form-preview__bd">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">号牌号码</label>
+                            <span class="weui-form-preview__value" ng-bind="jsyxx.hphm"></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">联系方式</label>
+                            <span class="weui-form-preview__value" ng-bind="jsyxx.contact"></span>
+                        </div>
                     </div>
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">联系方式</label>
-                        <span class="weui-form-preview__value"></span>
-                    </div>
-                </div>
+				</div>
 			</div>
 			
 			<br/>
@@ -98,7 +104,18 @@
                         <label class="weui-form-preview__label">事故图片</label>
                     </div>
                     <div class="weui-form-preview__item">
-                        
+						<div ng-show="imgUrls.length==0"></div>
+						<div class="weui-cell__bd" ng-show="imgUrls.length>0">
+							<div class="weui-uploader">
+								<div class="weui-uploader__bd">
+									<ul class="weui-uploader__files">
+										<li class="weui-uploader__file" 
+											ng-repeat="imgUrl in imgUrls"
+											style="background-image:url('{{imgUrl}}');"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
