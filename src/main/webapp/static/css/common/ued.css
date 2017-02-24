@@ -222,8 +222,8 @@ li {
 .hpbzAll{
     box-sizing: border-box;
     border-radius: 2px;
-    line-height:32px;
-    height: 32px;
+    line-height:30px;
+    height: 30px;
     width: 100%;
     border: 1px solid #d1d1d1;
     background-color: #fff;

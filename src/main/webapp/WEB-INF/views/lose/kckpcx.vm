@@ -50,7 +50,7 @@
 										</select>
 							 	</div>
 							 	<div class="hmInputDiv">
-							 		<input id = "hphmInput" style="width:90px;height: 28px;line-height:28px;"/>
+							 		<input id = "hphmInput" style="width:90px;height: 30px;line-height:30px;"/>
 							 	</div>
 						 	</div>
 						</td>

@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import net.sf.json.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +26,14 @@ import com.csy.module.wx.entity.BDriverInfo;
 import com.csy.module.wx.entity.BWxUser;
 import com.csy.module.wx.service.service.BAccidentInfoService;
 import com.csy.util.StringUtils;
+import com.csy.util.TimeFormatUtil;
+import com.csy.util.XtpzUtil;
 import com.csy.util.spring.BaseService;
 import com.csy.util.wx.en.WxFileEnum;
 import com.csy.util.wx.queue.FileQueue;
 import com.csy.util.wx.queue.FileQueue.FileDescription;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.csy.util.TimeFormatUtil;
-import net.sf.json.JSONObject;
 
 /**
  * @author wangqiang
@@ -166,6 +169,7 @@ public class BAccidentInfoServiceImpl extends BaseService<BAccidentInfo, BAccide
 				accident.setSgms(info.getDescription());
 				accident.setSgjd(info.getLongitude());
 				accident.setSgwd(info.getLatitude());
+				accident.setImagePath(XtpzUtil.getXtpzByName("wxResource").getVal());
 				accident.setLiveImage(info.getLiveImage());
 				accident.setLiveVoice(info.getLiveVoice());
 				accident.setWxid(info.getFkWxOpenid());

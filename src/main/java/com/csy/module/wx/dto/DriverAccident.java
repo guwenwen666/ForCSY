@@ -28,11 +28,20 @@ public class DriverAccident {
 	private String sgms;//事故描述
 	private String liveImage;//现场关于事故的一些图片
 	private String liveVoice;//现场事故的一些录音
+	private String imagePath;
 	
 	private List<BDriverInfo> bDriverInfos = new ArrayList<BDriverInfo>();
 	
 	private String hphm;//号牌号码
 	
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
 	public String getWxid() {
 		return wxid;
 	}

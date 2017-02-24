@@ -109,8 +109,8 @@ function makeLeftTable(data){
 			var j = i + 1;
 			$("#mainDiv1").append("<div id='main"+i+"' class='d_out' onmouseover='sizeOver("+i+")' onmouseout='sizeOut("+i+")' style='width: 99.5%;height:100px;border: 1px solid #d1d1d1;cursor:pointer' onclick='onClick(this,"+JSON.stringify(item)+")'></div>");
 			$("#main"+i).append("<div id='divDiv"+i+"' style='width:30%;float: left;margin-top: 10px;text-align: center;position: relative'></div>");
-			$("#divDiv"+i).append("<div id='text' style='position: absolute; top: 15px; left: 45%;'><p>"+j+"</p></div>");
-			$("#divDiv"+i).append("<img  id='images' src='../../ForCsy/static/img/common/background.png' />");
+			$("#divDiv"+i).append("<div id='text' style='position: absolute; top: 25px; left: 45%;'><p>"+j+"</p></div>");
+			$("#divDiv"+i).append("<img  id='images' src='../../ForCsy/mp/static/img/common/background.png' />");
 			$("#main"+i).append("<div id='divTable"+i+"' style='width:70%;float: right;margin-top: 10px;'></div>");
 			$("#divTable"+i).append("<table id='table"+i+"'></table>");
 			$("#table"+i).append("<tr id='tr1"+i+"'></tr>");
@@ -158,74 +158,69 @@ function onClick(value,data){
 	$("#rightTr").append("<td style='text-align: center;width: 5%;'>"+data.wxzh+"</td>");
 	$("#rightTr").append("<td></td>");
 	//事故信息
-	$("#mainDiv2").append("<div id='right2'style='height: 25%;width:99.7%;border: 1px solid #d1d1d1;'></div>");
-	$("#right2").append("<div id='accident'style='width: 100%;height: 30%;'></div>");
+	$("#mainDiv2").append("<div id='right2'style='height: 40%;width:99.7%;border: 1px solid #d1d1d1;'></div>");
+	$("#right2").append("<div id='accident'style='width: 100%;height: 20%;'></div>");
 	$("#accident").append("<div id='accidentdiv'style='padding-left:20px;margin-top: 10px;'></div>");
-	$("#accidentdiv").append("<img style='float: left;' src='../../ForCsy/static/img/common/accident.png'/>");
+	$("#accidentdiv").append("<img style='float: left;' src='../../ForCsy/mp/static/img/common/accident.png'/>");
 	$("#accidentdiv").append("<font color='#41D4FF' style='float: left;padding-left: 10px;'>事故信息</font>");
-	$("#right2").append("<div id='accidentTable' style='width: 100%;height: 60%;'></div>");
+	$("#right2").append("<div id='accidentTable' style='width: 100%;height: 72%;'></div>");
 	$("#accidentTable").append("<table id='accidenttable' style='width:100%;height:100%;border-collapse:collapse;'border='1' bordercolor='#d1d1d1' rules=rows></table>");
-	$("#accidenttable").append("<tr id='accidenttr'></tr>");
-	$("#accidenttr").append("<td style='width:8%;' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'>事故时间</td>");
-	$("#accidenttr").append("<td style='width:15%;'>"+data.sgsj+"</td>");
-	$("#accidenttr").append("<td style='width:8%;'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'>事故地点</td>");
-	$("#accidenttr").append("<td style='width:20%;'>"+sgwzmc+"</td>");
-	$("#accidenttr").append("<td style='width:8%;'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'>事故责任</td>");
-	$("#accidenttr").append("<td style='width:8%;'>"+data.sgzr+"</td>");
-	$("#accidenttr").append("<td style='width:8%;'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'>事故描述</td>");
-	$("#accidenttr").append("<td style='width:25%;'>"+data.sgms+"</td>");
+	$("#accidenttable").append("<tr id='accidenttr1'></tr>");
+	$("#accidenttr1").append("<td style='width:8%;' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'>事故时间</td>");
+	$("#accidenttr1").append("<td style='width:15%;'>"+data.sgsj+"</td>");
+	$("#accidenttr1").append("<td style='width:8%;'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'>事故地点</td>");
+	$("#accidenttr1").append("<td style='width:20%;'>"+sgwzmc+"</td>");
+	$("#accidenttable").append("<tr id='accidenttr2'></tr>");
+	$("#accidenttr2").append("<td style='width:8%;'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'>事故责任</td>");
+	$("#accidenttr2").append("<td style='width:8%;'>"+data.sgzr+"</td>");
+	$("#accidenttr2").append("<td style='width:8%;'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'>事故描述</td>");
+	$("#accidenttr2").append("<td style='width:25%;'>"+data.sgms+"</td>");
 	//驾驶员信息
 	if(data.bDriverInfos != null && data.bDriverInfos.length > 0){
 		$.each(data.bDriverInfos, function (i, items) {
-			$("#mainDiv2").append("<div id='driverDiv"+i+"' style='height: 25%;width:99.7%;border: 1px solid #d1d1d1;'></div>");
-			$("#driverDiv"+i).append("<div id='driverdiv"+i+"' style='width: 100%;height: 30%;'></div>");
+			$("#mainDiv2").append("<div id='driverDiv"+i+"' style='height: 40%;width:99.7%;border: 1px solid #d1d1d1;'></div>");
+			$("#driverDiv"+i).append("<div id='driverdiv"+i+"' style='width: 100%;height: 20%;'></div>");
 			$("#driverdiv"+i).append("<div id='driverdiv1"+i+"' style='padding-left:20px;margin-top: 10px;'></div>");
-			$("#driverdiv1"+i).append("<img style='float: left;' src='../../ForCsy/static/img/common/driver.png'/>");
+			$("#driverdiv1"+i).append("<img style='float: left;' src='../../ForCsy/mp/static/img/common/driver.png'/>");
 			if(items.name == ""){
 				$("#driverdiv1"+i).append("<font color='#41D4FF' style='float: left;padding-left: 10px;'>第"+(i+1)+"位驾驶员信息</font>");
 			}else{
 				$("#driverdiv1"+i).append("<font color='#41D4FF' style='float: left;padding-left: 10px;'>"+items.name+"驾驶员信息</font>");
 			}
-			$("#driverDiv"+i).append("<div id='driver"+i+"' style='width: 100%;height: 60%;'></div>");
+			$("#driverDiv"+i).append("<div id='driver"+i+"' style='width: 100%;height: 72%;'></div>");
 			$("#driver"+i).append("<table id='driverTable"+i+"' style='width:100%;height:100%;border-collapse:collapse;'border='1' bordercolor='#d1d1d1' rules=rows></table>");
 			$("#driverTable"+i).append("<tr id='driverTr"+i+"'></tr>");
 			$("#driverTr"+i).append("<td style='width:8%;' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'>姓名</td>");
-			$("#driverTr"+i).append("<td style='width:15.5%;'>"+items.name+"</td>");
+			$("#driverTr"+i).append("<td style='width:15%;'>"+items.name+"</td>");
 			$("#driverTr"+i).append("<td style='width:8%;' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'>号牌号码</td>");
-			$("#driverTr"+i).append("<td style='width:20.5%;'>"+items.hphm+"</td>");
-			$("#driverTr"+i).append("<td style='width:8%;' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'>联系方式</td>");
-			$("#driverTr"+i).append("<td style='width:8%;'>"+items.contact+"</td>");
-			$("#driverTr"+i).append("<td style='width:33%;'></td>");
+			$("#driverTr"+i).append("<td style='width:25%;'>"+items.hphm+"</td>");
+			$("#driverTable"+i).append("<tr id='drivertr"+i+"'></tr>");
+			$("#drivertr"+i).append("<td style='width:8%;' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'>联系方式</td>");
+			$("#drivertr"+i).append("<td style='width:8%;'>"+items.contact+"</td>");
 		});
 	}
 	//现场照片
-	var imagePath = "http://172.16.160.143:8090/wxfile/"+data.sgsj.substring(0,10)+"/"+data.wxid+"/";
+	var imagePath = data.imagePath+"/"+data.sgsj.substring(0,10)+"/"+data.wxid+"/";
 	if(data.liveImage != ""){
 		$("#mainDiv2").append("<div id='imageDiv' style='height: 50%;width:99.7%;border: 1px solid #d1d1d1;'></div>");
 		$("#imageDiv").append("<div id='imageFirst'style='width: 100%;height: 15%;'></div>");
 		$("#imageFirst").append("<div id='imageTwo'style='padding-left:20px;margin-top: 10px;'></div>");
-		$("#imageTwo").append("<img style='float: left;' src='../../ForCsy/static/img/common/site.png'/>");
+		$("#imageTwo").append("<img style='float: left;' src='../../ForCsy/mp/static/img/common/site.png'/>");
 		$("#imageTwo").append("<font color='#41D4FF' style='float: left;padding-left: 10px;'>现场照片</font>");
 		$("#imageDiv").append("<div id='imageFirst1'style='width: 100%;height: 80%;'></div>");
 		$("#imageFirst1").append("<table id='imageTable' style='width:100%;height:100%;border-collapse:collapse;' border='1' bordercolor='#d1d1d1' rules=rows></table>");
 		var str = data.liveImage.split(",");
 		if(str != null && str.length > 0){
-			if(str.length/5 > 1){//最多十张图片---一行是5张图片（2行）
 				for(var i = 0; i < str.length; i ++){
-					if(i > 5){
+					if(i >= 5){//最多十张图片---一行是5张图片（2行）
+						$("#imageDiv").height("85%");
 						$("#imageTable").append("<tr id='imageTr2'></tr>");
-						$("#imageTr2").append("<td style='width:20%;'><img src='"+(imagePath+str[i])+"'/></td>");
+						$("#imageTr2").append("<td style='width:20%;'><img style='width:100px;height:100px;' src='"+(imagePath+str[i])+"'/></td>");
 					}else{
 						$("#imageTable").append("<tr id='imageTr1'></tr>");
-						$("#imageTr1").append("<td style='width:20%;'><img src='"+(imagePath+str[i])+"'/></td>");
+						$("#imageTr1").append("<td style='width:20%;'><img style='width:100px;height:100px;' src='"+(imagePath+str[i])+"'/></td>");
 					}
 				}
-			}else{
-				$("#imageTable").append("<tr id='imageTr1'></tr>");
-				for(var i = 0; i < str.length; i ++){
-					$("#imageTr1").append("<td style='width:20%;text-align:center;'><img id='imgDiv' style='width:100px;height:100px;'src='"+(imagePath+str[i])+"'/></td>");
-				}
-			}
 		}
 	}
 	//现场录音
@@ -233,15 +228,21 @@ function onClick(value,data){
 		$("#mainDiv2").append("<div id='voiceDiv' style='height: 50%;width:99.7%;border: 1px solid #d1d1d1;'></div>");
 		$("#voiceDiv").append("<div id='voiceFirst'style='width: 100%;height: 15%;'></div>");
 		$("#voiceFirst").append("<div id='voiceTwo'style='padding-left:20px;margin-top: 10px;'></div>");
-		$("#voiceTwo").append("<img style='float: left;' src='../../ForCsy/static/img/common/voice.png'/>");
+		$("#voiceTwo").append("<img style='float: left;' src='../../ForCsy/mp/static/img/common/voice.png'/>");
 		$("#voiceTwo").append("<font color='#41D4FF' style='float: left;padding-left: 10px;'>现场录音</font>");
 		$("#voiceDiv").append("<div id='voiceFirst1'style='width: 100%;height: 80%;'></div>");
 		$("#voiceFirst1").append("<table id='voiceTable' style='width:100%;height:100%;border-collapse:collapse;' border='1' bordercolor='#d1d1d1' rules=rows></table>");
-		$("#voiceTable").append("<tr id='voiceTr'></tr>");
 		var str = data.liveVoice.split(",");
 		if(str != null && str.length > 0){
 			for(var i = 0; i < str.length; i ++){
-				$("#voiceTr").append("<td style='width:33%;text-align:center;'><img src='"+(imagePath+str[i])+"'/></td>");
+				if(i >= 2){
+					$("#voiceDiv").height("85%");
+					$("#voiceTable").append("<tr id='voiceTr2'></tr>");
+					$("#voiceTr2").append("<td style='width:30%;text-align:center;'><audio src='"+(imagePath+str[i])+"' preload='auto' controls></audio></td>");
+				}else{
+					$("#voiceTable").append("<tr id='voiceTr1'></tr>");
+					$("#voiceTr1").append("<td style='width:30%;text-align:center;'><audio src='"+(imagePath+str[i])+"' preload='auto' controls></audio></td>");
+				}
 			}
 		}
 	}
@@ -256,3 +257,5 @@ function codeLatLng(wd,jd){
 		sgwzmc = result.detail.address;
      });
 }
+
+
