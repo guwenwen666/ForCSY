@@ -215,10 +215,10 @@ function onClick(value,data){
 					if(i >= 5){//最多十张图片---一行是5张图片（2行）
 						$("#imageDiv").height("85%");
 						$("#imageTable").append("<tr id='imageTr2'></tr>");
-						$("#imageTr2").append("<td style='width:20%;'><img style='width:100px;height:100px;' src='"+(imagePath+str[i])+"'/></td>");
+						$("#imageTr2").append("<td style='width:20%;text-align:center;'><img style='width:100px;height:100px;' src='"+(imagePath+str[i])+"'/></td>");
 					}else{
 						$("#imageTable").append("<tr id='imageTr1'></tr>");
-						$("#imageTr1").append("<td style='width:20%;'><img style='width:100px;height:100px;' src='"+(imagePath+str[i])+"'/></td>");
+						$("#imageTr1").append("<td style='width:20%;text-align:center;'><img style='width:100px;height:100px;' src='"+(imagePath+str[i])+"'/></td>");
 					}
 				}
 		}
