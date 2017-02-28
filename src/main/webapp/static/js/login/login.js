@@ -164,7 +164,7 @@ function formValidate() {
 					return;
 				}
 //				window.open(rootPath+"/"+rst.account_id+"/cZone","_self");
-				window.open(rootPath+"/lose","_self");
+				window.open(rootPath+"/lose?param=1","_self");
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
 				resetPopoverContext($("#account"), "登录异常!"+ XMLHttpRequest.status);

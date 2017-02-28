@@ -38,7 +38,7 @@ public class QuickLoseAction {
 	 * @return
 	 */
 	@RequestMapping("/lose")
-	public ModelAndView register(){
+	public ModelAndView register(String param){
 		  Map<String, Object> paramsMap  = new HashMap<String, Object>();
 		  Calendar calendar = Calendar.getInstance();
 		  String formatTime = TimeFormatUtil.timeToStr(calendar, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));

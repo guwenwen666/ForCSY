@@ -114,7 +114,7 @@ function makeLeftTable(data){
 			$("#main"+i).append("<div id='divTable"+i+"' style='width:75%;float: right;margin-top: 10px;'></div>");
 			$("#divTable"+i).append("<table id='table"+i+"'></table>");
 			$("#table"+i).append("<tr id='tr1"+i+"'></tr>");
-			$("#tr1"+i).append("<td style='height:20px;'>号牌号码:</td>");
+			$("#tr1"+i).append("<td style='height:20px;'><strong>号牌号码:</strong></td>");
 			var hphm = "";
 			if(item.bDriverInfos != null && item.bDriverInfos.length > 0){
 				$.each(item.bDriverInfos, function (i, items) {
@@ -127,10 +127,10 @@ function makeLeftTable(data){
 			}
 			$("#tr1"+i).append("<td style='height:20px;'>"+hphm+"</td>");
 			$("#table"+i).append("<tr id='tr2"+i+"'></tr>");
-			$("#tr2"+i).append("<td style='height:20px;'>微信号:</td>");
+			$("#tr2"+i).append("<td style='height:20px;'><strong>微信号:</strong></td>");
 			$("#tr2"+i).append("<td style='height:20px;'>"+item.wxzh+"</td>");
 			$("#table"+i).append("<tr id='tr3"+i+"'></tr>");
-			$("#tr3"+i).append("<td style='height:20px;'>事故时间:</td>");
+			$("#tr3"+i).append("<td style='height:20px;'><strong>事故时间:</strong></td>");
 			$("#tr3"+i).append("<td style='height:20px;'>"+item.sgsj+"</td>");
 		}); 
 	}
