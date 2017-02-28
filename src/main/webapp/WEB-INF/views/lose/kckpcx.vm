@@ -19,7 +19,7 @@
 <body>
 #parse("/include/head/commonTop.vm")
 <div class="whole-div">
-	    <div class="main-top" style="float:left;border: 1px solid #d1d1d1;width: 98.2%;height:25%;margin: 10px 10px 10px 10px;">
+	    <div class="main-top" style="float:left;border: 1px solid #d1d1d1;width: 98.2%;height:22%;margin: 10px 10px 10px 10px;">
 			<div class="titleDiv">
 				<span class="pageTitle" style="padding-left: 600px;">快处快赔查询</span>
 			</div>
@@ -77,9 +77,9 @@
 				<div class="titleDiv">
 					<span class="pageTitle" style="padding-left: 600px;">快处快赔查询列表</span>
 				</div>
-				<div id = "mainDiv1" style="float:left;width:27%;"class="overFlow">
+				<div id = "mainDiv1" style="float:left;width:28%;"class="overFlow">
 				</div>
-				<div id = "mainDiv2" style="float:right;width:72%;" class="overFlow">
+				<div id = "mainDiv2" style="float:right;width:71%;" class="overFlow">
 				</div>
 			</div>
 		</div>

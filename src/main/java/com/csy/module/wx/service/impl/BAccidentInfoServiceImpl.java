@@ -158,8 +158,6 @@ public class BAccidentInfoServiceImpl extends BaseService<BAccidentInfo, BAccide
 								accident.setWxtx(user.getHeadimgurl().substring(0, user.getHeadimgurl().lastIndexOf("/")+1)+46);
 							}
 						}
-					}else{
-						break;
 					}
 				}else{
 					logger.error("事故信息表没有关联微信用户表");
@@ -187,7 +185,7 @@ public class BAccidentInfoServiceImpl extends BaseService<BAccidentInfo, BAccide
 				}else{
 					logger.error("事故信息表没有关联事故驾驶员关联表");
 				}
-				if(!accident.getbDriverInfos().isEmpty()){
+				if(!accident.getbDriverInfos().isEmpty() && null != user){
 					list.add(accident);
 				}
 			}
