@@ -17,4 +17,6 @@ public interface BDriverInfoMapper extends BaseDao<BDriverInfo, BDriverInfoExamp
 	int insertPatch(List<BDriverInfo> list);
 	
 	BDriverInfo selectById(HashMap<String, String> map);
+	
+	List<BDriverInfo> selectDriversByAccidentID(String id);
 }

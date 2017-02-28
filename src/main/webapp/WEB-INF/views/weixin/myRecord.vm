@@ -48,8 +48,8 @@
             </a>
         </div>
 		
-		
 		<script type="text/ng-template" id="detail.html">
+		
 			<div class="weui-form-preview">
                 <div class="weui-form-preview__bd">
                     <div class="weui-form-preview__item">
@@ -84,7 +84,7 @@
                         </div>
                     </div>
     				<div class="weui-form-preview__hd"></div>
-                    <div class="weui-form-preview__bd">
+                    <div class="weui-form-preview__bd bottom_line">
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">号牌号码</label>
                             <span class="weui-form-preview__value" ng-bind="jsyxx.hphm"></span>
@@ -121,13 +121,22 @@
             </div>
 			
 			<br/>
+			
 			<div class="weui-form-preview">
                 <div class="weui-form-preview__bd">
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">事故语音</label>
                     </div>
                     <div class="weui-form-preview__item">
-                        
+						<div ng-repeat="voice in voiceUrls" class="voice left">
+							<div class="arrow"><em></em></div>
+                            <div class="voiceDiv" ng-style="voiceStyle(voice.duration);" 
+								ng-class="{'playing':voice.playing}" 
+								ng-click="voiceClick('voice'+$index);"></div>
+							<span class="voiceDuration"><span ng-bind="voice.duration"></span>"</span>
+                            <audio id="voice{{$index}}" controls="controls" hidden="true" 
+								ng-src="{{sce(voice.voiceUrl)}}" ng-bind="loadingVoice(voice,'voice'+$index);"></audio>
+						</div>
                     </div>
                 </div>
             </div>
@@ -138,8 +147,6 @@
         <script src="${springPath}/static/plugins/angularJS/angular-ui-router.js"></script>
 		<script src="${springPath}/static/plugins/angularJS/angular-validation.js"></script>
 		<script src="${springPath}/static/plugins/angularJS/angular-validation-rule.js"></script>
-        <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-        <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
 		<script src="http://map.qq.com/api/js?v=2.exp"></script>
 		<script src="${springPath}/static/js/common/util.js"></script>
 		<script src="${springPath}/static/js/common/wx-common.js"></script>

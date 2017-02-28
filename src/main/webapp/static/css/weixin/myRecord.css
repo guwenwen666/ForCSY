@@ -25,3 +25,74 @@ body {
 .weui-form-preview__hd{
 	padding: 0px 15px;
 }
+
+.bottom_line{
+	border-bottom: 1px solid #d9d9d9;
+}
+
+.voice{
+	width: 100%;
+	margin: 5px 0px;
+	height: 30px;
+	position: relative;
+	padding-left: 7px;
+	clear: both;
+	box-sizing: border-box;
+}
+
+.voiceDiv{
+	box-sizing: border-box;
+	border: 1px solid #E3E3E3;
+	border-radius: 5px;
+	height: 100%;
+	min-width: 10%;
+	background-image: url("../../img/weixin/voice.svg");
+	background-size: contain;
+	background-repeat: no-repeat; 
+	float: left;
+}
+
+.voiceDiv.playing{
+	background-image: url("../../img/weixin/voice_play.svg");
+}
+
+.voiceDuration{
+	padding-left: 8px;
+	float: left;
+}
+
+.arrow {
+   	-moz-border-bottom-colors: none;
+   	-moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: transparent rgba(0, 0, 0, 0.2) transparent transparent;
+    border-image: none;
+    border-style: dashed solid dashed dashed;
+    border-width: 5px;
+    display: inline-block;
+    font-size: 0;
+    height: 0;
+    left: -3px;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    margin-top: -5px; 
+    width: 0;
+    z-index: 2;
+}
+
+.left>.arrow em {
+    border-color: transparent #fff transparent transparent;
+    border-style: dashed solid dashed dashed;
+    border-width: 5px;
+    color: #666;
+    display: block;
+    font-size: 0;
+    height: 0;
+    left: -4px;
+    line-height: 0;
+    position: absolute;
+    top: -5px;
+    width: 0;
+}

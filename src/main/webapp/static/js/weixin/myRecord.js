@@ -19,20 +19,35 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     });
 });
 
-app.controller("detail", function($scope, $stateParams, $state){
+app.controller("detail", function($scope, $stateParams, $state, $http, $sce){
 	if(!$stateParams.data){
 		$state.go("/");
 		return;
 	}
+	
 	var info = $stateParams.data;
 	var resoure_prev = $("#wxResource").val() + "/" + new Date(info.occurrenceTime.time)
 			.format("yyyy-MM-dd")+"/"+ info.fkWxOpenid + "/";
+	//无法直接绑定audio元素问题
+	$scope.sce = $sce.trustAsResourceUrl;
 	
 	$scope.info = info;
+	
+	$http({
+		method: "post",
+		url: rootPath + "/getDriverByEventID",
+		params: {
+			id: info.id
+		}
+	}).success(function(data,status,config,headers){
+		$scope.info.jsyxxs = data;
+	});
+	
 	//日期格式化
 	$scope.formatterTime = function(date){
 		return new Date(date.time).format("yyyy-MM-dd hh:mm:ss");
 	};
+	
 	//驾驶员信息索引预定
 	$scope.jsyxxIndex = function(number){
 		return String.fromCharCode(number+65);
@@ -44,12 +59,74 @@ app.controller("detail", function($scope, $stateParams, $state){
 		$scope.imgUrls[index] = resoure_prev + item;
 	});
 	
+	//语音资源转换
 	$scope.voiceUrls = !info.liveVoice?[]:info.liveVoice.split(",");
 	$.each($scope.voiceUrls, function(index,item){
-		$scope.voiceUrls[index] = resoure_prev + item;
+		var voiceUrl = resoure_prev + item;
+		$scope.voiceUrls[index] = {
+				voiceUrl: voiceUrl,
+				playing: false,
+				duration: 0
+				};
 	});
 	
-	console.log($scope.info);
+	$scope.voiceClick = function(domId){
+		var dom = $("#"+domId)[0];
+		if(dom.paused){
+			dom.play();
+		}else{
+			dom.pause();
+		}
+	};
+	
+	$scope.voiceStyle = function(length){
+		var width = 0;
+		if(length>=60){
+			width = 2*10+8*5+50*0.5;
+		}else if(length>=10){
+			width = 2*10+8*5+(length-10)*1;
+		}else if(length>=2){
+			width = 2*10+(length-2)*3;
+		}else if(length>0){
+			width = (length-2)*5;
+		}else{
+			width = 10;
+		}
+		return {width:width+"%"};
+	};
+	
+	$scope.loadingVoice = function(voice, domId){
+		//微信内置浏览器
+		$("#"+domId).unbind("canplay").bind("canplay",function(){
+			var $this = $(this);
+			$scope.$apply(function(){
+				voice.duration = Math.ceil($this[0].duration);
+			});
+		});
+
+		$("#"+domId).unbind("play").bind("play",function(){
+			$scope.$apply(function(){
+				voice.playing = true;
+			});
+			
+			$(this).parent(".voice").siblings(".voice").children("audio").each(function(){
+				this.pause();
+			});
+		});
+		
+		$("#"+domId).unbind("ended").bind("ended",function(){
+			$scope.$apply(function(){
+				voice.playing = false;
+			});
+		});
+		
+		$("#"+domId).unbind("pause").bind("pause",function(){
+			$(this)[0].load();
+			$scope.$apply(function(){
+				voice.playing = false;
+			});
+		});
+	};
 });
 
 app.controller("myCtrl", function($scope, $http, $state){

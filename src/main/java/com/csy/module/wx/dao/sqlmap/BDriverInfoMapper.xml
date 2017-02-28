@@ -282,4 +282,12 @@
        and hphm like concat(concat('%',#{hphm,jdbcType=VARCHAR}),'%')
     </if>
   </select>
+  
+  <select id="selectDriversByAccidentID" resultType="com.csy.module.wx.entity.BDriverInfo">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from b_driver_info
+  	where id in (select fk_driver_id from b_accident_driver where id = #{id, jdbcType=VARCHAR})
+  </select>
+  	
 </mapper>
