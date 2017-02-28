@@ -10,7 +10,7 @@
 	<body ng-app="myApp" ng-controller="myCtrl" 
     		ng-init="inVoice=false;" 
     		ng-touchend="stopRecord();" 
-    		class="{{inVoice?'bodyInVoice':''}}" ontouchstart>
+    		class="{{inVoice?'bodyInVoice':''}}" ontouchstart style="display:none;">
 		<div class="formInValidErrorMsg" id="formInValidErrorMsg"></div>
 		<form name="registerForm" novalidate>
 			<div class="weui-cells__title">事故信息</div>
@@ -86,10 +86,15 @@
 			</div>
 			
 			<div class="weui-cells__title">现场图片上传
+				
 				<span class="weui-cells__ft union-btn" ng-init="editUploder=false" ng-hide="editUploder" 
 					ng-click="editUploder=!editUploder">
 					<span class="weui-icon-modify_sm"></span>编辑
 				</span>
+				
+				<a class="weui-cells__ft union-btn" target="_blank" 
+					href="${springPath}/static/img/weixin/example.jpg">示例</a>
+				
 				<span class="weui-cells__ft union-btn" ng-hide="!editUploder" 
 					ng-click="editUploder=!editUploder">
 					<span class="weui-icon-success_sm"></span>完成

@@ -619,6 +619,9 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 
 
 $(function(){
+	
+	$("body").css("display","block");
+	
 	$.getJSON(rootPath+"/wx/sign?url=" + encodeURIComponent(location.href.split('#')[0]), function (res) {
         wx.config({
             debug: false,

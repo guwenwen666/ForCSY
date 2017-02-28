@@ -15,7 +15,7 @@
 		
 		<div ui-view></div>
 		
-		<div ng-controller="myCtrl">
+		<div ng-controller="myCtrl" class="myCtrl">
 			<div ng-repeat="page in pages" class="page">
     			<div class="weui-panel" ng-repeat="info in page.list">
                     <div class="weui-panel__hd" ng-bind="formatterTime(info.occurrenceTime)"></div>
@@ -49,94 +49,107 @@
         </div>
 		
 		<script type="text/ng-template" id="detail.html">
-		
-			<div class="weui-form-preview">
-                <div class="weui-form-preview__bd">
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">事件时间</label>
-                        <span class="weui-form-preview__value" ng-bind="formatterTime(info.occurrenceTime)"></span>
-                    </div>
-                </div>
-				<div class="weui-form-preview__hd"></div>
-                <div class="weui-form-preview__bd">
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">事件地点</label>
-                        <span class="weui-form-preview__value" ng-bind="info.position"></span>
-                    </div>
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">事故责任</label>
-                        <span class="weui-form-preview__value" ng-bind="info.duty"></span>
-                    </div>
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">事故描述</label>
-                        <span class="weui-form-preview__value" ng-bind="info.description"></span>
-                    </div>
-                </div>
-            </div>
-			
-			<br/>
-			<div class="weui-form-preview">
-				<div ng-repeat="jsyxx in info.jsyxxs">
+			<div class="detailDiv hidden">
+    			<div class="weui-form-preview">
                     <div class="weui-form-preview__bd">
                         <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label"><span ng-bind="jsyxxIndex($index)"></span>方姓名</label>
-                            <span class="weui-form-preview__value" ng-bind="jsyxx.name"></span>
+                            <label class="weui-form-preview__label">事件时间</label>
+                            <span class="weui-form-preview__value" ng-bind="formatterTime(info.occurrenceTime)"></span>
                         </div>
                     </div>
     				<div class="weui-form-preview__hd"></div>
-                    <div class="weui-form-preview__bd bottom_line">
+                    <div class="weui-form-preview__bd">
                         <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">号牌号码</label>
-                            <span class="weui-form-preview__value" ng-bind="jsyxx.hphm"></span>
+                            <label class="weui-form-preview__label">事件地点</label>
+                            <span class="weui-form-preview__value" ng-bind="info.position"></span>
                         </div>
                         <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">联系方式</label>
-                            <span class="weui-form-preview__value" ng-bind="jsyxx.contact"></span>
+                            <label class="weui-form-preview__label">事故责任</label>
+                            <span class="weui-form-preview__value" ng-bind="info.duty"></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">事故描述</label>
+                            <span class="weui-form-preview__value" ng-bind="info.description"></span>
                         </div>
                     </div>
-				</div>
-			</div>
-			
-			<br/>
-			<div class="weui-form-preview">
-                <div class="weui-form-preview__bd">
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">事故图片</label>
-                    </div>
-                    <div class="weui-form-preview__item">
-						<div ng-show="imgUrls.length==0"></div>
-						<div class="weui-cell__bd" ng-show="imgUrls.length>0">
-							<div class="weui-uploader">
-								<div class="weui-uploader__bd">
-									<ul class="weui-uploader__files">
-										<li class="weui-uploader__file" 
-											ng-repeat="imgUrl in imgUrls"
-											style="background-image:url('{{imgUrl}}');"></li>
-                                    </ul>
+                </div>
+    			
+    			<br/>
+    			<div class="weui-form-preview">
+    				<div ng-repeat="jsyxx in info.jsyxxs">
+                        <div class="weui-form-preview__bd">
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label"><span ng-bind="jsyxxIndex($index)"></span>方姓名</label>
+                                <span class="weui-form-preview__value" ng-bind="jsyxx.name"></span>
+                            </div>
+                        </div>
+        				<div class="weui-form-preview__hd"></div>
+                        <div class="weui-form-preview__bd bottom_line">
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">号牌号码</label>
+                                <span class="weui-form-preview__value" ng-bind="jsyxx.hphm"></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">联系方式</label>
+                                <span class="weui-form-preview__value" ng-bind="jsyxx.contact"></span>
+                            </div>
+                        </div>
+    				</div>
+    			</div>
+    			
+    			<br/>
+    			<div class="weui-form-preview">
+                    <div class="weui-form-preview__bd">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">事故图片</label>
+                        </div>
+                        <div class="weui-form-preview__item">
+    						<div ng-show="imgUrls.length==0"></div>
+    						<div class="weui-cell__bd" ng-show="imgUrls.length>0">
+    							<div class="weui-uploader">
+    								<div class="weui-uploader__bd">
+    									<ul class="weui-uploader__files">
+    										<li class="weui-uploader__file" ng-class="{'weui-uploader__file_status':!img.cacheSuccess}" 
+    											ng-repeat="img in imgUrls"
+    											style="background-image:url('{{img.src}}');" ng-click="imgClick(img.src);">
+        										<div>
+                                                    <div class="weui-uploader__file-content">
+                                                        <i  class="weui-loading"></i>
+                                                    </div>
+                                                </div>
+											</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-			
-			<br/>
-			
-			<div class="weui-form-preview">
-                <div class="weui-form-preview__bd">
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">事故语音</label>
-                    </div>
-                    <div class="weui-form-preview__item">
-						<div ng-repeat="voice in voiceUrls" class="voice left">
-							<div class="arrow"><em></em></div>
-                            <div class="voiceDiv" ng-style="voiceStyle(voice.duration);" 
-								ng-class="{'playing':voice.playing}" 
-								ng-click="voiceClick('voice'+$index);"></div>
-							<span class="voiceDuration"><span ng-bind="voice.duration"></span>"</span>
-                            <audio id="voice{{$index}}" controls="controls" hidden="true" 
-								ng-src="{{sce(voice.voiceUrl)}}" ng-bind="loadingVoice(voice,'voice'+$index);"></audio>
-						</div>
+    			
+    			<br/>
+    			
+    			<div class="weui-form-preview">
+                    <div class="weui-form-preview__bd">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">事故语音</label>
+                        </div>
+                        <div class="weui-form-preview__item">
+							<div ng-show="voiceUrls.length==0" style="text-align:left;">
+								未上传事故语音
+                            </div>
+    						<div ng-repeat="voice in voiceUrls" class="voice arrowLeft">
+    							<div class="arrow"><em></em></div>
+                                <div class="voiceDiv" ng-style="voiceStyle(voice.duration);" 
+    								ng-class="{'playing':voice.playing}" 
+    								ng-click="voiceClick('voice'+$index);"></div>
+    							<span class="voiceDuration">
+    								<span ng-show="voice.cache"><span ng-bind="voice.duration"></span>"</span>
+    								<span ng-show="!voice.cache"></span>
+    							</span>
+                                <audio id="voice{{$index}}" controls="controls" hidden="true" 
+    								ng-src="{{sce(voice.voiceUrl)}}" ng-bind="loadingVoice(voice,'voice'+$index);"></audio>
+    						</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -150,6 +163,6 @@
 		<script src="http://map.qq.com/api/js?v=2.exp"></script>
 		<script src="${springPath}/static/js/common/util.js"></script>
 		<script src="${springPath}/static/js/common/wx-common.js"></script>
-		<script src="${springPath}/static/js/weixin/myRecord.js"></script>
+		<script src="${springPath}/static/js/weixin/myRecord.js?a=10"></script>
 	</body>
 </html>

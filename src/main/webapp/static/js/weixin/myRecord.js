@@ -41,6 +41,7 @@ app.controller("detail", function($scope, $stateParams, $state, $http, $sce){
 		}
 	}).success(function(data,status,config,headers){
 		$scope.info.jsyxxs = data;
+		$("div.detailDiv").removeClass("hidden");
 	});
 	
 	//日期格式化
@@ -56,18 +57,45 @@ app.controller("detail", function($scope, $stateParams, $state, $http, $sce){
 	//图片资源转换
 	$scope.imgUrls = !info.liveImage?[]:info.liveImage.split(",");
 	$.each($scope.imgUrls, function(index,item){
-		$scope.imgUrls[index] = resoure_prev + item;
+		var imgUrl = resoure_prev + item;
+		$scope.imgUrls[index] = {
+			src: imgUrl,
+			cacheSuccess: false
+		};
 	});
+	
+	$.each($scope.imgUrls, function(index){
+		var img = new Image();
+		img.src = this.src;
+		img.onload = function(){
+			$scope.$apply(function(){
+				$scope.imgUrls[index].cacheSuccess = true;
+			});
+		};
+	});
+	
+	
+	$scope.imgClick = function(src){
+		var srcArray = [];
+		for(var i=0;i<$scope.imgUrls.length;i++){
+			srcArray.push($scope.imgUrls[i].src);
+		}
+		WeixinJSBridge.invoke('imagePreview', {    
+			'current': src,    
+            'urls': srcArray
+		});
+	};
 	
 	//语音资源转换
 	$scope.voiceUrls = !info.liveVoice?[]:info.liveVoice.split(",");
 	$.each($scope.voiceUrls, function(index,item){
 		var voiceUrl = resoure_prev + item;
 		$scope.voiceUrls[index] = {
-				voiceUrl: voiceUrl,
-				playing: false,
-				duration: 0
-				};
+			voiceUrl: voiceUrl,
+			playing: false,
+			duration: 0,
+			cache: false
+		};
 	});
 	
 	$scope.voiceClick = function(domId){
@@ -101,6 +129,7 @@ app.controller("detail", function($scope, $stateParams, $state, $http, $sce){
 			var $this = $(this);
 			$scope.$apply(function(){
 				voice.duration = Math.ceil($this[0].duration);
+				voice.cache = true;
 			});
 		});
 
@@ -131,6 +160,7 @@ app.controller("detail", function($scope, $stateParams, $state, $http, $sce){
 
 app.controller("myCtrl", function($scope, $http, $state){
 	
+	$scope.hidden = false;
 	$scope.pages = [];
 	$scope.pageNum = 1;
 	$scope.noMoreData = false;
@@ -193,3 +223,12 @@ app.controller("myCtrl", function($scope, $http, $state){
 		$state.go("detail", {data:info});
 	};
 });
+
+//浏览器返回事件
+window.addEventListener("hashchange", function(e) {
+	if(location.hash.indexOf("detail")>0){
+		$("div.myCtrl").css("display", "none");
+	}else{
+		$("div.myCtrl").css("display", "block");
+	}
+}, false);

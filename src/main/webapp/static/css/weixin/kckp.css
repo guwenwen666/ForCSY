@@ -183,6 +183,7 @@ A.addJsy{
 .union-btn{
 	cursor: pointer;
 	color: #586c94;
+	margin-left: 1em;
 }
 
 .shake-little{
