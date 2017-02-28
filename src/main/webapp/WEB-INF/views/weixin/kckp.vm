@@ -92,13 +92,13 @@
 					<span class="weui-icon-modify_sm"></span>编辑
 				</span>
 				
-				<a class="weui-cells__ft union-btn" target="_blank" 
-					href="${springPath}/static/img/weixin/example.jpg">示例</a>
-				
 				<span class="weui-cells__ft union-btn" ng-hide="!editUploder" 
 					ng-click="editUploder=!editUploder">
 					<span class="weui-icon-success_sm"></span>完成
 				</span>
+				
+				<a class="weui-cells__ft union-btn" target="_blank" 
+					href="${springPath}/static/img/weixin/example.jpg">示例</a>
 			</div>
 			<div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
