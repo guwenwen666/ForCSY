@@ -3,6 +3,8 @@
 <head>
 	<title>快处快赔查询</title>
 	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=9" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 	<link rel="stylesheet" href="${springPath}/static/css/common/ued.css"/>
 	<link href="${springPath}/static/plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -85,6 +87,7 @@
 		</div>
 	</div>
 </body>
+<script src="http://api.html5media.info/1.1.6/html5media.min.js"></script>
 <script src="${springPath}/static/plugins/jquery/dist/jquery.min.js"></script>
 <script src="${springPath}/static/DatePicker/WdatePicker.js"></script>
 <script src="${springPath}/static/js/common/common.js"></script>

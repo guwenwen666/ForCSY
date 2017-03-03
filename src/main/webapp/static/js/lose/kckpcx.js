@@ -178,7 +178,7 @@ function makeRightLane(data){
 	$("#rightTable").append("<tr id='rightTr'></tr>");
 	$("#rightTr").append("<td></td>");
 	$("#rightTr").append("<td style='text-align: center;width: 10%;'><img src='"+data.wxtx+"'></td>");
-	$("#rightTr").append("<td style='text-align: left;width: 20%;'>"+data.wxzh+"</td>");
+	$("#rightTr").append("<td style='text-align: left;width: 20%;'><font color='#41D4FF' size='3'>"+data.wxzh+"</font></td>");
 	$("#rightTr").append("<td></td>");
 	//事故信息
 	$("#mainDiv2").append("<div id='right2'style='height: 40%;width:99.7%;border: 1px solid #d1d1d1;'></div>");
@@ -277,13 +277,22 @@ function makeRightLane(data){
 					$("#voiceFirst").height("10%");
 					$("#voiceFirst1").height("87%");
 					$("#voiceTable").append("<tr id='voiceTr2'></tr>");
-					$("#voiceTr2").append("<td style='width:30%;text-align:center;'><audio src='"+(imagePath+str[i])+"' preload='auto' controls></audio></td>");
+					if(navigator.appName.indexOf("Microsoft Internet Explorer")!=-1 && document.all){//ie8
+						 $("#voiceTr2").append("<td style='width:30%;text-align:center;'> <object data='"+(imagePath+str[i])+"' height='90%' width='90%'><embed src='"+(imagePath+str[i])+"' height='90%' width='90%' /></object</td>");
+					 }else{
+						 $("#voiceTr2").append("<td style='width:30%;text-align:center;'><audio src='"+(imagePath+str[i])+"' preload='auto' controls='controls'></audio></td>");
+					 }
 				}else{
 					$("#voiceTable").append("<tr id='voiceTr1'></tr>");
-					$("#voiceTr1").append("<td style='width:30%;text-align:center;'><audio src='"+(imagePath+str[i])+"' preload='auto' controls></audio></td>");
+					 if(navigator.appName.indexOf("Microsoft Internet Explorer")!=-1 && document.all){//ie8
+						 $("#voiceTr1").append("<td style='width:30%;text-align:center;'> <object data='"+(imagePath+str[i])+"' height='90%' width='90%'><embed src='"+(imagePath+str[i])+"' height='90%' width='90%' /></object</td>");
+					 }else{
+						 $("#voiceTr1").append("<td style='width:30%;text-align:center;'><audio src='"+(imagePath+str[i])+"' preload='auto' controls='controls'></audio></td>");
+					 }
 				}
 			}
 		}
 	}
+	
 }
 
