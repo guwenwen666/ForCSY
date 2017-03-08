@@ -11,17 +11,24 @@
 	<link href="${springPath}/static/css/common/common.css" rel="stylesheet">
 	<style>
 		.d_over{
-			 background-color:#41D4FF;
+			 background-color:#BAE7F4;
 		}  
 		.d_out{
 			background-color:#EFEFEF;
 		}  
+		.item_over{
+			z-index: 2;
+			-webkit-box-shadow:0 15px 30px rgba(0,0,0,0.1);
+			box-shadow:0 15px 30px rgba(0,0,0,0.1);
+			-webkit-transform:translate3d(0,-2px,0);
+			transform:translate3d(0,-2px,0);
+		}
 	</style>
 </head>
 <body>
 #parse("/include/head/commonTop.vm")
 <div class="whole-div">
-	    <div class="main-top" style="float:left;border: 1px solid #d1d1d1;width: 98.2%;height:22%;margin: 10px 10px 10px 10px;">
+	    <div class="main-top" style="float:left;border: 1px solid #d1d1d1;width: 98.2%;margin: 10px 10px 10px 10px;">
 			<div class="titleDiv">
 				<span class="pageTitle" style="padding-left: 600px;">快处快赔查询</span>
 			</div>
@@ -96,4 +103,5 @@
 <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
 <input type="hidden" id="hidden_kssj" value="${startTime}" />
 <input type="hidden" id="hidden_jssj" value="${endTime}" />
+<input type="hidden" id="hidden_param" value="${param}" />
 </html>

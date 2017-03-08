@@ -1,15 +1,21 @@
 
 $(function() {
 	initResize();
+	//初始化尺寸
+	$(window).resize(function(){
+		initResize();
+	});
 	initComponent();
 	loadLxk();
 	restParam();
+	$('#user-name').val($('#hidden_param').val());
 });
 function initResize(){
 	var  winWidth = $(window).width();//窗口宽度
 	var  winHeight = $(window).height();//窗口高度
 	$(".whole-div").width(winWidth); //整体的宽度
 	$(".whole-div").height(winHeight - 45);//整体的高度
+	$(".main-top").height((winHeight/100)*19);//整体的高度
 	$('#dataGrid').height($('.main-top').height() - $('.titleDiv').height());
 	$('.main-top1').height($('.whole-div').height() - $('.main-top').height()-35);
 	$('#mainDiv1').height($('.main-top1').height() - $('.titleDiv').height()-4);
@@ -102,12 +108,14 @@ function btnSearch(){
 		}
 	});
 }
+var jsonData = "";
 //左侧动态生成快处快赔查询列表
 function makeLeftTable(data){
 	if(data.data != null && data.data.length > 0){
+		jsonData = data;
 		$.each(data.data, function (i, item) {
 			var j = i + 1;
-			$("#mainDiv1").append("<div id='main"+i+"' class='d_out' onmouseover='sizeOver("+i+")' onmouseout='sizeOut("+i+")' style='width: 99.5%;height:100px;border: 1px solid #d1d1d1;cursor:pointer' onclick='onClick(this,"+JSON.stringify(item)+")'></div>");
+			$("#mainDiv1").append("<div id='main"+i+"' class='item_over' onmouseover='sizeOver("+i+")' onmouseout='sizeOut("+i+")' style='width: 99.5%;height:100px;border: 1px solid #d1d1d1;cursor:pointer' onclick='onClick(this,"+JSON.stringify(item)+","+i+")'></div>");
 			$("#main"+i).append("<div id='divDiv"+i+"' style='width:25%;float: left;margin-top: 10px;text-align: center;position: relative'></div>");
 			$("#divDiv"+i).append("<div id='text' style='position: absolute; top: 25px; left: 45%;'><p>"+j+"</p></div>");
 			$("#divDiv"+i).append("<img  id='images' src='"+rootPath+"/static/img/common/background.png' />");
@@ -137,17 +145,26 @@ function makeLeftTable(data){
 }
 //鼠标移入事件
 function sizeOver(e){
-	$("#main"+e).removeClass("d_out");
-	$("#main"+e).addClass("d_over");
+	if($("#main"+e).attr('class') != "d_over item_over"){
+		$("#main"+e).removeClass("item_over");
+		$("#main"+e).addClass("d_out");
+	}
 }
 //鼠标移出事件
 function sizeOut(e){
-	$("#main"+e).removeClass("d_over");
-	$("#main"+e).addClass("d_out");
+	$("#main"+e).removeClass("d_out");
+	$("#main"+e).addClass("item_over");
 }
 //选中区域的点击事件
-function onClick(value,data){
+function onClick(value,data,e){
+	$.each(jsonData.data, function (i, item) {
+		if(i != e && $("#main"+i).attr('class') == "d_over item_over"){
+			$("#main"+i).removeClass("d_over");
+		}
+	});
 	codeLatLng(data);
+	$("#main"+e).removeClass("d_out");
+	$("#main"+e).addClass("d_over");
 }
 //根据地图上面的经纬度来获取具体城市坐在位置名称
 var sgwzmc = "";
@@ -237,7 +254,7 @@ function makeRightLane(data){
 	//现场照片
 	var imagePath = data.imagePath+"/"+data.sgsj.substring(0,10)+"/"+data.wxid+"/";
 	if(data.liveImage != ""){
-		$("#mainDiv2").append("<div id='imageDiv' style='height: 50%;width:99.7%;border: 1px solid #d1d1d1;'></div>");
+		$("#mainDiv2").append("<div id='imageDiv' style='height: 45%;width:99.7%;border: 1px solid #d1d1d1;'></div>");
 		$("#imageDiv").append("<div id='imageFirst'style='width: 100%;height: 20%;'></div>");
 		$("#imageFirst").append("<div id='imageTwo'style='padding-left:20px;margin-top: 10px;'></div>");
 		$("#imageTwo").append("<img style='float: left;' src='"+rootPath+"/static/img/common/site.png'/>");
@@ -271,24 +288,26 @@ function makeRightLane(data){
 		$("#voiceFirst1").append("<table id='voiceTable' style='width:100%;height:100%;border-collapse:collapse;' border='1' bordercolor='#d1d1d1' rules=rows></table>");
 		var str = data.liveVoice.split(",");
 		if(str != null && str.length > 0){
-			for(var i = 0; i < str.length; i ++){
-				if(i >= 2){
+			if(navigator.appName.indexOf("Microsoft Internet Explorer")!=-1 && document.all){//ie8
+				if(str.length <= 2){
+					 $("#voiceTable").append("<tr id='voiceTr1'></tr>");
+					 for(var i = 0; i < str.length; i ++){
+						 $("#voiceTr1").append("<td style='width:30%;text-align:center;'><object PLAY='false' data='"+(imagePath+str[i])+"' height='90%' width='90%'><embed src='"+(imagePath+str[0])+"' height='90%' width='90%' autostart='false'/></object></td>");
+					 }
+				}else{
 					$("#voiceDiv").height("85%");
 					$("#voiceFirst").height("10%");
 					$("#voiceFirst1").height("87%");
-					$("#voiceTable").append("<tr id='voiceTr2'></tr>");
-					if(navigator.appName.indexOf("Microsoft Internet Explorer")!=-1 && document.all){//ie8
-						 $("#voiceTr2").append("<td style='width:30%;text-align:center;'> <object data='"+(imagePath+str[i])+"' height='90%' width='90%'><embed src='"+(imagePath+str[i])+"' height='90%' width='90%' /></object</td>");
-					 }else{
-						 $("#voiceTr2").append("<td style='width:30%;text-align:center;'><audio src='"+(imagePath+str[i])+"' preload='auto' controls='controls'></audio></td>");
-					 }
-				}else{
 					$("#voiceTable").append("<tr id='voiceTr1'></tr>");
-					 if(navigator.appName.indexOf("Microsoft Internet Explorer")!=-1 && document.all){//ie8
-						 $("#voiceTr1").append("<td style='width:30%;text-align:center;'> <object data='"+(imagePath+str[i])+"' height='90%' width='90%'><embed src='"+(imagePath+str[i])+"' height='90%' width='90%' /></object</td>");
-					 }else{
-						 $("#voiceTr1").append("<td style='width:30%;text-align:center;'><audio src='"+(imagePath+str[i])+"' preload='auto' controls='controls'></audio></td>");
-					 }
+					$("#voiceTr1").append("<td style='width:30%;height:50%;text-align:center;'><object data='"+(imagePath+str[0])+"' height='90%' width='90%'><embed src='"+(imagePath+str[0])+"' height='90%' width='90%' autostart='false'/></object></td>");
+					$("#voiceTr1").append("<td style='width:30%;height:50%;text-align:center;'><object data='"+(imagePath+str[1])+"' height='90%' width='90%'><embed src='"+(imagePath+str[1])+"' height='90%' width='90%' autostart='false'/></object></td>");
+					$("#voiceTable").append("<tr id='voiceTr2'></tr>");
+					$("#voiceTr2").append("<td style='width:30%;height:50%;text-align:center;'><object data='"+(imagePath+str[2])+"' height='90%' width='90%'><embed src='"+(imagePath+str[0])+"' height='90%' width='90%' autostart='false'/></object></td>");
+				}
+			}else{
+				for(var i = 0; i < str.length; i ++){
+					$("#voiceTable").append("<tr id='voiceTr"+i+"'></tr>");
+					$("#voiceTr"+i).append("<td style='text-align:center;'><audio src='"+(imagePath+str[i])+"' preload='auto' controls='controls'></audio></td>");
 				}
 			}
 		}
