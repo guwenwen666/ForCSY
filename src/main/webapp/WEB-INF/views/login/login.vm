@@ -22,13 +22,13 @@
 			<div class="section fp-auto-height" style="display: none;">
 				#parse("/include/head/commonTopWithNoLink.vm")
 			</div>
-            <div class="section" style="background-image:url('${springPath}/static/img/login/login/login.jpg');">
-				<div class="container box-content">
+            <div class="section">
+				<div class="container box-content" style="top:25%;">
 					<div class="row">
 						<div class="col-md-offset-1 col-md-5 hidden-xs">
 							<img width="100%;" style="display: none;" src="${springPath}/static/img/login/login/T1_1.png" />
                         </div>
-						<div class="col-md-offset-1 col-md-3 col-xs-12" style="min-width:300px;">
+						<div class="col-md-offset-1 col-md-3 col-xs-12" style="min-width:25%;">
 							<div class="loginBox">
 								<div class="loginBoxBackground hidden-xs" style="filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr=#33000000,endColorstr=#33000000)"></div>
     								

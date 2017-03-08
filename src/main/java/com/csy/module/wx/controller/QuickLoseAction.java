@@ -46,6 +46,7 @@ public class QuickLoseAction {
 		  String formatTime1 = TimeFormatUtil.timeToStr(calendar, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		  paramsMap.put("startTime", formatTime1);
 		  paramsMap.put("endTime", formatTime);
+		  paramsMap.put("param", param);
 		  return new ModelAndView("lose/kckpcx",paramsMap);
 	}
 	/**

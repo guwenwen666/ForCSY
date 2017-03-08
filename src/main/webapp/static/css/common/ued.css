@@ -202,6 +202,7 @@ li {
     width:55px;
     float: left;
     margin-left: 2px;
+    text-align: center;   
 }
 .hpbzDiv{
 	width:20px;
@@ -228,6 +229,7 @@ li {
     border: 1px solid #d1d1d1;
     background-color: #fff;
     box-shadow: 0 0 3px white inset, 0 1px 1px rgba(0, 0, 0, 0.1);
+    padding: 5% 0 
 }
 .date-icon {
 	cursor:pointer;
