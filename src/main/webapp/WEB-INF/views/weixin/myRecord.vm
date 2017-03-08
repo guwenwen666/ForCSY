@@ -156,7 +156,7 @@
         </script>
 		
 		<script src="${springPath}/static/js/weixin/zepto.min.js"></script>
-		<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+		<script src="${springPath}/static/plugins/angularJS/angular.min.js"></script>
         <script src="${springPath}/static/plugins/angularJS/angular-ui-router.js"></script>
 		<script src="${springPath}/static/plugins/angularJS/angular-validation.js"></script>
 		<script src="${springPath}/static/plugins/angularJS/angular-validation-rule.js"></script>

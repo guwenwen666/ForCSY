@@ -111,7 +111,7 @@ DROP TABLE IF EXISTS `b_xtpz_dmx`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `b_xtpz_dmx` (
-  `id` int(10) NOT NULL,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `dmlxbh` int(10) NOT NULL COMMENT '外键 代码类型英文名',
   `dmxywm` varchar(32) NOT NULL COMMENT '代码项英文名',
   `dmxzwm` varchar(32) NOT NULL COMMENT '代码项中文名',
@@ -127,6 +127,19 @@ CREATE TABLE `b_xtpz_dmx` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代码项管理';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+-- ----------------------------
+-- Table structure for `b_xtpz`
+-- ----------------------------
+DROP TABLE IF EXISTS `b_qj_xtpz`;
+CREATE TABLE `b_qj_xtpz` (
+  `id` int(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(32) NOT NULL COMMENT '变量名',
+  `name_cn` varchar(32) DEFAULT NULL COMMENT '变量中文名',
+  `val` varchar(128) DEFAULT NULL COMMENT '变量对应的配置值',
+  `expand` varchar(128) DEFAULT NULL COMMENT '代码项扩展',
+  `description` varchar(256) DEFAULT NULL COMMENT '代码项描述',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `b_wx_user`
@@ -196,16 +209,17 @@ CREATE TABLE `b_accident_info` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='事故信息表';
 
+
 -- ----------------------------
--- Table structure for `b_xtpz`
+-- Table structure for `b_wx_fkyj`
 -- ----------------------------
-DROP TABLE IF EXISTS `b_qj_xtpz`;
-CREATE TABLE `b_qj_xtpz` (
-  `id` int(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(32) NOT NULL COMMENT '变量名',
-  `name_cn` varchar(32) DEFAULT NULL COMMENT '变量中文名',
-  `val` varchar(128) DEFAULT NULL COMMENT '变量对应的配置值',
-  `expand` varchar(128) DEFAULT NULL COMMENT '代码项扩展',
-  `description` varchar(256) DEFAULT NULL COMMENT '代码项描述',
+DROP TABLE IF EXISTS `b_wx_fkyj`;
+CREATE TABLE `csy`.`b_wx_fkyj` (
+  `id` VARCHAR(64) NOT NULL COMMENT '主键Key',
+  `openid` VARCHAR(64) NOT NULL COMMENT '微信用户ID',
+  `type` INT(10) NULL COMMENT '反馈类型',
+  `image` VARCHAR(1024) NULL COMMENT '错误图例 (多张图片以分隔符,隔开)',
+  `description` VARCHAR(128) NULL COMMENT '描述信息',
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '提交时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '反馈意见表';

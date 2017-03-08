@@ -377,7 +377,7 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 		        for(var i=0; i<localIds.length; i++){
 		        	if($scope.xxtps.length >= 10){
 		        		alert("最多可上传十张图片!");
-		        		return;
+		        		break;
 		        	}
 		        	$scope.$apply(function(){
 		        		$scope.xxtps.push({
@@ -590,7 +590,7 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 			submitInfo.liveImage = xxtpsUrl.join(",");
 			submitInfo.liveVoice = voicesUrl.join(",");
 			submitInfo.occurrenceTime = submitInfo.occurrenceTime.getTime();
-			
+			submitInfo.a = 1;
 			if($validationProvider.checkValid($scope.registerForm)){
 				//记录开始提交
 				$scope.submitting = true;
@@ -607,7 +607,7 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 					console.log(data);
 				}).error(function(data,status,hedaers,config){
 					$scope.submitting = false;
-					$state.go("formRst",{errMsg:"系统异常! 错误代码:400"});
+					$state.go("formRst",{errMsg:"系统异常! 错误代码:"+status});
 					console.log(data);
 				});
 			}else{

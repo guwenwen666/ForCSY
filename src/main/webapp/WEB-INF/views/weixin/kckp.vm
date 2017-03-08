@@ -280,7 +280,7 @@
                     <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg"></i></div>
                     <div class="weui-msg__text-area">
                         <h2 class="weui-msg__title">操作失败</h2>
-                        <p class="weui-msg__desc">请求服务出现异常，请联系管理员寻求帮助！</p>
+                        <p class="weui-msg__desc">请求服务出现异常，<a href="./fkyj/index">点击反馈</a></p>
                     </div>
                     <div class="weui-msg__opr-area">
                         <p class="weui-btn-area">
@@ -297,7 +297,7 @@
 		<script src="${springPath}/static/js/common/common.js"></script>
 		-->
 		<script src="${springPath}/static/js/weixin/zepto.min.js"></script>
-		<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+		<script src="${springPath}/static/plugins/angularJS/angular.min.js"></script>
         <script src="${springPath}/static/plugins/angularJS/angular-ui-router.js"></script>
 		<script src="${springPath}/static/plugins/angularJS/angular-validation.js"></script>
 		<script src="${springPath}/static/plugins/angularJS/angular-validation-rule.js"></script>
