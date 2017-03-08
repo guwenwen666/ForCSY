@@ -116,7 +116,7 @@
                     </div>
                     <div class="weui-msg__opr-area">
                         <p class="weui-btn-area">
-                            <a href="../index" class="weui-btn weui-btn_default">回到主页</a>
+                            <a href="../index" class="weui-btn weui-btn_primary">回到主页</a>
                         </p>
                     </div>
                 </div>
