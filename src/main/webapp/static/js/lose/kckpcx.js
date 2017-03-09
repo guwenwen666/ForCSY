@@ -15,7 +15,7 @@ function initResize(){
 	var  winHeight = $(window).height();//窗口高度
 	$(".whole-div").width(winWidth); //整体的宽度
 	$(".whole-div").height(winHeight - 45);//整体的高度
-	$(".main-top").height((winHeight/100)*19);//整体的高度
+	$(".main-top").height(winHeight/6);//整体的高度
 	$('#dataGrid').height($('.main-top').height() - $('.titleDiv').height());
 	$('.main-top1').height($('.whole-div').height() - $('.main-top').height()-35);
 	$('#mainDiv1').height($('.main-top1').height() - $('.titleDiv').height()-4);
@@ -190,7 +190,7 @@ function onClickImage(e,url){
 function makeRightLane(data){
 	$("#mainDiv2").empty();
 	//微信
-	$("#mainDiv2").append("<div id='right1' style='height: 20%;width: 99.7%;border: 1px solid #d1d1d1;'></div>");
+	$("#mainDiv2").append("<div id='right1' style='height: 15%;width: 99.7%;border: 1px solid #d1d1d1;'></div>");
 	$("#right1").append("<table id='rightTable' style='width:100%;height:100%;'></table>");
 	$("#rightTable").append("<tr id='rightTr'></tr>");
 	$("#rightTr").append("<td></td>");
@@ -203,10 +203,10 @@ function makeRightLane(data){
 	$("#accident").append("<div id='accidentdiv'style='padding-left:20px;margin-top: 10px;'></div>");
 	$("#accidentdiv").append("<img style='float: left;' src='"+rootPath+"/static/img/common/accident.png'/>");
 	$("#accidentdiv").append("<font color='#41D4FF' style='float: left;padding-left: 10px;'>事故信息</font>");
-	$("#right2").append("<div id='accidentTable' style='width: 100%;height: 74%;'></div>");
-	$("#accidentTable").append("<table id='accidenttable' style='width:100%;height:100%;border-collapse:collapse;'border='1' bordercolor='#d1d1d1' rules=rows></table>");
-	$("#accidenttable").append("<tr id='accidenttr1'></tr>");
-	$("#accidenttable").append("<tr id='accidenttr2'></tr>");
+	$("#right2").append("<div id='accidentTable' style='width: 100%;height: 75%;'></div>");
+	$("#accidentTable").append("<table id='accidenttable' style='width:100%;height:100%;border: 1px solid #d1d1d1;'></table>");
+	$("#accidenttable").append("<tr id='accidenttr1' style='border: 1px solid #d1d1d1;'></tr>");
+	$("#accidenttable").append("<tr id='accidenttr2' style='border: 1px solid #d1d1d1;'></tr>");
 	if(data.sgms.length > 60){
 		$("#accidenttr1").append("<td style='width:8%;' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>事故时间</strong></td>");
 		$("#accidenttr1").append("<td style='width:15%;'>"+data.sgsj+"</td>");
@@ -239,8 +239,8 @@ function makeRightLane(data){
 				$("#driverdiv1"+i).append("<font color='#41D4FF' style='float: left;padding-left: 10px;'>"+items.name+"驾驶员信息</font>");
 			}
 			$("#driverDiv"+i).append("<div id='driver"+i+"' style='width: 100%;height: 62%;'></div>");
-			$("#driver"+i).append("<table id='driverTable"+i+"' style='width:100%;height:100%;border-collapse:collapse;'border='1' bordercolor='#d1d1d1' rules=rows></table>");
-			$("#driverTable"+i).append("<tr id='driverTr"+i+"'></tr>");
+			$("#driver"+i).append("<table id='driverTable"+i+"' style='width:100%;height:100%;border: 1px solid #d1d1d1;'></table>");
+			$("#driverTable"+i).append("<tr id='driverTr"+i+"' style='border: 1px solid #d1d1d1;'></tr>");
 			$("#driverTr"+i).append("<td style='width:8%;' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>姓名</strong></td>");
 			$("#driverTr"+i).append("<td style='width:10%;'>"+items.name+"</td>");
 			$("#driverTr"+i).append("<td style='width:8%;' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>号牌号码</strong></td>");
@@ -259,22 +259,37 @@ function makeRightLane(data){
 		$("#imageFirst").append("<div id='imageTwo'style='padding-left:20px;margin-top: 10px;'></div>");
 		$("#imageTwo").append("<img style='float: left;' src='"+rootPath+"/static/img/common/site.png'/>");
 		$("#imageTwo").append("<font color='#41D4FF' style='float: left;padding-left: 10px;'>现场照片</font>");
-		$("#imageDiv").append("<div id='imageFirst1'style='width: 100%;height: 73%;'></div>");
-		$("#imageFirst1").append("<table id='imageTable' style='width:100%;height:100%;border-collapse:collapse;' border='1' bordercolor='#d1d1d1' rules=rows></table>");
+		$("#imageDiv").append("<div id='imageFirst1'style='width: 100%;height: 75%;'></div>");
+		$("#imageFirst1").append("<table id='imageTable' style='width:100%;height:100%;border: 1px solid #d1d1d1;'></table>");
 		var str = data.liveImage.split(",");
 		if(str != null && str.length > 0){
+			if(str.length <= 5){
+				$("#imageTable").append("<tr id='imageTr1' style='border: 1px solid #d1d1d1;'></tr>");
 				for(var i = 0; i < str.length; i ++){
-					if(i >= 5){//最多十张图片---一行是5张图片（2行）
-						$("#imageDiv").height("85%");
-						$("#imageFirst").height("10%");
-						$("#imageFirst1").height("87%");
-						$("#imageTable").append("<tr id='imageTr2'></tr>");
-						$("#imageTr2").append("<td style='width:20%;text-align:center;'><img style='width:100px;height:100px;cursor:pointer'onclick='onClickImage(this,"+JSON.stringify(imagePath+str[i])+")' src='"+(imagePath+str[i])+"'/></td>");
+					$("#imageTr1").append("<td style='width:20%;text-align:center;'><img style='width:140px;height:140px;cursor:pointer'onclick='onClickImage(this,"+JSON.stringify(imagePath+str[i])+")' src='"+(imagePath+str[i])+"'/></td>");
+				}
+			}else{
+				$("#imageDiv").height("85%");
+				$("#imageFirst").height("10%");
+				$("#imageFirst1").height("87%");
+				var a = str.length/5;
+				if(str.length > a*5){
+					a = a+1;
+				}
+				for(var i = 0; i < a; i++){
+					$("#imageTable").append("<tr id='imageTr"+i+"' style='border: 1px solid #d1d1d1;'></tr>");
+					if((i+1)*5 > str.length){
+						for(var j = i*5; j < str.length; j ++){
+							$("#imageTr"+i).append("<td style='width:20%;text-align:center;'><img style='width:140px;height:140px;cursor:pointer'onclick='onClickImage(this,"+JSON.stringify(imagePath+str[j])+")' src='"+(imagePath+str[j])+"'/></td>");
+						}
 					}else{
-						$("#imageTable").append("<tr id='imageTr1'></tr>");
-						$("#imageTr1").append("<td style='width:20%;text-align:center;'><img style='width:100px;height:100px;cursor:pointer'onclick='onClickImage(this,"+JSON.stringify(imagePath+str[i])+")' src='"+(imagePath+str[i])+"'/></td>");
+						for(var j = i*5; j < (i+1)*5; j ++){
+							$("#imageTr"+i).append("<td style='width:20%;text-align:center;'><img style='width:140px;height:140px;cursor:pointer'onclick='onClickImage(this,"+JSON.stringify(imagePath+str[j])+")' src='"+(imagePath+str[j])+"'/></td>");
+						}
 					}
 				}
+
+			}
 		}
 	}
 	//现场录音
@@ -285,28 +300,28 @@ function makeRightLane(data){
 		$("#voiceTwo").append("<img style='float: left;' src='"+rootPath+"/static/img/common/voice.png'/>");
 		$("#voiceTwo").append("<font color='#41D4FF' style='float: left;padding-left: 10px;'>现场录音</font>");
 		$("#voiceDiv").append("<div id='voiceFirst1'style='width: 100%;height: 80%;'></div>");
-		$("#voiceFirst1").append("<table id='voiceTable' style='width:100%;height:100%;border-collapse:collapse;' border='1' bordercolor='#d1d1d1' rules=rows></table>");
+		$("#voiceFirst1").append("<table id='voiceTable' style='width:100%;height:100%;border: 1px solid #d1d1d1;'></table>");
 		var str = data.liveVoice.split(",");
 		if(str != null && str.length > 0){
 			if(navigator.appName.indexOf("Microsoft Internet Explorer")!=-1 && document.all){//ie8
 				if(str.length <= 2){
-					 $("#voiceTable").append("<tr id='voiceTr1'></tr>");
+					 $("#voiceTable").append("<tr id='voiceTr1' style='border: 1px solid #d1d1d1;'></tr>");
 					 for(var i = 0; i < str.length; i ++){
-						 $("#voiceTr1").append("<td style='width:30%;text-align:center;'><object PLAY='false' data='"+(imagePath+str[i])+"' height='90%' width='90%'><embed src='"+(imagePath+str[0])+"' height='90%' width='90%' autostart='false'/></object></td>");
+						 $("#voiceTr1").append("<td style='width:30%;height:100%;text-align:center;'><object PLAY='false' data='"+(imagePath+str[i])+"' height='90%' width='90%'><embed src='"+(imagePath+str[i])+"' height='90%' width='90%' autostart='false'/></object></td>");
 					 }
 				}else{
 					$("#voiceDiv").height("85%");
 					$("#voiceFirst").height("10%");
 					$("#voiceFirst1").height("87%");
-					$("#voiceTable").append("<tr id='voiceTr1'></tr>");
-					$("#voiceTr1").append("<td style='width:30%;height:50%;text-align:center;'><object data='"+(imagePath+str[0])+"' height='90%' width='90%'><embed src='"+(imagePath+str[0])+"' height='90%' width='90%' autostart='false'/></object></td>");
-					$("#voiceTr1").append("<td style='width:30%;height:50%;text-align:center;'><object data='"+(imagePath+str[1])+"' height='90%' width='90%'><embed src='"+(imagePath+str[1])+"' height='90%' width='90%' autostart='false'/></object></td>");
-					$("#voiceTable").append("<tr id='voiceTr2'></tr>");
-					$("#voiceTr2").append("<td style='width:30%;height:50%;text-align:center;'><object data='"+(imagePath+str[2])+"' height='90%' width='90%'><embed src='"+(imagePath+str[0])+"' height='90%' width='90%' autostart='false'/></object></td>");
+					$("#voiceTable").append("<tr id='voiceTr1' style='border: 1px solid #d1d1d1;'></tr>");
+					$("#voiceTr1").append("<td style='width:30%;height:50%;text-align:center;'><object PLAY='false' data='"+(imagePath+str[0])+"' height='90%' width='90%'><embed src='"+(imagePath+str[0])+"' height='90%' width='90%' autostart='false'/></object></td>");
+					$("#voiceTr1").append("<td style='width:30%;height:50%;text-align:center;'><object PLAY='false' data='"+(imagePath+str[1])+"' height='90%' width='90%'><embed src='"+(imagePath+str[1])+"' height='90%' width='90%' autostart='false'/></object></td>");
+					$("#voiceTable").append("<tr id='voiceTr2' style='border: 1px solid #d1d1d1;'></tr>");
+					$("#voiceTr2").append("<td style='width:30%;height:50%;text-align:center;'><object PLAY='false' data='"+(imagePath+str[2])+"' height='90%' width='90%'><embed src='"+(imagePath+str[2])+"' height='90%' width='90%' autostart='false'/></object></td>");
 				}
 			}else{
 				for(var i = 0; i < str.length; i ++){
-					$("#voiceTable").append("<tr id='voiceTr"+i+"'></tr>");
+					$("#voiceTable").append("<tr id='voiceTr"+i+"' style='border: 1px solid #d1d1d1;'></tr>");
 					$("#voiceTr"+i).append("<td style='text-align:center;'><audio src='"+(imagePath+str[i])+"' preload='auto' controls='controls'></audio></td>");
 				}
 			}

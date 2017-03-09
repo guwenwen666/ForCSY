@@ -164,9 +164,6 @@ function getCookieVal(offset) {
 
 
 function init() {
-	if($(window).width() > 1362){
-		$('.container box-content:eq(0)').css('top','30%');//给top赋值 
-	}
 	// 手机注册按钮 暂不可用
 	$(".safeLogin").tooltip({
 		title : "扫码登录方式暂未提供",

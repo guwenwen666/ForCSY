@@ -29,8 +29,8 @@
 #parse("/include/head/commonTop.vm")
 <div class="whole-div">
 	    <div class="main-top" style="float:left;border: 1px solid #d1d1d1;width: 98.2%;margin: 10px 10px 10px 10px;">
-			<div class="titleDiv">
-				<span class="pageTitle" style="padding-left: 600px;">快处快赔查询</span>
+			<div class="titleDiv" style="text-align: center;">
+				<span class="pageTitle">快处快赔查询</span>
 			</div>
 			<div id="dataGrid">
 				<table style="width:100%;height:100%">
@@ -83,8 +83,8 @@
 				</table>
 			</div>
 			<div class="main-top1" style="float:left;border: 1px solid #d1d1d1;margin: 10px 50px 0px 0px;">
-				<div class="titleDiv">
-					<span class="pageTitle" style="padding-left: 600px;">快处快赔查询列表</span>
+				<div class="titleDiv" style="text-align: center;">
+					<span class="pageTitle">快处快赔查询列表</span>
 				</div>
 				<div id = "mainDiv1" style="float:left;width:28%;"class="overFlow">
 				</div>
