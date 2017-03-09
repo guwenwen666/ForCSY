@@ -590,7 +590,6 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 			submitInfo.liveImage = xxtpsUrl.join(",");
 			submitInfo.liveVoice = voicesUrl.join(",");
 			submitInfo.occurrenceTime = submitInfo.occurrenceTime.getTime();
-			submitInfo.a = 1;
 			if($validationProvider.checkValid($scope.registerForm)){
 				//记录开始提交
 				$scope.submitting = true;
