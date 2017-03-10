@@ -86,9 +86,9 @@
 				<div class="titleDiv" style="text-align: center;">
 					<span class="pageTitle">快处快赔查询列表</span>
 				</div>
-				<div id = "mainDiv1" style="float:left;width:28%;"class="overFlow">
+				<div id = "mainDiv1" style="float:left;"class="overFlow">
 				</div>
-				<div id = "mainDiv2" style="float:right;width:71%;" class="overFlow">
+				<div id = "mainDiv2" style="float:right;" class="overFlow">
 				</div>
 			</div>
 		</div>
