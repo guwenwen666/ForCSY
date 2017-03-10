@@ -10,7 +10,8 @@
 	<body ng-app="myApp" ng-controller="myCtrl" 
     		ng-init="inVoice=false;" 
     		ng-touchend="stopRecord();" 
-    		class="{{inVoice?'bodyInVoice':''}}" ontouchstart style="display:none;">
+			ng-touchstart="onTouchMove($event);" 
+    		class="{{inVoice?'bodyInVoice':''}}" style="display:none;">
 		<div class="formInValidErrorMsg" id="formInValidErrorMsg"></div>
 		<form name="registerForm" novalidate>
 			<div class="weui-cells__title">事故信息</div>
@@ -236,7 +237,7 @@
     		
         </form>
 		
-		<div ui-view></div>
+		<div ui-view ng-class="ui-view"></div>
 		
 		<script type="text/ng-template" id="toast_ok.html">
 			<div id="toast" style="opacity: 1; display: block;">
@@ -304,6 +305,7 @@
 		<script src="${springPath}/static/js/common/wx-common.js"></script>
         <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
         <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+		<script src="http://map.qq.com/api/js?v=2.exp"></script>
 		<script src="${springPath}/static/js/weixin/kckp.js"></script>
 	</body>
 </html>

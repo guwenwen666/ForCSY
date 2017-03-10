@@ -38,13 +38,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     	templateUrl: 'formRst.html',
     	controller: 'formRstController'
     }).state('/',{
-    	url: '/',
+    	url: '',
     	template: ''
     });
 });
 
-app.controller("formRstController", function($scope, $stateParams, $state) {
+app.controller("formRstController", function($scope, $stateParams, $state, $location) {
 	$scope.errMsg = $stateParams.errMsg;
+	$location.path("").replace();
 	//提交反馈页面禁止刷新
 	if($scope.errMsg === undefined){
 		$state.go("/");

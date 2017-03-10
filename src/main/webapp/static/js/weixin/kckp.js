@@ -57,11 +57,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     });
 });
 
-app.controller("toastVoiceController", function($scope, $stateParams) {
+app.controller("toastVoiceController", function($scope, $stateParams, $location) {
 	$scope.fail = $stateParams.fail;
 });
 
-app.controller("formRstController", function($scope, $stateParams, $state) {
+app.controller("formRstController", function($scope, $stateParams, $state, $location) {
 	$scope.errMsg = $stateParams.errMsg;
 	//提交反馈页面禁止刷新
 	if($scope.errMsg === undefined){
@@ -259,12 +259,31 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 				    	$scope.info.longitude = res.longitude;
 				    	$scope.info.latitude = res.latitude;
 				    	
-				    	$scope.position = "经度:" + res.longitude + ",纬度:" + res.latitude;
+				    	//请求成功的状态
+				    	var geocoder = new qq.maps.Geocoder();
+			    		var latLng = new qq.maps.LatLng($scope.info.latitude, $scope.info.longitude);
+			    		geocoder.getAddress(latLng);//对指定经纬度进行解析
+			    		geocoder.setComplete(function(result) {
+			    			$scope.$apply(function(){
+			    				if(!!result.detail.address){
+			    					var address = result.detail.addressComponents;
+			    					$scope.position = address.city+address.district+address.streetNumber;
+			    				}else{
+							    	$scope.position = "经度:" + res.longitude + ",纬度:" + res.latitude;
+			    				}
+			    			});
+			    		});
+			    		//若服务请求失败，则运行以下函数
+			    		geocoder.setError(function() {
+			    			$scope.$apply(function(){
+			    				$scope.position = "经度:"+info.longitude+",纬度:"+info.latitude;
+			    			});
+			    		});
 			    	});
 			    },
 			    fail: function (res){
 			    	$scope.$apply(function(){
-						$scope.position = "用户拒绝了位置请求!";
+						$scope.position = "GPS定位失败，请刷新重试";
 			    	});
 			    }
 			});
@@ -393,19 +412,16 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 		        		$scope.registerForm.xxtpNum.$dirty = true;
 		        	});
 		        }
-		        
 		        uploadImageList(localIds);
 		    }
 		});
 	};
 	
 	$scope.onTouchMove = function(event){
-		//录音状态下,禁止浏览器滚动
 		if(!!$scope.inVoice){
+			event = event || window.event;
 			event.preventDefault();
 			return false;
-		}else{
-			return true;
 		}
 	};
 	
@@ -651,5 +667,4 @@ $(function(){
         	wx.initFail = true;
         });
     });
-	
 });

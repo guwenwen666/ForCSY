@@ -49,7 +49,7 @@
         </div>
 		
 		<script type="text/ng-template" id="detail.html">
-			<div class="detailDiv hidden">
+			<div class="detailDiv">
     			<div class="weui-form-preview">
                     <div class="weui-form-preview__bd">
                         <div class="weui-form-preview__item">
@@ -163,6 +163,6 @@
 		<script src="http://map.qq.com/api/js?v=2.exp"></script>
 		<script src="${springPath}/static/js/common/util.js"></script>
 		<script src="${springPath}/static/js/common/wx-common.js"></script>
-		<script src="${springPath}/static/js/weixin/myRecord.js?a=10"></script>
+		<script src="${springPath}/static/js/weixin/myRecord.js?a=1csa10"></script>
 	</body>
 </html>

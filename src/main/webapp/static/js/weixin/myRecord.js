@@ -6,7 +6,7 @@
 var app = angular.module("myApp", ["ui.router"]);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('');
 	
 	$stateProvider.state('detail', {
 		url: '/detail',
@@ -41,7 +41,6 @@ app.controller("detail", function($scope, $stateParams, $state, $http, $sce){
 		}
 	}).success(function(data,status,config,headers){
 		$scope.info.jsyxxs = data;
-		$("div.detailDiv").removeClass("hidden");
 	});
 	
 	//日期格式化
@@ -228,7 +227,10 @@ app.controller("myCtrl", function($scope, $http, $state){
 window.addEventListener("hashchange", function(e) {
 	if(location.hash.indexOf("detail")>0){
 		$("div.myCtrl").css("display", "none");
+		$("div.detailDiv").removeClass("hidden");
 	}else{
 		$("div.myCtrl").css("display", "block");
+		$("div.detailDiv").addClass("hidden");
 	}
 }, false);
+
