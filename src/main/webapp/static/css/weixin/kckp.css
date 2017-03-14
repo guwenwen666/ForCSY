@@ -164,6 +164,14 @@ form[name='registerForm']{
 	margin-left: 0px;
 }
 
+input.position{
+	color: rgba(0, 0, 0, 0.6);
+}
+
+input.position.positionFail{
+	color: #586c94;
+}
+
 div.deleteUploadDiv{
     position: absolute;
     right: 0em;
@@ -183,7 +191,6 @@ A.addJsy{
 .union-btn{
 	cursor: pointer;
 	color: #586c94;
-	margin-left: 1em;
 }
 
 .shake-little{

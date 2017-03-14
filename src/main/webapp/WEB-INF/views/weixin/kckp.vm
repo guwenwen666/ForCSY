@@ -25,16 +25,14 @@
     			<div class="weui-cell">
     				<div class="weui-cell__hd"><label class="weui-label">事故地点</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" ng-model="position" type="input" placeholder="事故发生位置定位" 
-							ng-init="position='正在定位,请稍候...'" ng-disabled="true"/>
+                        <input class="weui-input position" ng-model="position" type="input" placeholder="事故发生位置定位" readonly="true" 
+							ng-init="position='定位中,请稍候...'" ng-click="getPosition();" ng-class="{'positionFail':!!positionFail}"/>
                         <input ng-model="info.longitude" name="longitude" type="hidden" validator="required"/>
                         <input ng-model="info.latitude" name="latitude" type="hidden" validator="required"/>
                     </div>
-					<!--
-        				<div class="weui-cell__ft">
-                            <span class="weui-icon-position"></span>
-                        </div>
-					-->
+    				<div class="weui-cell__ft" ng-click="openLocation(info.longitude,info.latitude);">
+                        <span class="weui-icon-position"></span>
+                    </div>
     			</div>
             </div>
 			
@@ -98,8 +96,6 @@
 					<span class="weui-icon-success_sm"></span>完成
 				</span>
 				
-				<a class="weui-cells__ft union-btn" target="_blank" 
-					href="${springPath}/static/img/weixin/example.jpg">示例</a>
 			</div>
 			<div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
@@ -133,14 +129,16 @@
 								ng-init="minXxtpNum=5">
 								<input ng-model="xxtps.length" type="hidden" name="xxtpNum" validator="min={{minXxtpNum}}"/>
 								<div class="weui-textarea-counter">
-                                <span style="float:left;">请至少上传<span ng-bind="minXxtpNum"></span>张图片</span>
-								<span ng-bind="xxtps.length">0</span>/10</div>
+                                    <span style="float:left;">请至少上传<span ng-bind="minXxtpNum"></span>张图片
+										<a class="union-btn" target="_blank" href="${springPath}/static/img/weixin/example.jpg">示例图</a>
+									</span>
+    								<span ng-bind="xxtps.length">0</span>/10
+								</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-			
 			<div class="weui-cells__title">事故责任</div>
 			<div class="weui-cells weui-cells_form">
         		<div class="weui-cell">

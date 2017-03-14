@@ -246,47 +246,81 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
     //事故发生时间信息默认
 	$scope.info.occurrenceTime = new Date();
 	
+	$scope.openLocation = function(longitude, latitude){
+		if(!!wx.initOk){
+			if(latitude>0 || longitude>0){
+		    	//请求成功的状态
+		    	var geocoder = new qq.maps.Geocoder();
+	    		var latLng = new qq.maps.LatLng(latitude, longitude);
+	    		geocoder.getAddress(latLng);//对指定经纬度进行解析
+	    		geocoder.setComplete(function(result) {
+	    			$scope.$apply(function(){
+	    				var address = result.detail.addressComponents;
+	    				wx.openLocation({
+	    				    latitude: $scope.info.latitude, // 纬度，浮点数，范围为90 ~ -90
+	    				    longitude: $scope.info.longitude, // 经度，浮点数，范围为180 ~ -180。
+	    				    name: address.city + address.district, // 位置名
+	    				    address: result.detail.address, // 地址详情说明
+	    				    scale: 16, // 地图缩放级别,整形值,范围从1~28。默认为最大
+	    				    infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+	    				});
+	    			});
+	    		});
+			}
+		}
+	};
+	
+	$scope.getPosition = function(){
+		
+		//首先获取用户地理位置信息
+		wx.getLocation({
+		    type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+		    success: function (res) {
+		    	$scope.$apply(function(){
+			    	$scope.info.longitude = res.longitude;
+			    	$scope.info.latitude = res.latitude;
+			    	
+			    	//请求成功的状态
+			    	var geocoder = new qq.maps.Geocoder();
+		    		var latLng = new qq.maps.LatLng($scope.info.latitude, $scope.info.longitude);
+		    		geocoder.getAddress(latLng);//对指定经纬度进行解析
+		    		geocoder.setComplete(function(result) {
+		    			$scope.$apply(function(){
+		    				if(!!result.detail.address){
+		    					var address = result.detail.addressComponents;
+		    					$scope.position = address.city+address.district+address.streetNumber;
+		    				}else{
+						    	$scope.position = "经度:" + res.longitude + ",纬度:" + res.latitude;
+		    				}
+		    			});
+		    		});
+		    		//若服务请求失败，则运行以下函数
+		    		geocoder.setError(function() {
+		    			$scope.$apply(function(){
+		    				$scope.position = "经度:"+info.longitude+",纬度:"+info.latitude;
+		    			});
+		    		});
+		    	});
+		    	$scope.positionFail = false;
+		    },
+		    fail: function (res){
+		    	$scope.$apply(function(){
+					$scope.position = "GPS定位失败，点我重试";
+					$scope.positionFail = true;
+					alert("GPS定位失败，请确认定位是否开启并允许本站访问");
+		    	});
+		    }
+		});
+	};
+	
 	$scope.positionInterval = $interval(function(){
 		//如果微信初始化成功
 		if(!!wx.initOk){
 			//停止定时器
 			$interval.cancel($scope.positionInterval);
-			//首先获取用户地理位置信息
-			wx.getLocation({
-			    type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-			    success: function (res) {
-			    	$scope.$apply(function(){
-				    	$scope.info.longitude = res.longitude;
-				    	$scope.info.latitude = res.latitude;
-				    	
-				    	//请求成功的状态
-				    	var geocoder = new qq.maps.Geocoder();
-			    		var latLng = new qq.maps.LatLng($scope.info.latitude, $scope.info.longitude);
-			    		geocoder.getAddress(latLng);//对指定经纬度进行解析
-			    		geocoder.setComplete(function(result) {
-			    			$scope.$apply(function(){
-			    				if(!!result.detail.address){
-			    					var address = result.detail.addressComponents;
-			    					$scope.position = address.city+address.district+address.streetNumber;
-			    				}else{
-							    	$scope.position = "经度:" + res.longitude + ",纬度:" + res.latitude;
-			    				}
-			    			});
-			    		});
-			    		//若服务请求失败，则运行以下函数
-			    		geocoder.setError(function() {
-			    			$scope.$apply(function(){
-			    				$scope.position = "经度:"+info.longitude+",纬度:"+info.latitude;
-			    			});
-			    		});
-			    	});
-			    },
-			    fail: function (res){
-			    	$scope.$apply(function(){
-						$scope.position = "GPS定位失败，请刷新重试";
-			    	});
-			    }
-			});
+			
+			//默认加载完成时获取一次定位
+			$scope.getPosition();
 			//接下来去绑定wx.onVoiceRecordEnd回调函数
 			wx.onVoicePlayEnd({
 			    success: function (res) {

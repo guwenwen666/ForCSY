@@ -208,6 +208,7 @@ app.controller("myCtrl", function($scope, $http, $state){
 				}else{
 					info.position = "经度:"+info.longitude+",纬度:"+info.latitude;
 				}
+				console.log(result);
 			});
 		});
 		//若服务请求失败，则运行以下函数
