@@ -27,9 +27,16 @@ app.config(function($validationProvider){
 });
 
 app.config(function ($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.otherwise('');
+	$urlRouterProvider.otherwise('/');
 	
-	$stateProvider.state('toast_ok', {
+	$stateProvider.state('examplePic', {
+		url: '/examplePic',
+    	replace: true,
+		templateUrl: 'examplePic.html',
+    	controller: function(){
+    		$("form[name='registerForm']").hide();
+    	}
+    }).state('toast_ok', {
 		url: '/toast_ok',
     	replace: true,
 		templateUrl: 'toast_ok.html'
@@ -53,7 +60,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     	controller: 'formRstController'
     }).state('/',{
     	url: '/',
-    	template: ''
+    	template: '',
+    	controller: function(){
+    		$("form[name='registerForm']").show();
+    	}
     });
 });
 
@@ -66,6 +76,8 @@ app.controller("formRstController", function($scope, $stateParams, $state, $loca
 	//提交反馈页面禁止刷新
 	if($scope.errMsg === undefined){
 		$state.go("/");
+	}else{
+		$("form[name='registerForm']").hide();
 	}
 	$scope.rtnForm = function(){
 		$state.go("/");
@@ -376,6 +388,11 @@ app.controller("myCtrl", function($scope, $state, $timeout, $interval, $http, $i
 	                 {name:"",hphm:"",contact:""},
 	                 {name:"",hphm:"",contact:""}
 	                 ];
+	
+	//示例图绑定
+	$scope.examplePic = function(){
+		$state.go("examplePic");
+	};
 	
 	//事故描述字段及时提醒绑定
 	$scope.getSgfsmsLenght = function() {

@@ -24,7 +24,7 @@
 							<div class="weui-cell__bd">
 								<h4 class="weui-media-box__title" title="{{info.position}}" 
     								ng-init="info.position='获取中，请稍候...';formatterPosition(info)" ng-bind="info.position"></h4>
-                                <p class="weui-media-box__desc" ng-bind="info.description || '无事故描述信息'"></p>
+                                <p class="weui-media-box__desc" ng-bind="info.duty || '无事故责任描述'"></p>
                             </div>
 							<div class="weui-cell__ft">
                             </div>
@@ -67,7 +67,7 @@
                             <label class="weui-form-preview__label">事故责任</label>
                             <span class="weui-form-preview__value" ng-bind="info.duty"></span>
                         </div>
-                        <div class="weui-form-preview__item">
+                        <div class="weui-form-preview__item" style="display:none;">
                             <label class="weui-form-preview__label">事故描述</label>
                             <span class="weui-form-preview__value" ng-bind="info.description"></span>
                         </div>

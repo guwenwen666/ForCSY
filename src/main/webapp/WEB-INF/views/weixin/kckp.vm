@@ -130,7 +130,7 @@
 								<input ng-model="xxtps.length" type="hidden" name="xxtpNum" validator="min={{minXxtpNum}}"/>
 								<div class="weui-textarea-counter">
                                     <span style="float:left;">请至少上传<span ng-bind="minXxtpNum"></span>张图片
-										<a class="union-btn" target="_blank" href="${springPath}/static/img/weixin/example.jpg">示例图</a>
+										<a class="union-btn" ng-click="examplePic();">示例图</a>
 									</span>
     								<span ng-bind="xxtps.length">0</span>/10
 								</div>
@@ -148,14 +148,14 @@
 							placeholder="事故责任方" maxlength=32 
 							validator="required,maxlength=32">
                     </div>
-					<div class="weui-cell__ft">
+					<div class="weui-cell__ft"> 
                         <i class="weui-icon-warn"></i>
                     </div>
                 </div>
             </div>
 			
 			<!-- 录音责任代码 start -->
-			<div class="weui-cells__title">责任确认录音
+			<div class="weui-cells__title">事故描述+责任确认录音
 				<span class="weui-cells__ft union-btn" ng-init="editUploderVoice=false" ng-hide="editUploderVoice" 
 					ng-click="editUploderVoice=!editUploderVoice">
 					<span class="weui-icon-modify_sm"></span>编辑
@@ -197,25 +197,31 @@
                                     <span ng-bind="!inVoice?'按住 出现提示后说话':'松开 结束'"></span>
                                 </div>
                             </div>
-							<div class="weui-uploader__ft">
-								<div class="weui-textarea-counter"><span ng-bind="voices.length">0</span>/3</div>
+							<div class="weui-uploader__ft" 
+								ng-init="minVoiceNum=1">
+								<input ng-model="voices.length" type="hidden" name="voiceNum" validator="min={{minVoiceNum}}"/>
+								<div class="weui-textarea-counter">
+                                    <span style="float:left;">请至少上传<span ng-bind="minVoiceNum"></span>段录音</span>
+									<span ng-bind="voices.length">0</span>/3
+								</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 			<!-- 录音责任代码 end -->
-			
-			<div class="weui-cells__title">事故描述</div>
-    		<div class="weui-cells weui-cells_form">
-				<div class="weui-cell">
-                    <div class="weui-cell__bd">
-                        <textarea ng-model="info.description" class="weui-textarea" 
-							placeholder="事故发生原因概述" rows="3" maxlength=200></textarea>
-                        <div class="weui-textarea-counter"><span ng-bind="getSgfsmsLenght()">0</span>/200</div>
+			<div style="display:none;">
+    			<div class="weui-cells__title">事故描述</div>
+        		<div class="weui-cells weui-cells_form">
+    				<div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <textarea ng-model="info.description" class="weui-textarea" 
+    							placeholder="事故发生原因概述" rows="3" maxlength=200></textarea>
+                            <div class="weui-textarea-counter"><span ng-bind="getSgfsmsLenght()">0</span>/200</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+			</div>
     		<div class="weui-btn-area">
 				<!--
 					ng-disabled="!form.checkValid(registerForm)" ng-class="{'weui-btn_disabled':!form.checkValid(registerForm)}" 
@@ -236,6 +242,12 @@
         </form>
 		
 		<div ui-view ng-class="ui-view"></div>
+		
+		<script type="text/ng-template" id="examplePic.html">
+			<div class="forRst msg_success js_show">
+				<img src="../static/img/weixin/example.jpg" style="width:100%"/>
+            </div>
+		</script>
 		
 		<script type="text/ng-template" id="toast_ok.html">
 			<div id="toast" style="opacity: 1; display: block;">
