@@ -232,7 +232,7 @@ function makeRightLane(data){
 		$("#accidenttr1").append("<td style='width:10%;font-size:17px' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>事故时间</strong></td>");
 		$("#accidenttr1").append("<td style='width:25%;font-size:16px'>"+data.sgsj+"</td>");
 		$("#accidenttr1").append("<td style='width:10%;font-size:17px'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>事故地点</strong></td>");
-		$("#accidenttr1").append("<td id='sgwzmc'style='width:55%;font-size:16px'>"+sgwzmc+"<span style='float:right;color:#41D4FF;cursor:pointer;'onclick='change("+JSON.stringify(data)+")'>经纬度</span></td>");
+		$("#accidenttr1").append("<td id='sgwzmc'style='width:55%;font-size:16px'>"+sgwzmc+"<span style='float:right;color:#41D4FF;cursor:pointer;'onclick='change("+JSON.stringify(data)+")'>位置切换</span></td>");
 		$("#accidenttr2").append("<td style='width:10%;font-size:17px'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>事故责任</strong></td>");
 		$("#accidenttr2").append("<td style='width:25%;font-size:16px'>"+data.sgzr+"</td>");
 		$("#accidenttr2").append("<td style='width:10%;font-size:17px'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>事故描述</strong></td>");
@@ -358,8 +358,8 @@ function openNewWindow(){
 	  tmp.location=rootPath+"/fkyj";
 }
 function change(data){
-	$("#sgwzmc").html("纬度："+data.sgwd+"；经度："+data.sgjd+"<span style='float:right;color:#41D4FF;cursor:pointer;'onclick='changeEx("+JSON.stringify(data)+")'>经纬度</span>");
+	$("#sgwzmc").html("纬度："+data.sgwd+"；经度："+data.sgjd+"<span style='float:right;color:#41D4FF;cursor:pointer;'onclick='changeEx("+JSON.stringify(data)+")'>位置切换</span>");
 }
 function changeEx(data){
-	$("#sgwzmc").html(sgwzmc+"<span style='float:right;color:#41D4FF;cursor:pointer;'onclick='change("+JSON.stringify(data)+")'>经纬度</span>");
+	$("#sgwzmc").html(sgwzmc+"<span style='float:right;color:#41D4FF;cursor:pointer;'onclick='change("+JSON.stringify(data)+")'>位置切换</span>");
 }
