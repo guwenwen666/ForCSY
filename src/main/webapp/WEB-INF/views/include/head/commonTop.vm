@@ -8,6 +8,9 @@
 	                </div>
 	    		</div>
 	    		<div class="col-lg-6 col-md-6">
+	    			<div class="pull-left" style="cursor:pointer;padding-left: 68%;padding-top: 5px;" onclick="openNewWindow()">
+	    				<font color='#41D4FF'>反馈意见</font>
+	    			</div>
 					<div class="pull-right">
 						<div class="btn-group btn-group-xs">
 							#if($user)

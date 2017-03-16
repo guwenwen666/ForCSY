@@ -14,8 +14,58 @@ public class BWxFkyj {
     private String description;
 
     private Date createTime;
+    
+    private String nickName;//微信昵称
+    
+    private String jssj;
+    
+    private String kssj;
+    
+    private String imagePath;
+    
+    private boolean flag;//标识是否分页
+    
+	public boolean isFlag() {
+		return flag;
+	}
 
-    public String getId() {
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public String getJssj() {
+		return jssj;
+	}
+
+	public void setJssj(String jssj) {
+		this.jssj = jssj;
+	}
+
+	public String getKssj() {
+		return kssj;
+	}
+
+	public void setKssj(String kssj) {
+		this.kssj = kssj;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getId() {
         return id;
     }
 
