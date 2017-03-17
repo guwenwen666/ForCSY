@@ -59,14 +59,15 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td width="100%" height="60%" colspan="2" class="znjt-text-align-center">
+						<td colspan="2" class="znjt-text-align-center">
 							<input id="vehicleSearchBtn" type="button" value="查询" class="znjt-btn-s-1" style="margin-right: 20px; " /> 
 							<input id="vehicleSearchResetBtn" type="button" value="重置" class="znjt-btn-s-1" style="margin-right: 20px; "/>
 						</td>
 					</tr>
 				</table>
 			</div>
-			<div class="main-top1" style="float:left;border: 1px solid #d1d1d1;margin: 10px 50px 0px 0px;">
+		</div>
+		<div class="main-top1" style="float:left;border: 1px solid #d1d1d1;margin: 10px 10px 10px 10px;">
 				<div class="titleDiv" style="text-align: center;">
 					<span class="pageTitle" style="padding-left: 5%;">反馈意见查询列表</span>
 					<div style="float: right;padding-top: 5px;">
@@ -81,7 +82,6 @@
 					<div class="fishBone"></div>
 				</div>
 			</div>
-		</div>
 	</div>
 	<div id="fkyjxx" title="反馈详细信息" style="text-align:center;display: none;background-color: #fff;border: 1px solid #d1d1d1;">
 	</div> 

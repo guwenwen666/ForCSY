@@ -13,14 +13,18 @@ function initResize(){
 	var  winHeight = $(window).height();//窗口高度
 	$(".whole-div").width(winWidth); //整体的宽度
 	$(".whole-div").height(winHeight);//整体的高度
-	$(".main-top").height(winHeight/5);//整体的高度
+	$(".main-top").height((winHeight/100)*19);//整体的高度
 	$('#dataGrid').height($('.main-top').height() - $('.titleDiv').height());
+	$('.znjt-search-table').height($('#dataGrid').height());
 	$('.main-top1').height($('.whole-div').height() - $('.main-top').height()-35);
 	$('.main-top1').width($('.main-top').width());
 	$('#divList').width($('.main-top1').width());
 	$('#divList').height($('.main-top1').height() - $('.titleDiv').height());
 	$(".container").width($('.main-top1').width());
 	$(".container").height($('.main-top1').height() - $('.titleDiv').height());
+	$(".tempWrap").height($(".container").height());
+	$(".item").height($(".container").height());
+	$(".content").height($(".container").height()/2 - 22);
 }
 //注册点击事件
 function initComponent(){
@@ -80,6 +84,9 @@ function makeFishBone(param){
 					alert("没有查询到数据");
 				}
 				$(".fishBone").fishBone(data.rows);
+				$(".tempWrap").height($(".container").height());
+				$(".item").height($(".container").height());
+				$(".content").height($(".container").height()/2 - 22);
 			}
 		}
 	});

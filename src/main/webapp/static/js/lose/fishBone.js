@@ -122,7 +122,7 @@ $.fn.fishBone = function(data) {
             var titleCenterY = getTitleCenterY(index);
             var titleRightY = getTitleRightY(index);
             
-            var ul = $("<ul style='height:90%;'></ul>");
+            var ul = $("<ul style='height:100%;width:100%;'></ul>");
             //遍历封装属性
             //封装审理时间和案号
             if(itemclass=='top'){
@@ -154,26 +154,26 @@ $.fn.fishBone = function(data) {
                 	if(name == 'type'){
                 		if(value == 1){
                 			value = "系统异常";
-                			li = $("<li ><font style='font-size:15px'><strong>反馈类型:</strong><span style='color:red;'>"+value+"</span></font></li>").css("border-left","1px solid "+color);
+                			li = $("<li style='height:15%;'><font style='font-size:15px'><strong>反馈类型:</strong><span style='color:red;'>"+value+"</span></font></li>").css("border-left","1px solid "+color);
                 		}
                 		if(value == 2){
                 			value = "优化建议";
-                			li = $("<li ><font style='font-size:15px'><strong>反馈类型:</strong><span style='color:green;'>"+value+"</span></font></li>").css("border-left","1px solid "+color);
+                			li = $("<li style='height:15%;'><font style='font-size:15px'><strong>反馈类型:</strong><span style='color:green;'>"+value+"</span></font></li>").css("border-left","1px solid "+color);
                 		}
                 	}
                 	if(name == 'description'){
-                		if(value.length <= 39){
-                			li = $("<li style='width:169px;height:52%;'><div style='width:100px;'><font style='font-size:15px'><strong>反馈意见:</strong></span></font></div><font style='font-size:13px'>"+value+"</font></li>").css("border-left","1px solid "+color);
+                		if(value.length <= 45){
+                			li = $("<li style='width:100%;height:45%;'><div style='width:40%;'><font style='font-size:15px'><strong>反馈意见:</strong></span></font></div><font style='font-size:13px'>"+value+"</font></li>").css("border-left","1px solid "+color);
                 		}else{
-                			li = $("<li style='width:416px;height:52%;'><font style='font-size:15px'><strong>反馈意见:</strong></span></font><font style='font-size:13px'>"+value+"</font></li>").css("border-left","1px solid "+color);
+                			li = $("<li style='width:210%;height:45%;'><font style='font-size:15px'><strong>反馈意见:</strong></span></font><font style='font-size:13px'>"+value+"</font></li>").css("border-left","1px solid "+color);
                 		}
                 	}
                 	if(name == 'image'){
                 		if(value != ""){
                 			var str = value.split(",");
-                			li = $("<li><font style='font-size:15px'><strong>上传图片:</strong><span style='color:#41D4FF;cursor:pointer' onclick='showDetail(this,"+JSON.stringify(data[index])+")'>"+str.length+"张图片</span></font></li>").css("border-left","1px solid "+color);
+                			li = $("<li style='height:15%;'><font style='font-size:15px'><strong>上传图片:</strong><span style='color:#41D4FF;cursor:pointer' onclick='showDetail(this,"+JSON.stringify(data[index])+")'>"+str.length+"张图片</span></font></li>").css("border-left","1px solid "+color);
                 		}else{
-                			li = $("<li><font style='font-size:15px'><strong>上传图片:</strong><span style='color:#41D4FF;'>0张图片</span></font></li>").css("border-left","1px solid "+color);
+                			li = $("<li style='height:15%;'><font style='font-size:15px'><strong>上传图片:</strong><span style='color:#41D4FF;'>0张图片</span></font></li>").css("border-left","1px solid "+color);
                 		}
                 	}	
                     li.appendTo(ul);
@@ -208,7 +208,7 @@ $.fn.fishBone = function(data) {
             
             //生成一个item（一个完整的案件）
             var li_item = $("<li class='item'></li>");
-            var content = $("<div class='content' style='height:45%;'></div>");
+            var	content = $("<div class='content' style='width:100%'></div>");
             ul.appendTo(content);
             content.appendTo(li_item);
             li_item.addClass(itemClass(index)).appendTo(ul_item);
@@ -218,7 +218,6 @@ $.fn.fishBone = function(data) {
         var prev = $("<a class='prev'></a>");
         var next = $("<a class='next'></a>");
         var line = $("<div class='line'/>");
-
         fishBone.append(wrapper).append(prev).append(next).append(line);
         return fishBone;
     };

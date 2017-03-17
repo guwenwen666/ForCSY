@@ -27,7 +27,6 @@ color: #767676;
 .fishBone .item{
 	position: relative;
 	width: 15%;
-	height: 470px;
 	display: inline-block;
 	margin-left:20px;
 }
@@ -35,6 +34,7 @@ color: #767676;
 	line-height:2em;
 }
 .fishBone .item .title{
+	width:280px;
 	border-left:none;
 }
 .fishBone .item .title .title-left{
@@ -110,7 +110,7 @@ color: #767676;
 /**prev next*/
 .fishBone .prev {
 	position: absolute;
-	top: 45.5%;
+	top: 46%;
 	left: 0;
 	display: inline-block;
 	width: 20px;
@@ -127,7 +127,7 @@ background-position-y: -28px;
 }
 .fishBone .next {
 	position: absolute;
-	top: 45.5%;
+	top: 46%;
 	right: 0;
 	display: inline-block;
 	width: 20px;
