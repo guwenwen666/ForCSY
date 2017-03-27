@@ -155,7 +155,7 @@ public class BAccidentInfoServiceImpl extends BaseService<BAccidentInfo, BAccide
 						accident.setWxzh(user.getNickname());
 						if(user.getHeadimgurl() != null && user.getHeadimgurl() != ""){
 							if(user.getHeadimgurl().substring(user.getHeadimgurl().lastIndexOf("/")+1).equals("0")){
-								accident.setWxtx(user.getHeadimgurl().substring(0, user.getHeadimgurl().lastIndexOf("/")+1)+46);
+								accident.setWxtx(user.getHeadimgurl().substring(0, user.getHeadimgurl().lastIndexOf("/")+1)+64);
 							}
 						}
 					}
