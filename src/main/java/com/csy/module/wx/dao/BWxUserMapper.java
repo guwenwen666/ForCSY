@@ -5,7 +5,7 @@ import com.csy.module.wx.entity.BWxUserExample;
 import com.csy.util.spring.BaseDao;
 
 public interface BWxUserMapper extends BaseDao<BWxUser, BWxUserExample>{
-	//¸ù¾ÝÎ¢ÐÅºÅÈ¥²éÑ¯Î¢ÐÅÐÅÏ¢
+	//ï¿½ï¿½ï¿½Î¢ï¿½Åºï¿½È¥ï¿½ï¿½Ñ¯Î¢ï¿½ï¿½ï¿½ï¿½Ï¢
 	BWxUser selectByParam(BWxUser bWxUser);
 	
 }

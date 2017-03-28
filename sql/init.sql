@@ -94,3 +94,8 @@ INSERT INTO `b_qj_xtpz` (`id`,`name`,`name_cn`,`val`,`expand`,`description`) VAL
 delete from b_qj_xtpz where name = 'wxResource';
 INSERT INTO `b_qj_xtpz` (`id`,`name`,`name_cn`,`val`,`expand`,`description`) VALUES (null,'wxResource','微信存储资源路径','http://127.0.0.1:8090/wxfile',null,'微信存储资源路径');
 
+/*新增一个角色用户*/
+delete from b_user_account where account = 'hualai';
+INSERT INTO `b_user_account` VALUES ('1006', 'hualai', 'ee156d29b3861d2a431ef8050f08b783', null, 'm15551351535@163.com', '2', null, '2', 'o8g4mhqblyxzspyqzqn4c63ua8t1iaet', '1', '2017-02-27 14:50:31');
+delete from b_user_info where foreign_account = 'hualai';
+INSERT INTO `b_user_info` VALUES ('hualai', '1', null, null, null, null, null, null);

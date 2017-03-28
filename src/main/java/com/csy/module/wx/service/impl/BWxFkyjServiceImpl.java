@@ -5,14 +5,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.csy.module.wx.dao.BWxFkyjMapper;
+import com.csy.module.wx.dao.BWxUserMapper;
 import com.csy.module.wx.entity.BWxFkyj;
 import com.csy.module.wx.entity.BWxFkyjExample;
 import com.csy.module.wx.service.service.BWxFkyjService;
 import com.csy.util.StringUtils;
+import com.csy.util.XtpzUtil;
 import com.csy.util.spring.BaseService;
 import com.csy.util.wx.en.WxFileEnum;
 import com.csy.util.wx.queue.FileQueue;
@@ -45,6 +50,32 @@ public class BWxFkyjServiceImpl extends BaseService<BWxFkyj, BWxFkyjExample>
 			fkyj.setImage(StringUtils.join(newLiveImages));
 		}
 		return fkyjDao.insertSelective(fkyj);
+	}
+
+	@Override
+	public List<BWxFkyj> queryAllInfo(BWxFkyj bWxFkyj,RowBounds rowBounds) {
+		List<BWxFkyj> list = new ArrayList<BWxFkyj>();
+		if(!bWxFkyj.isFlag()){
+			list = fkyjDao.queryAllInfo(bWxFkyj);
+		}else{
+			list = fkyjDao.queryAllInfo(bWxFkyj,rowBounds);
+		}
+		String imagePath = XtpzUtil.getXtpzByName("wxResource").getVal();
+		if(null != list && list.size() > 0){
+			for(BWxFkyj fkyj : list){
+				if(null != fkyj.getImage() && !"".equals(fkyj.getImage())){
+					String image = imagePath+"/"+fkyj.getKssj().substring(0,10)+"/"+fkyj.getOpenid()+"/";
+					fkyj.setImagePath(image);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public int countByMap(BWxFkyj wxFkyj) {
+		int count = fkyjDao.countByMap(wxFkyj);
+		return count;
 	}
 	
 }

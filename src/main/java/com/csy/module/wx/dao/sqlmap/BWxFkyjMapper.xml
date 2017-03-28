@@ -226,4 +226,55 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+   <select id="queryAllInfo" resultMap="BaseResultMap" parameterType="com.csy.module.wx.entity.BWxFkyj" >
+    select 
+    fxyj.id as id,
+	fxyj.openid as openid,
+	fxyj.create_time as createTime,
+	(select nickname from b_wx_user where openid = fxyj.openid) as nickname,
+	fxyj.type as type,
+	fxyj.image as image,
+	fxyj.description as description,
+	date_format(fxyj.create_time,'%Y-%m-%d %h:%i:%s') as kssj
+    from b_wx_fkyj fxyj
+    <where>
+    	<if test="description != null and description != ''" >
+        	and fxyj.create_time &gt;= #{description,jdbcType=VARCHAR}
+      	</if>
+      	<if test="image != null and image != ''" >
+        	and fxyj.create_time &lt;= #{image,jdbcType=VARCHAR}
+      	</if>
+    	<if test="type != null and type != '' ">
+    		and fxyj.type = #{type,jdbcType=INTEGER}
+    	</if>
+    	<if test="openid != null and openid != '' ">
+    		and fxyj.openid = #{openid,jdbcType=VARCHAR}
+    	</if>
+    	<if test="id != null and id != '' ">
+    		and fxyj.openid in ( select openid from b_wx_user where  nickname like concat(concat('%',#{id,jdbcType=VARCHAR}),'%') )
+    	</if>
+    </where>
+    order by create_time desc
+  </select>
+  <select id="countByMap" resultType="java.lang.Integer" parameterType="com.csy.module.wx.entity.BWxFkyj" >
+   select count(*)
+   from b_wx_fkyj fxyj
+   <where>
+    	<if test="description != null and description != ''" >
+        	and fxyj.create_time &gt;= #{description,jdbcType=VARCHAR}
+      	</if>
+      	<if test="image != null and image != ''" >
+        	and fxyj.create_time &lt;= #{image,jdbcType=VARCHAR}
+      	</if>
+    	<if test="type != null and type != '' ">
+    		and fxyj.type = #{type,jdbcType=INTEGER}
+    	</if>
+    	<if test="openid != null and openid != '' ">
+    		and fxyj.openid = #{openid,jdbcType=VARCHAR}
+    	</if>
+    	<if test="id != null and id != '' ">
+    		and fxyj.openid in ( select openid from b_wx_user where  nickname like concat(concat('%',#{id,jdbcType=VARCHAR}),'%') )
+    	</if>
+    </where>
+ </select>
 </mapper>

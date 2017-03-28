@@ -186,7 +186,11 @@ function codeLatLng(data){
 }
 //点击图片进行放大
 function onClickImage(e,url){
-	window.open(url);
+	  var tmp=window.open("about:blank","","");
+	  tmp.moveTo(0,0);
+	  tmp.resizeTo(screen.width+20,screen.height);
+	  tmp.focus();
+	  tmp.location=url;
 }
 //右侧区域动态生成
 function makeRightLane(data){
@@ -214,25 +218,25 @@ function makeRightLane(data){
 	$("#accidenttable").append("<tr id='accidenttr1' style='border: 1px solid #d1d1d1;'></tr>");
 	$("#accidenttable").append("<tr id='accidenttr2' style='border: 1px solid #d1d1d1;'></tr>");
 	if(data.sgms.length > 60){
-		$("#right2").height(($("#mainDiv2").height()/100)*40);
+		$("#right2").height(($("#mainDiv2").height()/100)*45);
 		$("#accidentTable").height(($("#right2").height()/100)*79);
 		$("#accidenttr1").append("<td style='width:10%;font-size:17px' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>事故时间</strong></td>");
-		$("#accidenttr1").append("<td style='width:17%;font-size:15px'>"+data.sgsj+"</td>");
+		$("#accidenttr1").append("<td style='width:17%;font-size:16px'>"+data.sgsj+"</td>");
 		$("#accidenttr1").append("<td style='width:10%;font-size:17px'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>事故地点</strong></td>");
-		$("#accidenttr1").append("<td style='width:63%;font-size:15px'>"+sgwzmc+"</td>");
+		$("#accidenttr1").append("<td style='width:63%;font-size:16px'>"+sgwzmc+"</td>");
 		$("#accidenttr2").append("<td style='width:10%;font-size:17px'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>事故责任</strong></td>");
-		$("#accidenttr2").append("<td style='width:17%;font-size:15px'>"+data.sgzr+"</td>");
+		$("#accidenttr2").append("<td style='width:17%;font-size:16px'>"+data.sgzr+"</td>");
 		$("#accidenttr2").append("<td style='width:10%;font-size:17px'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>事故描述</strong></td>");
-		$("#accidenttr2").append("<td style='width:63%;font-size:15px'>"+data.sgms+"</td>");
+		$("#accidenttr2").append("<td style='width:63%;font-size:16px'>"+data.sgms+"</td>");
 	}else{
 		$("#accidenttr1").append("<td style='width:10%;font-size:17px' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>事故时间</strong></td>");
-		$("#accidenttr1").append("<td style='width:25%;font-size:15px'>"+data.sgsj+"</td>");
+		$("#accidenttr1").append("<td style='width:25%;font-size:16px'>"+data.sgsj+"</td>");
 		$("#accidenttr1").append("<td style='width:10%;font-size:17px'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>事故地点</strong></td>");
-		$("#accidenttr1").append("<td style='width:55%;font-size:15px'>"+sgwzmc+"</td>");
+		$("#accidenttr1").append("<td id='sgwzmc'style='width:55%;font-size:16px'>"+sgwzmc+"<span style='float:right;color:#41D4FF;cursor:pointer;'onclick='change("+JSON.stringify(data)+")'>位置切换</span></td>");
 		$("#accidenttr2").append("<td style='width:10%;font-size:17px'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>事故责任</strong></td>");
-		$("#accidenttr2").append("<td style='width:25%;font-size:15px'>"+data.sgzr+"</td>");
+		$("#accidenttr2").append("<td style='width:25%;font-size:16px'>"+data.sgzr+"</td>");
 		$("#accidenttr2").append("<td style='width:10%;font-size:17px'class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>事故描述</strong></td>");
-		$("#accidenttr2").append("<td style='width:55%;font-size:15px'>"+data.sgms+"</td>");
+		$("#accidenttr2").append("<td style='width:55%;font-size:16px'>"+data.sgms+"</td>");
 	}
 	//驾驶员信息
 	if(data.bDriverInfos != null && data.bDriverInfos.length > 0){
@@ -253,11 +257,11 @@ function makeRightLane(data){
 			$("#driver"+i).append("<table id='driverTable"+i+"' style='width:100%;height:100%;border: 1px solid #d1d1d1;'></table>");
 			$("#driverTable"+i).append("<tr id='driverTr"+i+"' style='border: 1px solid #d1d1d1;'></tr>");
 			$("#driverTr"+i).append("<td style='width:10%;font-size:17px' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>姓名</strong></td>");
-			$("#driverTr"+i).append("<td style='width:16%;font-size:15px'>"+items.name+"</td>");
+			$("#driverTr"+i).append("<td style='width:16%;font-size:16px'>"+items.name+"</td>");
 			$("#driverTr"+i).append("<td style='width:10%;font-size:17px' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>号牌号码</strong></td>");
-			$("#driverTr"+i).append("<td style='width:12%;font-size:15px'>"+items.hphm+"</td>");
+			$("#driverTr"+i).append("<td style='width:12%;font-size:16px'>"+items.hphm+"</td>");
 			$("#driverTr"+i).append("<td style='width:10%;font-size:17px' class='znjt-search-label znjt-color-background-5 znjt-text-align-center'><strong>联系方式</strong></td>");
-			$("#driverTr"+i).append("<td style='width:12%;font-size:15px'>"+items.contact+"</td>");
+			$("#driverTr"+i).append("<td style='width:12%;font-size:16px'>"+items.contact+"</td>");
 			$("#driverTr"+i).append("<td style='width:30%;'></td>");
 		});
 	}
@@ -323,7 +327,7 @@ function makeRightLane(data){
 				if(str.length <= 2){
 					 $("#voiceTable").append("<tr id='voiceTr1' style='border: 1px solid #d1d1d1;'></tr>");
 					 for(var i = 0; i < str.length; i ++){
-						 $("#voiceTr1").append("<td style='width:30%;height:100%;text-align:center;'><object autoplay='false' PLAY='false' data='"+(imagePath+str[i])+"' height='90%' width='90%'><embed src='"+(imagePath+str[i])+"' height='90%' width='90%' autoplay='false' autostart='false'/></object></td>");
+						 $("#voiceTr1").append("<td style='width:30%;height:100%;text-align:center;'><object classid='clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6' autoplay='false' PLAY='false' data='"+(imagePath+str[i])+"' height='90%' width='90%'><embed src='"+(imagePath+str[i])+"' height='90%' width='90%' autoplay='false' autostart='false'/></object></td>");
 					 }
 				}else{
 					$("#voiceDiv").height(($("#mainDiv2").height()/100)*90);
@@ -345,4 +349,17 @@ function makeRightLane(data){
 	}
 	
 }
-
+//反馈意见页面弹出
+function openNewWindow(){
+	  var tmp=window.open("about:blank","","");
+	  tmp.moveTo(0,0);
+	  tmp.resizeTo(screen.width+20,screen.height);
+	  tmp.focus();
+	  tmp.location=rootPath+"/fkyj";
+}
+function change(data){
+	$("#sgwzmc").html("纬度："+data.sgwd+"；经度："+data.sgjd+"<span style='float:right;color:#41D4FF;cursor:pointer;'onclick='changeEx("+JSON.stringify(data)+")'>位置切换</span>");
+}
+function changeEx(data){
+	$("#sgwzmc").html(sgwzmc+"<span style='float:right;color:#41D4FF;cursor:pointer;'onclick='change("+JSON.stringify(data)+")'>位置切换</span>");
+}
