@@ -99,3 +99,11 @@ delete from b_user_account where account = 'hualai';
 INSERT INTO `b_user_account` VALUES ('1006', 'hualai', 'ee156d29b3861d2a431ef8050f08b783', null, 'm15551351535@163.com', '2', null, '2', 'o8g4mhqblyxzspyqzqn4c63ua8t1iaet', '1', '2017-02-27 14:50:31');
 delete from b_user_info where foreign_account = 'hualai';
 INSERT INTO `b_user_info` VALUES ('hualai', '1', null, null, null, null, null, null);
+
+/* 
+ * date: 2017-03-30
+ * desctiption 意见反馈类型
+ */
+INSERT INTO `b_xtpz_dmx` (`id`,`dmlxbh`,`dmxywm`,`dmxzwm`,`dmxz`,`p_dmxywm`,`sfxs`,`sfky`,`sfmr`,`xssx`,`dmxms`,`dmxkz`) VALUES (NULL,'20001','系统异常','系统异常','1',NULL,1,1,0,1,'系统异常',NULL);
+INSERT INTO `b_xtpz_dmx` (`id`,`dmlxbh`,`dmxywm`,`dmxzwm`,`dmxz`,`p_dmxywm`,`sfxs`,`sfky`,`sfmr`,`xssx`,`dmxms`,`dmxkz`) VALUES (NULL,'20001','优化建议','优化建议','2',NULL,1,1,0,2,'优化建议',NULL);
+
