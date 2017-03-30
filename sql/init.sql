@@ -104,6 +104,7 @@ INSERT INTO `b_user_info` VALUES ('hualai', '1', null, null, null, null, null, n
  * date: 2017-03-30
  * desctiption 意见反馈类型
  */
+delete from b_xtpz_dmx where dmlxbh = 20001;
 INSERT INTO `b_xtpz_dmx` (`id`,`dmlxbh`,`dmxywm`,`dmxzwm`,`dmxz`,`p_dmxywm`,`sfxs`,`sfky`,`sfmr`,`xssx`,`dmxms`,`dmxkz`) VALUES (NULL,'20001','系统异常','系统异常','1',NULL,1,1,0,1,'系统异常',NULL);
 INSERT INTO `b_xtpz_dmx` (`id`,`dmlxbh`,`dmxywm`,`dmxzwm`,`dmxz`,`p_dmxywm`,`sfxs`,`sfky`,`sfmr`,`xssx`,`dmxms`,`dmxkz`) VALUES (NULL,'20001','优化建议','优化建议','2',NULL,1,1,0,2,'优化建议',NULL);
 
