@@ -12,8 +12,8 @@
     <result column="live_voice" property="liveVoice" jdbcType="VARCHAR" />
     <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP" />
     <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="imgReUpload_index" property="imgreuploadIndex" jdbcType="VARCHAR" />
   </resultMap>
-  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -74,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, fk_wx_openid, occurrence_time, longitude, latitude, duty, live_image, live_voice, 
-    upload_time, description
+    upload_time, description, imgReUpload_index
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csy.module.wx.entity.BAccidentInfoExample" >
     select
@@ -111,11 +111,11 @@
     insert into b_accident_info (id, fk_wx_openid, occurrence_time, 
       longitude, latitude, duty, 
       live_image, live_voice, upload_time, 
-      description)
+      description, imgReUpload_index)
     values (#{id,jdbcType=VARCHAR}, #{fkWxOpenid,jdbcType=VARCHAR}, #{occurrenceTime,jdbcType=TIMESTAMP}, 
       #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{duty,jdbcType=VARCHAR}, 
       #{liveImage,jdbcType=VARCHAR}, #{liveVoice,jdbcType=VARCHAR}, #{uploadTime,jdbcType=TIMESTAMP}, 
-      #{description,jdbcType=VARCHAR})
+      #{description,jdbcType=VARCHAR}, #{imgreuploadIndex,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.csy.module.wx.entity.BAccidentInfo" >
     insert into b_accident_info
@@ -150,6 +150,9 @@
       <if test="description != null" >
         description,
       </if>
+      <if test="imgreuploadIndex != null" >
+        imgReUpload_index,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -181,6 +184,9 @@
       </if>
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="imgreuploadIndex != null" >
+        #{imgreuploadIndex,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -223,6 +229,9 @@
       <if test="record.description != null" >
         description = #{record.description,jdbcType=VARCHAR},
       </if>
+      <if test="record.imgreuploadIndex != null" >
+        imgReUpload_index = #{record.imgreuploadIndex,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -239,7 +248,8 @@
       live_image = #{record.liveImage,jdbcType=VARCHAR},
       live_voice = #{record.liveVoice,jdbcType=VARCHAR},
       upload_time = #{record.uploadTime,jdbcType=TIMESTAMP},
-      description = #{record.description,jdbcType=VARCHAR}
+      description = #{record.description,jdbcType=VARCHAR},
+      imgReUpload_index = #{record.imgreuploadIndex,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -274,6 +284,9 @@
       <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
       </if>
+      <if test="imgreuploadIndex != null" >
+        imgReUpload_index = #{imgreuploadIndex,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -287,9 +300,11 @@
       live_image = #{liveImage,jdbcType=VARCHAR},
       live_voice = #{liveVoice,jdbcType=VARCHAR},
       upload_time = #{uploadTime,jdbcType=TIMESTAMP},
-      description = #{description,jdbcType=VARCHAR}
+      description = #{description,jdbcType=VARCHAR},
+      imgReUpload_index = #{imgreuploadIndex,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
   <select id="selectBysj" resultMap="BaseResultMap" parameterType="com.csy.module.wx.entity.BAccidentInfo" >
     select 
     <include refid="Base_Column_List" />
@@ -304,4 +319,5 @@
     </where>
     order by occurrence_time desc
   </select>
+  
 </mapper>

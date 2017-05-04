@@ -228,3 +228,10 @@ CREATE TABLE `csy`.`b_wx_fkyj` (
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '提交时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '反馈意见表';
+
+
+/*
+ * 2017-05-03
+ * Add column for 'b_accident_info';
+*/
+ALTER TABLE csy.b_accident_info ADD imgReUpload_index varchar(64) default NULL COMMENT '图片重传序号,多个以逗号分割(,)';

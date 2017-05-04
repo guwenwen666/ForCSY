@@ -23,6 +23,8 @@ public class BAccidentInfo {
 
     private String description;
 
+    private String imgreuploadIndex;
+
     public String getId() {
         return id;
     }
@@ -101,5 +103,13 @@ public class BAccidentInfo {
 
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
+    }
+
+    public String getImgreuploadIndex() {
+        return imgreuploadIndex;
+    }
+
+    public void setImgreuploadIndex(String imgreuploadIndex) {
+        this.imgreuploadIndex = imgreuploadIndex == null ? null : imgreuploadIndex.trim();
     }
 }
