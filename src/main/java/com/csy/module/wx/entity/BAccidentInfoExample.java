@@ -854,6 +854,76 @@ public class BAccidentInfoExample {
             addCriterion("imgReUpload_index not between", value1, value2, "imgreuploadIndex");
             return (Criteria) this;
         }
+
+        public Criteria andImgreuploadedIndexIsNull() {
+            addCriterion("imgReUploaded_index is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgreuploadedIndexIsNotNull() {
+            addCriterion("imgReUploaded_index is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgreuploadedIndexEqualTo(String value) {
+            addCriterion("imgReUploaded_index =", value, "imgreuploadedIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgreuploadedIndexNotEqualTo(String value) {
+            addCriterion("imgReUploaded_index <>", value, "imgreuploadedIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgreuploadedIndexGreaterThan(String value) {
+            addCriterion("imgReUploaded_index >", value, "imgreuploadedIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgreuploadedIndexGreaterThanOrEqualTo(String value) {
+            addCriterion("imgReUploaded_index >=", value, "imgreuploadedIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgreuploadedIndexLessThan(String value) {
+            addCriterion("imgReUploaded_index <", value, "imgreuploadedIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgreuploadedIndexLessThanOrEqualTo(String value) {
+            addCriterion("imgReUploaded_index <=", value, "imgreuploadedIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgreuploadedIndexLike(String value) {
+            addCriterion("imgReUploaded_index like", value, "imgreuploadedIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgreuploadedIndexNotLike(String value) {
+            addCriterion("imgReUploaded_index not like", value, "imgreuploadedIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgreuploadedIndexIn(List<String> values) {
+            addCriterion("imgReUploaded_index in", values, "imgreuploadedIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgreuploadedIndexNotIn(List<String> values) {
+            addCriterion("imgReUploaded_index not in", values, "imgreuploadedIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgreuploadedIndexBetween(String value1, String value2) {
+            addCriterion("imgReUploaded_index between", value1, value2, "imgreuploadedIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgreuploadedIndexNotBetween(String value1, String value2) {
+            addCriterion("imgReUploaded_index not between", value1, value2, "imgreuploadedIndex");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

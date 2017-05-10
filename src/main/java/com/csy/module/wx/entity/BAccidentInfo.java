@@ -25,6 +25,8 @@ public class BAccidentInfo {
 
     private String imgreuploadIndex;
 
+    private String imgreuploadedIndex;
+
     public String getId() {
         return id;
     }
@@ -111,5 +113,13 @@ public class BAccidentInfo {
 
     public void setImgreuploadIndex(String imgreuploadIndex) {
         this.imgreuploadIndex = imgreuploadIndex == null ? null : imgreuploadIndex.trim();
+    }
+
+    public String getImgreuploadedIndex() {
+        return imgreuploadedIndex;
+    }
+
+    public void setImgreuploadedIndex(String imgreuploadedIndex) {
+        this.imgreuploadedIndex = imgreuploadedIndex == null ? null : imgreuploadedIndex.trim();
     }
 }
