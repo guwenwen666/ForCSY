@@ -248,24 +248,50 @@ app.controller("detail", function($scope, $stateParams, $state, $http, $sce){
 		    success: function (res) {
 		        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 		        for(var i=0; i<localIds.length; i++){
-		        	$scope.$apply(function(){
-		        		$scope.addImgUrl.push(localIds[i]);
-		        		$scope.xxtps.push({
-			        		uploadUrl: localIds[i],
-			        		uploadSuccess: false,
-			        		uploadError: 0,
-			        		uploadWaiting: true,
-			        		uploading: false,
-			        		serverId: undefined,
-			    			errPic: false,
-			    			newUpload: true
-			        	});
-		        		
-//		        		$scope.registerForm.xxtpNum.$pristine = false;
-//		        		$scope.registerForm.xxtpNum.$dirty = true;
-		        	});
+		        	$scope.$apply(function(i){
+		        		return function(){
+		        			$scope.addImgUrl.push(localIds[i]);
+			        		if(window.__wxjs_is_wkwebview){
+			        			wx.getLocalImgData({
+			        				localId: localIds[i], // 图片的localID
+			        				success: function (res) {
+			        					$scope.$apply(function(){
+				        					var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
+				        					$scope.xxtps.push({
+				        						iosUploadUrl: localData,
+								        		uploadUrl: localIds[i],
+								        		uploadSuccess: false,
+								        		uploadError: 0,
+								        		uploadWaiting: true,
+								        		uploading: false,
+								        		serverId: undefined,
+								    			errPic: false,
+								    			newUpload: true
+								        	});
+							        		if(i==localIds.length-1){
+							    		        uploadImageList(localIds);
+							        		}
+			        					});
+			        				}
+			        			});
+			        		}else{
+				        		$scope.xxtps.push({
+					        		uploadUrl: localIds[i],
+					        		uploadSuccess: false,
+					        		uploadError: 0,
+					        		uploadWaiting: true,
+					        		uploading: false,
+					        		serverId: undefined,
+					    			errPic: false,
+					    			newUpload: true
+					        	});
+				        		if(i==localIds.length-1){
+				    		        uploadImageList(localIds);
+				        		}
+			        		}
+		        		};
+		        	}(i));
 		        }
-		        uploadImageList(localIds);
 		    }
 		});
 	};
