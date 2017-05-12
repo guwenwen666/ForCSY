@@ -26,7 +26,9 @@
     								ng-init="info.position='获取中，请稍候...';formatterPosition(info)" ng-bind="info.position"></h4>
                                 <p class="weui-media-box__desc" ng-bind="info.duty || '无事故责任描述'"></p>
                             </div>
-							<div class="weui-cell__ft">
+							<div class="weui-cell__ft" style="font-size: 0">
+								<span ng-show="info.imgreuploadIndex != info.imgreuploadedIndex"
+									class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
                             </div>
                         </div>
                     </div>
@@ -125,7 +127,7 @@
 													'shake-little': editUploder && xxtp.newUpload}"
         										ng-repeat="xxtp in xxtps" 
         										ng-click="picClick($index)"
-        										ng-style="{'background-image':'url('+xxtp.uploadUrl+')'}">
+        										ng-style="{'background-image':'url('+ (xxtp.iosUploadUrl || xxtp.uploadUrl)+')'}">
     										<div ng-hide="editUploder">
                                                 <div ng-hdie="xxtp.uploadSuccess" class="weui-uploader__file-content">
                                                     <i ng-show="xxtp.uploadError && !xxtp.uploadWaiting" class="weui-icon-warn"></i>
@@ -207,7 +209,7 @@
         <script src="${springPath}/static/plugins/angularJS/angular-ui-router.js"></script>
 		<script src="${springPath}/static/plugins/angularJS/angular-validation.js"></script>
 		<script src="${springPath}/static/plugins/angularJS/angular-validation-rule.js"></script>
-        <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 		<script src="http://map.qq.com/api/js?v=2.exp"></script>
 		<script src="${springPath}/static/js/common/util.js"></script>
 		<script src="${springPath}/static/js/common/wx-common.js"></script>
