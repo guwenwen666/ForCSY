@@ -132,4 +132,23 @@ public class QuickLoseAction {
 	    jsonObject.put("total", total);
 	    JSONUtil.writeJSONObjectToResponse(response, jsonObject);
 	}
+	/**
+	 * 说明：标记有问题的图片
+	 * 创建时间：2017-05-05 13:31
+	 * @author wangyonghui
+	 */
+	@RequestMapping("/flagImage")
+	public void update(HttpServletRequest request, HttpServletResponse response,String id,String num){
+	    JSONObject jsonObject = new JSONObject();
+	    jsonObject.put("error", "");
+	    String imageString = "";
+	    try {
+	    	imageString = bAccidentInfoService.updateByPrimaryKeySelective(id, num);
+	    } catch (Exception e) {
+	      jsonObject.put("error", e);
+	      e.printStackTrace();
+	    }
+	    jsonObject.put("data", imageString);
+	    JSONUtil.writeJSONObjectToResponse(response, jsonObject);
+	}
 }

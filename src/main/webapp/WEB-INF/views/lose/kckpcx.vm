@@ -24,6 +24,28 @@
 			-webkit-transform:translate3d(0,-2px,0);
 			transform:translate3d(0,-2px,0);
 		}
+		.detail{
+			position:relative;
+			left:15px;
+			line-height:22px;
+			top:-20px;
+			cursor:pointer;
+			width:60px;
+		}
+		.imageClass{
+			width:140px;
+			height:140px;
+			cursor:pointer;
+		}
+		.imageClassFq{
+			width:140px;
+			height:140px;
+			cursor:pointer;
+			margin-top:-25px;
+			filter: Alpha(opacity=10);
+			-moz-opacity:.1;
+			opacity:0.1;
+		}
 	</style>
 </head>
 <body>
@@ -95,9 +117,9 @@
 		</div>
 	</div>
 </body>
+<script src="${springPath}/static/DatePicker/WdatePicker.js"></script>
 <script src="http://api.html5media.info/1.1.6/html5media.min.js"></script>
 <script src="${springPath}/static/plugins/jquery/dist/jquery.min.js"></script>
-<script src="${springPath}/static/DatePicker/WdatePicker.js"></script>
 <script src="${springPath}/static/js/common/common.js"></script>
 <script src="${springPath}/static/showLoading/jquery.showLoading.min.js"></script>
 <script src="${springPath}/static/js/lose/kckpcx.js"></script>
