@@ -6,11 +6,13 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import com.csy.module.login.controller.LoginAction;
 import com.csy.module.user.entity.BUserAccount;
 import com.csy.module.user.entity.BUserAccountExample;
 import com.csy.module.user.service.service.BuserAccountService;
 import com.csy.util.ObjectUtils;
 import com.csy.util.algorithm.DesUtil;
+import com.csy.util.algorithm.MD5Util;
 import com.csy.util.exception.account.EmailNotActivatedException;
 import com.csy.util.exception.account.PhoneNotActivatedException;
 import com.csy.util.exception.account.UserNotUniqueException;
@@ -61,9 +63,10 @@ public class BuserAccountServiceImpl extends BaseService<BUserAccount, BUserAcco
 		if(users.size() > 1)
 			throw new UserNotUniqueException(account);
 		BUserAccount user = users.get(0);
-		String encryptPassword = new DesUtil(user.getSafekey()).encrypt(password);
+		String encryptPassword = new DesUtil(user.getSafekey()).decrypt(user.getPassword());//解密
+		String md5Password = MD5Util.MD5(encryptPassword + LoginAction.imageCode);
 		//密码不匹配
-		if(!encryptPassword.equals(user.getPassword())){
+		if(!md5Password.equals(password)){
 			return null;
 		}
 		//email登录,并且email未激活

@@ -154,10 +154,16 @@ function formValidate() {
 			}
 		}
 	}).on("success.form.bv",function(e){
+		var json = getDes();
 		$.ajax({
 			type: "post",
 			url: rootPath+"/register/emailAccount",
-			data: $(".registerForm").serializeArray(),
+			data: {
+				account:$("#account").val(),
+				email:$("#email").val(),
+				password:json.key,
+				safekey:json.safeKey
+			},
 			dataType: "json",
 			success: function(rst, textStatus){
 				$("#registerTip").modal("show");
@@ -189,4 +195,24 @@ function formValidate() {
 	});
 	
 	
+}
+/**
+ * 进行des加密
+ * @returns {String}
+ */
+function getDes(){
+	var data = "";
+	$.ajax({
+		type: "post",
+		url: rootPath+"/register/getDes",
+		async:false,
+		data: {
+			password:$("#password").val()
+		},
+		dataType: "json",
+		success: function(rst){
+			data = rst;
+		},
+	});
+	return data;
 }

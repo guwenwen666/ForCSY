@@ -19,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.csy.module.login.service.service.RegisterService;
 import com.csy.module.user.entity.BUserAccount;
 import com.csy.module.user.service.service.BuserAccountService;
+import com.csy.util.RandDomUtil;
 import com.csy.util.StringUtils;
+import com.csy.util.algorithm.DesUtil;
 
 @Controller
 public class RegisterAction {
@@ -43,6 +45,8 @@ public class RegisterAction {
 			,BUserAccount account) throws IOException{
 		JSONObject jsonObject = new JSONObject();
 		try {
+			String password = new DesUtil(account.getSafekey()).decrypt(account.getPassword());
+			account.setPassword(password);
 			registerService.insertAccount(account);
 			jsonObject.put("success", "success");
 			jsonObject.put("account", account.getAccount());
@@ -68,5 +72,25 @@ public class RegisterAction {
 		}
 		boolean b = accountService.isAlreayExist(paramMap);
 		res.getWriter().print(b);
+	}
+	/**
+	 * des密码加密
+	 * @param password
+	 * @param res
+	 * @throws IOException
+	 */
+	@RequestMapping("/register/getDes")
+	public void getDes(String password,HttpServletResponse res) throws IOException{
+		JSONObject jsonObject = new JSONObject();
+		try {
+			String safeKey = RandDomUtil.getRandomString(32);
+			String key = new DesUtil(safeKey).encrypt(password);
+			jsonObject.put("safeKey", safeKey);
+			jsonObject.put("key", key);
+		} catch (Exception e){
+			logger.info("des加密失败", e);
+			jsonObject.put("errorMsg", e.getMessage());
+		}
+		res.getWriter().print(jsonObject);
 	}
 }
