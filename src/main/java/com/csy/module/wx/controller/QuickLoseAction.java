@@ -27,6 +27,7 @@ import com.csy.module.wx.service.service.BWxFkyjService;
 import com.csy.util.JSONUtil;
 import com.csy.util.StringUtils;
 import com.csy.util.TimeFormatUtil;
+import com.csy.util.algorithm.RSAUtil;
 
 @Controller
 public class QuickLoseAction {
@@ -45,9 +46,10 @@ public class QuickLoseAction {
 	 * 创建时间：2017-02-20 09:00
 	 * @author wangyonghui
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping("/lose.do")
-	public ModelAndView register(String param){
+	public ModelAndView register(String param,HttpServletRequest req) throws Exception{
 		  Map<String, Object> paramsMap  = new HashMap<String, Object>();
 		  Calendar calendar = Calendar.getInstance();
 		  String formatTime = TimeFormatUtil.timeToStr(calendar, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
@@ -58,6 +60,10 @@ public class QuickLoseAction {
 		  if(!StringUtils.isNull(param)){
 			  Param = param;
 		  }
+		  RSAUtil.generateKeyPair();
+		  req.getSession(true).setAttribute("key", RSAUtil.PRIVATEKEY);
+		  paramsMap.put("publicKey", RSAUtil.PUBLICKEY.getModulus().toString(16));
+		  paramsMap.put("publicExponent", RSAUtil.PUBLICKEY.getPublicExponent().toString(16));
 		  paramsMap.put("param", Param);
 		  return new ModelAndView("lose/kckpcx",paramsMap);
 	}

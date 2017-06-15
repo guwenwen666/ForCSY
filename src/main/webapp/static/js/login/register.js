@@ -27,7 +27,6 @@ function init() {
 	$(".resetFormBtn").click(function(){
 		$('.registerForm').data('bootstrapValidator').resetForm(true);
 	});
-	
 }
 
 function formValidate() {
@@ -124,7 +123,7 @@ function formValidate() {
 						message : '请输入密码'
 					},
 					regexp : {
-						regexp : /^[a-zA-Z0-9\-_\.]+$/,
+						regexp : /^[a-zA-Z0-9\-_@%!?+\.]+$/,
 						message : '密码由数字、字母、中划线、下划线组成'
 					},
 					identical : {
@@ -154,15 +153,16 @@ function formValidate() {
 			}
 		}
 	}).on("success.form.bv",function(e){
-		var json = getDes();
+		setMaxDigits(130);  
+		var key = new RSAKeyPair($("#publicExponent").val(),"",$("#publicKey").val());  
+	    var encryptData = encryptedString(key, $("#password").val());
 		$.ajax({
 			type: "post",
 			url: rootPath+"/register/emailAccount",
 			data: {
 				account:$("#account").val(),
 				email:$("#email").val(),
-				password:json.key,
-				safekey:json.safeKey
+				password:encryptData
 			},
 			dataType: "json",
 			success: function(rst, textStatus){
@@ -195,24 +195,4 @@ function formValidate() {
 	});
 	
 	
-}
-/**
- * 进行des加密
- * @returns {String}
- */
-function getDes(){
-	var data = "";
-	$.ajax({
-		type: "post",
-		url: rootPath+"/register/getDes",
-		async:false,
-		data: {
-			password:$("#password").val()
-		},
-		dataType: "json",
-		success: function(rst){
-			data = rst;
-		},
-	});
-	return data;
 }

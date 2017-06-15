@@ -261,7 +261,7 @@ function formValidate() {
 				url: rootPath+"/login/accountLogin",
 				data: {
 					account:$("#account").val(),
-					password:md5($("#password").val()+$("#securityCode").val())
+					password:md5(md5(md5($("#password").val()))+$("#securityCode").val())
 				},
 				dataType: "json",
 				success: function(rst, textStatus){
@@ -363,7 +363,7 @@ function formValidate() {
 					url: rootPath+"/login/accountLogin",
 					data: {
 						account:$("#account").val(),
-						password:md5($("#password").val()+$("#securityCode").val())
+						password:md5(md5(md5($("#password").val()))+$("#securityCode").val())
 					},
 					dataType: "json",
 					success: function(rst, textStatus){

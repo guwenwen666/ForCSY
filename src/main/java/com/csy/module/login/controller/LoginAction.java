@@ -1,6 +1,8 @@
 package com.csy.module.login.controller;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.security.interfaces.RSAPrivateKey;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +29,8 @@ import com.csy.util.SecurityCodeImg;
 import com.csy.util.StringUtils;
 import com.csy.util.TimeFormatUtil;
 import com.csy.util.algorithm.DesUtil;
+import com.csy.util.algorithm.MD5Util;
+import com.csy.util.algorithm.RSAUtil;
 import com.csy.util.exception.account.EmailNotActivatedException;
 import com.csy.util.exception.account.PhoneNotActivatedException;
 import com.csy.util.exception.account.UserNotUniqueException;
@@ -135,11 +139,10 @@ public class LoginAction {
 	 * @param res
 	 * @param oldPwd
 	 * @param newPwd
-	 * @param newPwd2
 	 */
 	@RequestMapping("login/modifyPassword.do")
 	public void update(HttpServletRequest req,HttpServletResponse res,String oldPwd,
-			String newPwd,String newPwd2){
+			String newPwd){
 		JSONObject jsonObject = new JSONObject(); 
 		try {
 			jsonObject.put("error", "");
@@ -153,20 +156,18 @@ public class LoginAction {
 				JSONUtil.writeJSONObjectToResponse(res, jsonObject);
 				return ;
 			}
-			if(!newPwd.equals(newPwd2)){
-				jsonObject.put("error", "新密码两次输入不一致");
-				JSONUtil.writeJSONObjectToResponse(res, jsonObject);
-				return ;
-			}
 			BUserAccount user = (BUserAccount) req.getSession(true).getAttribute("user");
-			String encryptPassword = new DesUtil(user.getSafekey()).decrypt(user.getPassword());//解密
+			String encryptPassword = user.getPassword();
 			if(!encryptPassword.equals(oldPwd)){
 				jsonObject.put("error", "原密码输入错误");
 				JSONUtil.writeJSONObjectToResponse(res, jsonObject);
 				return ;
 			}else{
+				byte[] en_result = RSAUtil.hexStringToBytes(newPwd); 
+				byte[] de_result = RSAUtil.decrypt((RSAPrivateKey)req.getSession(true).getAttribute("key"), en_result); 
+				String descPassword = URLDecoder.decode(new StringBuffer(new String(de_result)).reverse().toString());
 				//对新密码加密
-				user.setPassword(new DesUtil(user.getSafekey()).encrypt(newPwd));
+				user.setPassword(MD5Util.MD5(MD5Util.MD5(descPassword)));
 				accountService.updateByPrimaryKeySelective(user);
 			}
 		} catch (Exception e) {

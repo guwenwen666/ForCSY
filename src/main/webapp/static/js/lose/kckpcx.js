@@ -457,13 +457,24 @@ function modifyPassword(){
  * 修改密码
  */
 function btnModifyOk(){
+	var regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,16}');
+	if(!regex.test($("#txtNewPwd").val())){
+		alert("8～16个字符,包含数字、字母、特殊字符");
+		return ;
+	}
+	if($("#txtNewPwd").val() != $("#txtNewPwd2").val()){
+		alert("新密码两次输入不一致");
+		return ;
+	}
+	setMaxDigits(130);  
+	var key = new RSAKeyPair($("#publicExponent").val(),"",$("#publicKey").val());  
+    var txtNewPwd = encryptedString(key, $("#txtNewPwd").val());
 	$.ajax({
 		type: "post",
 		url:rootPath + "/login/modifyPassword.do",
 		data:{
-			oldPwd : $("#txtOldPwd").val(),
-			newPwd : $("#txtNewPwd").val(),
-			newPwd2 : $("#txtNewPwd2").val()
+			oldPwd : md5(md5($("#txtOldPwd").val())),
+			newPwd : txtNewPwd
 		},
 		dataType: "json",
 		success: function(data){
