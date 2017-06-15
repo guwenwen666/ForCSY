@@ -87,7 +87,7 @@ function btnSearch(){
 	$('#mainDiv1').showLoading();
 	$.ajax({
 		type: "post",
-		url: rootPath + "/kckpcx",
+		url: rootPath + "/kckpcx.do",
 		data: {
 			kssj:$('#kssj').val(),
 			jssj:$('#jssj').val(),
@@ -367,7 +367,7 @@ function openNewWindow(){
 	  tmp.moveTo(0,0);
 	  tmp.resizeTo(screen.width+20,screen.height);
 	  tmp.focus();
-	  tmp.location=rootPath+"/fkyj";
+	  tmp.location=rootPath+"/fkyj.do";
 }
 //切换到腾讯地图
 function change(data){
@@ -419,7 +419,7 @@ function processIamge(imageName,accidentId){
 	  }
 	  $.ajax({
 			type: "post",
-			url: rootPath + "/flagImage",
+			url: rootPath + "/flagImage.do",
 			data: {
 				id:accidentId,
 				num:imageName
@@ -438,4 +438,62 @@ function processIamge(imageName,accidentId){
 				}
 			}
 		});
+}
+/**
+ * 密码修改
+ */
+function modifyPassword(){
+	$("#password").css('display','block'); 
+	$("#password").dialog({
+		closed : true,
+		modal : true,
+		resizable : false,
+		width :360,
+		height:200,
+	});
+	 $("#password").dialog('open');
+}
+/**
+ * 修改密码
+ */
+function btnModifyOk(){
+	var regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,16}');
+	if(!regex.test($("#txtNewPwd").val())){
+		alert("8～16个字符,包含数字、字母、特殊字符");
+		return ;
+	}
+	if($("#txtNewPwd").val() != $("#txtNewPwd2").val()){
+		alert("新密码两次输入不一致");
+		return ;
+	}
+	setMaxDigits(130);  
+	var key = new RSAKeyPair($("#publicExponent").val(),"",$("#publicKey").val());  
+    var txtNewPwd = encryptedString(key, $("#txtNewPwd").val());
+	$.ajax({
+		type: "post",
+		url:rootPath + "/login/modifyPassword.do",
+		data:{
+			oldPwd : md5(md5($("#txtOldPwd").val())),
+			newPwd : txtNewPwd
+		},
+		dataType: "json",
+		success: function(data){
+			if(data.error != ""){
+				alert(data.error);
+				return ;
+			}else{
+				alert("修改密码成功");
+				$("#password").dialog('close');
+				window.open(rootPath+"/login.do","_self");
+			}
+		}
+	});
+}
+/**
+ * 密码重置
+ */
+function btnModifyReset(){
+	$("#txtOldPwd").val("");
+	$("#txtNewPwd").val("");
+	$("#txtNewPwd2").val("");
 }
