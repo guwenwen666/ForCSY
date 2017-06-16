@@ -17,7 +17,6 @@ $(function(){
 		$("div.dialog").removeClass("showIn").addClass("showOut");
 	});
 	
-	debugger;
 	if($("#isLogInFistTime").val()=="true"){
 		$("#button_showIn").click();
 	}
