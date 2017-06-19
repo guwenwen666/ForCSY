@@ -181,12 +181,12 @@ div.button-area{
     text-align: center;
 }
 
-@-webkit-keyframes showIn{
+@keyframes showIn{
 	0%   {bottom: 100%;}
     100% {bottom: 0%;}
 }
 
-@-webkit-keyframes showOut{
+@keyframes showOut{
 	0%   {bottom: 0%;}
     100% {bottom: 100%;}
 }
