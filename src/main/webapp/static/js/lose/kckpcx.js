@@ -60,6 +60,13 @@ function initComponent(){
 	$("#vehicleSearchResetBtn").click(function(){
 		restParam();
 	});
+	/**
+	 * 导出
+	 */
+	$("#exporttBtn").click(function(){
+		window.location = rootPath + "/queryDataExport.do" + "?hphm="
+		+ hphm  + "&wxzh=" +$('#wxh').val() + "&jssj=" + $('#jssj').val()+"&kssj="+$('#kssj').val()+"&r=" + new Date();
+	});
 }
 //把条件参数重置成空
 function restParam(){
@@ -74,8 +81,8 @@ function Switch() {
     $("#list").val(values.cysf.description);
 }
 //查询方法
+var hphm = "";
 function btnSearch(){
-	var hphm = "";
 	for(var i = 0; i < values.data.length; i ++){
 		if($("#list").val() == values.data[i].id){
 			hphm = values.data[i].dmxywm;
