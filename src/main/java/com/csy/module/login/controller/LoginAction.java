@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,18 +18,19 @@ import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.csy.module.user.entity.BUserAccount;
 import com.csy.module.user.service.service.BuserAccountService;
+import com.csy.util.GetExtranetIp;
 import com.csy.util.JSONUtil;
 import com.csy.util.ObjectUtils;
 import com.csy.util.SecurityCodeImg;
 import com.csy.util.StringUtils;
 import com.csy.util.TimeFormatUtil;
-import com.csy.util.algorithm.DesUtil;
 import com.csy.util.algorithm.MD5Util;
 import com.csy.util.algorithm.RSAUtil;
 import com.csy.util.exception.account.EmailNotActivatedException;
@@ -72,9 +74,13 @@ public class LoginAction {
 						jsonObject.put("errorMsg", "帐号或密码不正确!");
 						Flag ++;
 					}else{
-						jsonObject.put("success", "验证通过!");
-						jsonObject.put("account_id", user.getId());
-						req.getSession(true).setAttribute("user", user);
+						if(checkIp(account)){//验证通过
+							jsonObject.put("success", "验证通过!");
+							jsonObject.put("account_id", user.getId());
+							req.getSession(true).setAttribute("user", user);
+						}else{
+							jsonObject.put("errorMsg", "用户绑定的外网ip不正确！");
+						}
 					}
 					if(Flag >= 4){
 						jsonObject.put("errorMsg", "输入账号或者密码错误超过3次，一天后才能正常使用登录");
@@ -90,9 +96,13 @@ public class LoginAction {
 					jsonObject.put("errorMsg", "帐号或密码不正确!");
 					Flag ++;
 				}else{
-					jsonObject.put("success", "验证通过!");
-					jsonObject.put("account_id", user.getId());
-					req.getSession(true).setAttribute("user", user);
+					if(checkIp(account)){//验证通过
+						jsonObject.put("success", "验证通过!");
+						jsonObject.put("account_id", user.getId());
+						req.getSession(true).setAttribute("user", user);
+					}else{
+						jsonObject.put("errorMsg", "用户绑定的外网ip不正确！");
+					}
 				}
 				if(Flag >= 4){
 					jsonObject.put("errorMsg", "输入账号或者密码错误超过3次，一天后才能正常使用登录");
@@ -175,5 +185,24 @@ public class LoginAction {
 			e.printStackTrace();
 		}
 		JSONUtil.writeJSONObjectToResponse(res, jsonObject);
+	}
+	/**
+	 * 通过用户绑定的ip，判断此用户所对应的外网ip是否一致
+	 * @param account
+	 * @return
+	 */
+	public boolean checkIp(String account){
+		boolean flag = false;
+		try {
+			Properties properties = PropertiesLoaderUtils.loadAllProperties("userNet.properties");
+			String ip = GetExtranetIp.getWebIp();
+			if(null != properties.getProperty(account) && properties.getProperty(account).equals(ip)){//ip
+				flag = true;
+			}
+		} catch (IOException e) {
+			logger.error("checkIp is error:"+e);
+			e.printStackTrace();
+		}
+		return flag;
 	}
 }
