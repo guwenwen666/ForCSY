@@ -196,7 +196,12 @@ public class LoginAction {
 		try {
 			Properties properties = PropertiesLoaderUtils.loadAllProperties("userNet.properties");
 			String ip = GetExtranetIp.getWebIp();
-			if(null != properties.getProperty(account) && properties.getProperty(account).equals(ip)){//ip
+			String userIp = properties.getProperty(account);
+			if(null == userIp){
+				flag = true;
+				logger.error("此用户没有绑定ip"+account);
+			}
+			if(null != userIp && userIp.equals(ip)){//ip
 				flag = true;
 			}
 		} catch (IOException e) {
