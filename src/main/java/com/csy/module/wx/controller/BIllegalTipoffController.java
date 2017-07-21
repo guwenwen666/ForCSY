@@ -44,6 +44,7 @@ public class BIllegalTipoffController{
     }else{
       rst = new JSONObject();
       try{
+        tipoff.setPlateNumber(tipoff.getPlateNumber().toUpperCase());
         tipoff.setFkWxOpenid(wxUser.getOpenid());
         tipoffService.addTipOff(tipoff);
         rst.put("errMsg", "");
@@ -55,6 +56,4 @@ public class BIllegalTipoffController{
     }
     JSONUtil.writeJSONObjectToResponse(response, rst);
   }
-  
-  
 }

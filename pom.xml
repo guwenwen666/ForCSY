@@ -73,6 +73,11 @@
 			<artifactId>spring-oxm</artifactId>
 			<version>4.0.1.RELEASE</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-core</artifactId>
+		    <version>4.0.1.RELEASE</version>
+		</dependency>
 		<!-- springframe end -->
 		<!-- 模板引擎 velocity start -->
 		<dependency>
