@@ -195,14 +195,17 @@ public class LoginAction {
 		boolean flag = false;
 		try {
 			Properties properties = PropertiesLoaderUtils.loadAllProperties("userNet.properties");
-			String ip = GetExtranetIp.getWebIp();
 			String userIp = properties.getProperty(account);
 			if(null == userIp){
 				flag = true;
 				logger.error("此用户没有绑定ip"+account);
-			}
-			if(null != userIp && userIp.equals(ip)){//ip
-				flag = true;
+			}else{
+				String ip = GetExtranetIp.getWebIp();
+				if(userIp.equals(ip)){
+					flag = true;
+				}else{
+					flag = false;
+				}
 			}
 		} catch (IOException e) {
 			logger.error("checkIp is error:"+e);
