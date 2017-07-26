@@ -64,10 +64,6 @@ public class QuickLoseAction {
 		  if(!StringUtils.isNull(param)){
 			  Param = param;
 		  }
-		  RSAUtil.generateKeyPair();
-		  req.getSession(true).setAttribute("key", RSAUtil.PRIVATEKEY);
-		  paramsMap.put("publicKey", RSAUtil.PUBLICKEY.getModulus().toString(16));
-		  paramsMap.put("publicExponent", RSAUtil.PUBLICKEY.getPublicExponent().toString(16));
 		  paramsMap.put("param", Param);
 		  return new ModelAndView("lose/kckpcx",paramsMap);
 	}

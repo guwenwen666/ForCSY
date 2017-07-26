@@ -262,3 +262,23 @@ CREATE TABLE `csy`.`b_illegal_tipoff` (
   `phone` VARCHAR(16) NULL COMMENT '联系电话',
   PRIMARY KEY (`id`))
 COMMENT = '违法举报(随手抓拍)';
+----新增菜单表2017-07-25
+DROP TABLE IF EXISTS `b_qj_menu`;
+CREATE TABLE `b_qj_menu` (
+  `XH` varchar(32) NOT NULL COMMENT '序号',
+  `FJD` varchar(32) NOT NULL COMMENT '父节点',
+  `JDYWM` varchar(32) NOT NULL COMMENT '节点英文名',
+  `JDZWM` varchar(256) NOT NULL COMMENT '节点中文名',
+  `JDZWMQC` varchar(256) DEFAULT NULL COMMENT '节点中文名全称',
+  `JDJB` int(2) NOT NULL COMMENT '节点类型 0:系统 1:子系统 2:一级菜单 3:二级菜单',
+  `SFXS` int(2) DEFAULT NULL COMMENT '是否显示 0:菜单不显示 1:菜单显示',
+  `SFXTSY` int(2) DEFAULT NULL COMMENT '是否系统首页0:否 1:是',
+  `SFMKSY` int(2) DEFAULT NULL COMMENT '是否模块首页0:否 1:是',
+  `XSSX` int(2) DEFAULT NULL COMMENT '显示顺序',
+  `YLZD1` varchar(128) DEFAULT NULL,
+  `YLZD2` varchar(128) DEFAULT NULL,
+  `YLZD3` varchar(128) DEFAULT NULL,
+  `SFTC` int(2) DEFAULT NULL COMMENT '是否弹出 1：弹出 0或其他：不弹出',
+  `LJYMMC` varchar(32) DEFAULT NULL COMMENT '节点参数',
+  PRIMARY KEY (`XH`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

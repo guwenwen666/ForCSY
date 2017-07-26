@@ -7,9 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,6 +27,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.csy.module.user.entity.BUserAccount;
 import com.csy.module.user.service.service.BuserAccountService;
+import com.csy.module.wx.entity.BQjMenu;
+import com.csy.module.wx.service.service.BQjMenuService;
 import com.csy.util.GetExtranetIp;
 import com.csy.util.JSONUtil;
 import com.csy.util.ObjectUtils;
@@ -45,6 +49,8 @@ public class LoginAction {
 	
 	@Autowired
 	private BuserAccountService accountService;
+	@Resource
+	private BQjMenuService bQjSubsystemMenuService;
 	
 	private static int Flag = 0;
 	private static Map<String,Calendar> map = new HashMap<String, Calendar>();
@@ -198,7 +204,7 @@ public class LoginAction {
 			String userIp = properties.getProperty(account);
 			if(null == userIp){
 				flag = true;
-				logger.error("此用户没有绑定ip"+account);
+				logger.error("此用户没有绑定ip:"+account);
 			}else{
 				String ip = GetExtranetIp.getWebIp();
 				if(userIp.equals(ip)){
@@ -212,5 +218,72 @@ public class LoginAction {
 			e.printStackTrace();
 		}
 		return flag;
+	}
+	/**
+	 * 登录时候直接进行页面链接
+	 * @param request
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping("/frame_main.do")
+    public ModelAndView main(HttpServletRequest request) throws Exception{
+		Map<String, Object> paramsMap  = new HashMap<String, Object>();
+		RSAUtil.generateKeyPair();
+		request.getSession(true).setAttribute("key", RSAUtil.PRIVATEKEY);
+		paramsMap.put("publicKey", RSAUtil.PUBLICKEY.getModulus().toString(16));
+		paramsMap.put("publicExponent", RSAUtil.PUBLICKEY.getPublicExponent().toString(16));
+        return new ModelAndView("login/main",paramsMap);
+    }
+	/**
+	 *  根据节点名称获取子系统菜单
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/frame_getSubSystemMenu.do")
+	public void frame_getSubSystemMenu(HttpServletRequest request,HttpServletResponse response) {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("success", true);
+		jsonObject.put("msg", "");
+		//菜单节点级别
+		short pageJdjb = 3;
+		try {
+			String fjd = request.getParameter("fjd");
+			if(null != fjd && fjd.length() > 0)
+			{
+				//取菜单数据
+				BQjMenu bQjSubsystemMenu = new BQjMenu();
+				bQjSubsystemMenu.setFjd(fjd);
+				bQjSubsystemMenu.setSfxs(1);
+				List<BQjMenu> list  = bQjSubsystemMenuService.selectSubSystemMenu(bQjSubsystemMenu);
+				if(null != list && list.size()>0)
+				{
+					for(int i=0;i<list.size();i++)
+					{
+						BQjMenu entity = (BQjMenu)list.get(i);
+						if( pageJdjb != entity.getJdjb())
+						{
+							continue;
+						}
+						//得到菜单表的接口名称
+						String url = entity.getLjymmc();
+						if(null != url && !url.contains("http://"))
+						{
+							url ="./" + url;
+							entity.setLjymmc(url);
+						}
+					}
+					jsonObject.put("data", list);
+				}
+				else {
+					jsonObject.put("data", "{}");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonObject.put("success", false);
+			jsonObject.put("msg",e.getMessage());
+		}
+		JSONUtil.writeJSONObjectToResponse(response, jsonObject);
 	}
 }
