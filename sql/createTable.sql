@@ -282,3 +282,16 @@ CREATE TABLE `b_qj_menu` (
   `LJYMMC` varchar(32) DEFAULT NULL COMMENT '节点参数',
   PRIMARY KEY (`XH`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+----操作日志表2017-08-28
+CREATE TABLE `csy`.`b_qj_log` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `f_account` VARCHAR(16) NULL COMMENT '操作账户',
+  `ip` VARCHAR(16) NULL COMMENT 'ip地址',
+  `model` VARCHAR(8) NULL COMMENT '模块',
+  `oper_type` VARCHAR(8) NULL COMMENT '操作类型',
+  `oper_rst` VARCHAR(8) NULL COMMENT '操作结果(自行定义)',
+  `description` VARCHAR(128) NULL COMMENT '操作描述',
+  `createtime` DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
+  PRIMARY KEY (`id`))
+COMMENT = '全局日志操作表';
