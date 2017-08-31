@@ -1,9 +1,6 @@
 package com.csy.util.log;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.stereotype.Component;
 
 import com.csy.module.xtpz.dao.BQjLogMapper;
 import com.csy.module.xtpz.entity.BQjLog;
@@ -11,15 +8,13 @@ import com.csy.util.SpringFactory;
 import com.csy.util.account.UserUtil;
 import com.csy.util.exception.account.UserNotFoundException;
 
-@Component
+/**
+ * 日志接口类
+ * @author wangqiang
+ */
 public class LogUtil{
-
-  private static BQjLogMapper _log;
-
-  @PostConstruct
-  public void init(){
-    _log = SpringFactory.getBean("BQjLogMapper");
-  }
+  
+  private static final BQjLogMapper _log = SpringFactory.getBean("BQjLogMapper");
 
   /**
    * 
@@ -77,5 +72,6 @@ public class LogUtil{
     log.setOperType(operType);
     log.setDescription(description);
     _log.insertSelective(log);
-  } 
+  }
+  
 }
