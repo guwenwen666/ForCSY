@@ -145,9 +145,9 @@
                     </a>
 				</td>
 				<td>
-					<a href="#">
+					<a href="http://121.40.107.110/zjtraffic/about/lawsRegulations.html">
     					<div class="icon icon5" style="background-image:url('${springPath}/static/img/weixin/index/icon5.png');background-color:#5edf65"></div>
-                        <div class="desc">法律原地</div>
+                        <div class="desc">法律园地</div>
                     </a>
 				</td>
 				<td>
