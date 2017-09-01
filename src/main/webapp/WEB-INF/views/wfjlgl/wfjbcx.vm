@@ -39,7 +39,9 @@
 .s_first {
 	color: #5E5E5E;
 }
-
+.divleftBottom {
+   margin-bottom: 80px;
+}
 .item_over {
 	z-index: 2;
 	-webkit-box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
@@ -145,10 +147,12 @@
 <body>
 	<div class="wholessp-div">
 		<div class="main-top" style="float: left; width: 100%;">
-			<div class="maintitleDiv" style="text-align: center;"></div>
+			<div class="maintitleDiv">
+			<span  class="pageBigTitle">随手拍微信后台管理系统</span>
+			</div>
 
 			<div class="main-top1"
-				style="float: left; margin-top: 20px; margin-left: 20px; background-color: #E6F0ED;">
+				style="float: left; margin-top: 20px; margin-left: 20px; ">
 				<div class="lbtitleDiv" style="text-align: center;">
 					<span class="pageTitle">随手拍列表</span>
 				</div>
@@ -178,8 +182,6 @@
 										class="form-control search-input date-icon" value='${endTime}'
 										data-inputmask="'alias':'yyyy-MM-dd HH:mm:ss'"
 										onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'kssj\')}' })">
-
-
 								</div>
 
 
@@ -195,7 +197,7 @@
 							</select></td>
 							<td width="20%">
 
-								<button id="vehicleSearchBtn" type="button"
+								<button id="wfjbSearchBtn" type="button"
 									class="btn btn-primary">&nbsp;&nbsp;查&nbsp;询&nbsp;&nbsp;</button>
 
 							</td>
@@ -210,7 +212,7 @@
 
 
 				<div id="mainDiv1" style="float: left; border: none"
-					class="overFlow" align="center"></div>
+					class="overFlow" align="center" onkeydown="keyLogin();"></div>
 				<div id="mainDiv2" style="float: right; border: none"
 					class="overFlow" align="center"></div>
 			</div>

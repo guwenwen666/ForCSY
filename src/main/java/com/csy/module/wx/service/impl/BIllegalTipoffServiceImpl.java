@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ implements BIllegalTipoffService{
   
   @Autowired
   private BWxUserMapper userdao;
+  
   
   @Override
   public int addTipOff(BIllegalTipoff tipoff){
@@ -82,84 +84,123 @@ public List<BIllegalTipoffUser> selectByExample(BIllegalTipoffUser tipoffUser) {
 	for(int i=0;i<tipofflists.size();i++)
 	{
 		BIllegalTipoffUser btu=new BIllegalTipoffUser();
-	/*	String name=tipofflists.get(i).getName();
-		bu.setJbr(name);*/
 		BIllegalTipoff tipoff=tipofflists.get(i);
 		//号牌号码
+		if(tipoff.getPlateNumber() !=null&&tipoff.getPlateNumber() !="")
+		{
 		String hphm=tipoff.getPlateNumber();
-		//通过openid获得微信用户
-		String openid=tipoff.getFkWxOpenid();
-		BWxUser bwxUser=new BWxUser();
-		bwxUser.setOpenid(openid);
-		BWxUser user=userdao.selectByParam(bwxUser);
-		//微信账号
-		String wxh=user.getNickname();
-		//违法时间
-		Date occurrenceTime=tipoff.getOccurrenceTime();
-		//违法地点
-		String wfdd=tipoff.getIllegalPosition();
-		//违法描述--违法行为
-		String wfms=tipoff.getIllegalAct();
-		//举报人
-		String name=tipoff.getName();
-		//举报人电话
-		String lxdh=tipoff.getPhone();
-		//举报人身份证号
-		String sfzh=tipoff.getIdcard();
-		//微信头像
-		if(user.getHeadimgurl() != null && user.getHeadimgurl() != ""){
-		String wxtx=user.getHeadimgurl().substring(0, user.getHeadimgurl().lastIndexOf("/")+1)+64;
 
-		btu.setWxtx(wxtx);
-		}
-		//违法经度
-		String wfjd=tipoff.getLongitude();
-		//违法纬度
-		String wfwd=tipoff.getLatitude();
-		//现场图片
-		String wftp=tipoff.getIllegalImages();
-		//违法id
-		String wfid=tipoff.getId();
-		//处理状态
-		String wfstate=tipoff.getStatus();
-		//号牌号码
 		btu.setHphm(hphm);
-		//微信账号
-		btu.setWxzh(wxh);
+		}
+		String openid;
+		BWxUser bwxUser=new BWxUser();
+		//通过openid获得微信用户
+		if(tipoff.getFkWxOpenid() !=null&&tipoff.getFkWxOpenid() !="")
+		{
+         openid=tipoff.getFkWxOpenid();
+         bwxUser.setOpenid(openid);
+ 		btu.setWxid(openid);
+		}
+     	BWxUser user=userdao.selectByParam(bwxUser);
+     	if(user !=null)
+        {
+		  //微信账号
+		   if(user.getNickname() !=null&&user.getNickname() !="")
+		   {
+		   String wxh=user.getNickname();
+	
+		    btu.setWxzh(wxh);
+		   }
+		//微信头像
+				if(user.getHeadimgurl() != null && user.getHeadimgurl() != ""){
+				String wxtx=user.getHeadimgurl().substring(0, user.getHeadimgurl().lastIndexOf("/")+1)+64;
+		     	btu.setWxtx(wxtx);
+				}
+     	}
 		//违法时间
-		btu.setWfsj(TimeFormatUtil.dateToString(occurrenceTime));
+		if(tipoff.getOccurrenceTime() !=null)
+		{
+			Date occurrenceTime=tipoff.getOccurrenceTime();
+			btu.setWfsj(TimeFormatUtil.dateToString(occurrenceTime));
+		}
+
 		//违法地点
+		if(tipoff.getIllegalPosition() !=null && tipoff.getIllegalPosition() !="")
+		{
+		String wfdd=tipoff.getIllegalPosition();
 		btu.setWfdd(wfdd);
+		}
 		//违法描述--违法行为
+		if(tipoff.getIllegalAct() !=null && tipoff.getIllegalAct() !="")
+		{
+		String wfms=tipoff.getIllegalAct();
 		btu.setWfxw(wfms);
+		}
 		//举报人
+		if(tipoff.getName() !=null && tipoff.getName() !="")
+		{
+		String name=tipoff.getName();
 		btu.setJbr(name);
+		}
 		//举报人电话
+		if(tipoff.getPhone() !=null  && tipoff.getPhone() !="")
+		{
+		String lxdh=tipoff.getPhone();
 		btu.setLxdh(lxdh);
-		//举报人身份证账号
+		}
+		//举报人身份证号
+		if(tipoff.getIdcard() !=null && tipoff.getIdcard() !="")
+		{
+		String sfzh=tipoff.getIdcard();
 		btu.setSfzh(sfzh);
+		}
+		
 		//违法经度
+		if(tipoff.getLongitude() !=null && tipoff.getLongitude() !="")
+		{
+		String wfjd=tipoff.getLongitude();
 		btu.setWfjd(wfjd);
+		}
 		//违法纬度
+		if(tipoff.getLatitude() !=null && tipoff.getLatitude() !="")
+		{
+		String wfwd=tipoff.getLatitude();
 		btu.setWfwd(wfwd);
-		//违法图片
+		}
+		//现场图片
+		if(tipoff.getIllegalImages() !=null &&tipoff.getIllegalImages() !="")
+		{
+		String wftp=tipoff.getIllegalImages();
 		btu.setWftp(wftp);
-		//图片路径前缀
-		btu.setImagepath(XtpzUtil.getXtpzByName("wxResource").getVal());
-		//openid
-		btu.setWxid(openid);
+		}
 		//违法id
+		if(tipoff.getId() !=null && tipoff.getId() !="")
+		{
+		String wfid=tipoff.getId();
 		btu.setWfid(wfid);
-		//违法状态
-		btu.setWfstate(wfstate);
+		}
+		//处理状态
+		if(tipoff.getStatus() !=null && tipoff.getStatus() !="")
+		{
+		String wfstate=tipoff.getStatus();
+	    btu.setWfstate(wfstate);
+		}
+	//图片路径前缀
+		btu.setImagepath(XtpzUtil.getXtpzByName("wxResource").getVal());
 	
 		lists.add(btu);
 	}
-	
-
 	return lists;
 
 }
+
+
+
+
+
+
+
+
 
 /*	@Override
 	public void updateState(String wfid, String wfstate) {

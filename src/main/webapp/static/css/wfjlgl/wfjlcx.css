@@ -2,14 +2,14 @@
 
 /*随手拍后台管理标题框*/
 .maintitleDiv{
-	background: url("../../img/wfjlgl/ssp.png") left no-repeat;
-	background-color:#51586c;
+	background: url("../../img/wfjlgl/KDZNlogo.png") left no-repeat;
+	background-color:#3E7FB6;
 	width:100%;
 	height:45px;
 }
 /*随手拍列表标题框*/
 .lbtitleDiv{
-	background: #51586c;
+	background: #3E7FB6;
 	width:100%;
 	height:35px;
 }
@@ -25,7 +25,8 @@
 
 /*随手拍列表div样式*/
 .main-top1 {
-	background-color:#E6F0ED; 
+	/* background-color:#E6F0ED;  */
+	background-color:#FFFFFF; 
 }
 
 
@@ -52,24 +53,24 @@
 }
 
 #jssj {
-	background: url("../../img/wfjlgl/time.png") right no-repeat;
+	background: url("../../img/wfjlgl/calendar.png") right repeat-y;
+	
 }
 
 #kssj {
-	background: url("../../img/wfjlgl/time.png") right no-repeat;
-}
-
-#vehicleSearchBtn {
-	background-color: #51586c;
-}
-
-#vehicleSearchBtn:hover {
-	background-color: #808080;
+	background: url("../../img/wfjlgl/calendar.png") right repeat-y;
 	
 }
-#mainDiv1 {
-	background-color: #F6FAF9;
+
+#wfjbSearchBtn {
+	background-color: #3E7FB6;
 }
+
+#wfjbSearchBtn:hover {
+	background-color: #3671c9;
+	
+}
+
 
 
 /* sticky样式 */
@@ -84,6 +85,16 @@ div.sticky-note{
 	padding-left:60px;
 }	
 
+.pageBigTitle{
+	height:45px;
+	line-height:45px;
+	font-size:20px;
+	font-weight:bold;
+	color:#ffffff;
+	margin-left: 50px;
+	width:300px;
+	font-family: "Microsoft Yahei", 微软雅黑, Arial;
+}
 
 
 
