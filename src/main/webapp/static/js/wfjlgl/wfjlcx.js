@@ -32,7 +32,7 @@ function initResize(){
 //注册点击事件
 function initComponent(){
 	//查询按钮注册
-	$("#vehicleSearchBtn").click(function(){
+	$("#wfjbSearchBtn").click(function(){
 		btnSearch();
 	});
 }
@@ -53,6 +53,7 @@ function btnSearch(){
 		},
 		dataType: "json",
 		success: function(data){
+			/*$("#mainDiv1").css("background",'#E6F0ED');*/
 			if(data.error != ""){
 				jAlert(data.error);
 				return ;
@@ -61,11 +62,12 @@ function btnSearch(){
 				$("#mainDiv1").empty(); 
 				$("#mainDiv2").empty();
 				if(data.data.length == 0){
+					
 					jAlert("没有查询到数据");
 					return ;
 				}
 				jsonData = data;
-				makeLeftTable(data.data);
+				makeLeftTable(data.data,'first');
 			}
 		}
 	});
@@ -75,12 +77,36 @@ function btnSearch(){
 
 var jsonData = "";
 //左侧动态生成随手拍查询列表
-function makeLeftTable(data){
-	$("#mainDiv1").append("<div id='searchDiv' style='margin-top:10px;margin-left:-20px'><img onclick='dosearch();' src='"+rootPath+"/static/img/wfjlgl/search-icon.png'/>" +
-			"&nbsp;&nbsp;<input type='text'  id='searchText' style='border:none;background-color: #F6FAF9;font-size: 15px;font-weight:bold;' placeholder='请输入号牌或微信名称关键字'/></div>" +
-			"<br><div style='width: 90%;margin-top:-30px'><hr style='border:none;border-top:2px solid #5E6577;' /></div>");
-	      
+function makeLeftTable(data,value){
+	if(value =='next')
+		{
+		$(".main-top1").css("background",'#E6F0ED');
+		$("#mainDiv1").css("background",'#F6FAF9'); 
+		
+		$("#mainDiv1").append("<div id='searchDiv' style='margin-top:10px;margin-left:-20px'><img onclick='dosearch();' src='"+rootPath+"/static/img/wfjlgl/search-icon.png'/>" +
+				"&nbsp;&nbsp;<input type='text'  id='searchText' style='border:none;background-color: #F6FAF9;font-size: 15px;font-weight:bold;' placeholder='请输入号牌或微信名称关键字'/></div>" +
+				"<br><div style='width: 90%;margin-top:-30px'><hr style='border:none;border-top:2px solid #5E6577;' /></div>");
+		
+		}else if(value == 'first')
+			{
+			if(data != null && data.length > 0){
+				$(".main-top1").css("background",'#E6F0ED');
+				$("#mainDiv1").css("background",'#F6FAF9'); 
+				
+				$("#mainDiv1").append("<div id='searchDiv' style='margin-top:10px;margin-left:-20px'><img onclick='dosearch();' src='"+rootPath+"/static/img/wfjlgl/search-icon.png'/>" +
+						"&nbsp;&nbsp;<input type='text'  id='searchText' style='border:none;background-color: #F6FAF9;font-size: 15px;font-weight:bold;' placeholder='请输入号牌或微信名称关键字'/></div>" +
+						"<br><div style='width: 90%;margin-top:-30px'><hr style='border:none;border-top:2px solid #5E6577;' /></div>");
+			
+			   }
+			}
+	
 	if(data != null && data.length > 0){
+		/*$(".main-top1").css("background",'#E6F0ED');
+		$("#mainDiv1").css("background",'#F6FAF9'); 
+		
+		$("#mainDiv1").append("<div id='searchDiv' style='margin-top:10px;margin-left:-20px'><img onclick='dosearch();' src='"+rootPath+"/static/img/wfjlgl/search-icon.png'/>" +
+				"&nbsp;&nbsp;<input type='text'  id='searchText' style='border:none;background-color: #F6FAF9;font-size: 15px;font-weight:bold;' placeholder='请输入号牌或微信名称关键字'/></div>" +
+				"<br><div style='width: 90%;margin-top:-30px'><hr style='border:none;border-top:2px solid #5E6577;' /></div>");*/
 	
 		
 		$.each(data, function (i, item) {
@@ -112,10 +138,26 @@ function makeLeftTable(data){
 						  $("#td4"+i).append("<span id='span4"+i+"' class='s_first'>已忽略</span>");
 						}
 		}); 
+		$("#main"+(data.length-1)).addClass('divleftBottom');
 		$('#mainDiv1').niceScroll(scroll());
 	}
 }
 //设置滚动条样式
+function scrolltext()
+{
+	
+	var scroll={
+			cursorcolor: "#ccc",//#CC0071 光标颜色
+		    cursoropacitymax: 1, //改变不透明度非常光标处于活动状态（scrollabar“可见”状态），范围从1到0
+		    touchbehavior: false, //使光标拖动滚动像在台式电脑触摸设备
+		    cursorwidth: "5px", //像素光标的宽度
+		    cursorborder: "0", // 游标边框css定义
+		    cursorborderradius: "5px",//以像素为光标边界半径
+		    autohidemode: true //是否隐藏滚动条
+		    
+	};
+	return scroll;
+}
 function scroll()
 {
 	
@@ -152,12 +194,9 @@ function dosearch()
 			{
 			 searchedData.push(jsonDataObj);
 			}
-
-			
-	
 		
 	}); 
-	makeLeftTable(searchedData);
+	makeLeftTable(searchedData,'next');
 	
 }
 
@@ -249,11 +288,11 @@ function makeRightLane(data,e){
 	$("#right2").append("<div id='accident' style='width: 90%;'></div>");
 	$("#accident").height(($("#right2").height()/100)*20);
 	$("#accident").append("<table id='accidentTable' style='width:100%;height:100%;'></table>");
-	$("#accidentTable").append("<tr><td style='width:4%;height:15px'></td><td style='width:10%;></td><td style='width:36%'></td><td style='width:50%'></td></tr>");
+	$("#accidentTable").append("<tr><td style='width:6%;height:15px'></td><td style='width:12%;></td><td style='width:32%' ></td><td style='width:50%'></td></tr>");
 	$("#accidentTable").append("<tr id='accidenttr1'></tr>");
 	$("#accidenttr1").append("<td colspan='3' id='accidenttd11' style='text-align: left;font-size:16px;height:50px;'><font color='#A3A3A3' style='font-weight:bolder'>违法信息</font></td>");
 	$("#accidenttr1").append("<td id='accidenttd12' style='width:50%;text-align: left;font-size:16px;height:50px'><font color='#A3A3A3' style='font-weight:bolder'>违法描述</font></td>");
-	$("#accidentTable").append("<tr id='accidenttr2'></tr>");
+	$("#accidentTable").append("<tr id='accidenttr2' style='height:150px;'></tr>");
 	$("#accidenttr2").append("<td id='accidenttd21'></td>");
 	$("#accidenttd21").append("<img src='"+rootPath+"/static/img/wfjlgl/wfxx.png'/>");
 	$("#accidenttr2").append("<td id='accidenttd22'></td>");
@@ -263,11 +302,13 @@ function makeRightLane(data,e){
 	$("#accidenttd23").append("<font color='#5E5E5E' style='font-weight:bolder'>"+data.wfdd+"</font><span style='color:#41D4FF;cursor:pointer;' onclick='change("+JSON.stringify(data)+")'>切至地图</span><br><br>");
 	$("#accidenttd23").append("<div style='height: 42px;width: 88px;position:relative;'>" +
 					"<img  src='"+rootPath+"/static/img/wfjlgl/hphmbjt.png' style='height: 42px;width: 88px;border-radius:8px;border: 1px solid #EFEFEF;' /> " +
-							"<div class='upDiv' style='position:absolute;top:8px;left:12px;'><span style='color: white'>"+data.hphm+"</span></div></div>");
+							"<div class='upDiv' style='position:absolute;top:8px;left:12px;'><span style='color: white;font-size:16px;'>"+data.hphm+"</span></div></div>");
 	$("#accidenttr2").append("<td id='accidenttd24'></td>");
-	$("#accidenttd24").append("<font color='#5E5E5E' style='font-weight:bolder'>"+data.wfxw+"</font>");
+	$("#accidenttd24").append("<textarea rows='7' cols='30' style='font-weight:bolder ;color: #5E5E5E;border:0px;background-color:#ffffff' id='wfxwarea' readonly='true'>"+data.wfxw+"</textarea>");
+	$('#wfxwarea').niceScroll(scrolltext());
+	
 	//违法图片
-	$("#accidentTable").append("<tr id='accidenttr3'></tr>");
+	$("#accidentTable").append("<tr id='accidenttr3' style='height:50px'></tr>");
 	$("#accidenttr3").append("<td colspan='5' style='font-size:16px;text-align:left;height:50px'><font color='#A3A3A3' style='font-weight:bolder'>违法图片</font></td>");
 	
 
@@ -275,12 +316,13 @@ function makeRightLane(data,e){
 	if (data.wftp != "") {
 		  $("#right2")
 			.append(
-					"<div id='imgslideDiv' style='width:90%;margin-top:150px;margin-left:80px'  align='center'></div>");
+					"<div id='imgslideDiv' style='width:90%;margin-top:200px;margin-left:80px'  align='center'></div>");
 	 $("#imgslideDiv")
 			.append(
 					"<div class='carousel' style='width:100%;margin-top:20px;' align='center'></div>");
 		// 现场照片
 		 var str = data.wftp.split(",");
+		 
 		$(".carousel")
 				.append(
 						"<a href='javascript:void(0);' class='prev disabled' id='prev'>&nbsp </a>");
@@ -290,6 +332,7 @@ function makeRightLane(data,e){
 
 		for (var n = 0; n < str.length; n++) {
 			$("#ulimg").append("<li><a href='#'><img height='140' width='140' src='"+(imagePath+str[n])+"' onclick='onClickImage(this,"+JSON.stringify(imagePath+str[n])+")'  /></a></li>");
+			/*$("#ulimg").append("<li><a href='#'><img height='140' width='140' src='"+(str[n])+"' onclick='onClickImage(this,"+JSON.stringify(str[n])+")'  /></a></li>");*/
 			
 		
 		}
@@ -298,10 +341,11 @@ function makeRightLane(data,e){
 						"<a href='javascript:void(0);' class='next' id='next'>&nbsp </a>");
 		$(".carousel").append("<div class='clear'></div> ");
 		pictureSwitch();
-		$(".carousel").append("<div id='wfbtnDiv' style='width:100%;margin-top:20px;margin-bottom:100px;margin-left:200px'></div>");
-		
-		
 	}
+		$("#right2").append("<div id='wfbtnDiv' style='width:100%;margin-top:20px;margin-bottom:100px;margin-left:200px'></div>");
+		
+		
+	
 	
 	
 	//图片平铺==================================================================================================
@@ -377,12 +421,14 @@ function doCheck(dataSingle,value,e)
 						data: {
 							wfid:dataSingle.wfid,
 							wfstate:value,
+							wxzh:dataSingle.wxzh,
+							wfsj:dataSingle.wfsj,
 					
 						},
 						dataType: "json",
 						complete: function(){
 
-								$("#wfbtnDiv").remove();
+								$("#wfbtnDiv").empty();
 								$("#span4"+e).remove();
 								$("#td4"+e).append("<span id='span4"+e+"' class='s_first'>已确认</span>");							
 						}
@@ -406,6 +452,8 @@ function doCheck(dataSingle,value,e)
 						data: {
 							wfid:dataSingle.wfid,
 							wfstate:value,
+							wxzh:dataSingle.wxzh,
+							wfsj:dataSingle.wfsj,
 					
 						},
 						dataType: "json",
@@ -425,7 +473,7 @@ function doCheck(dataSingle,value,e)
 		
 		}
 
-	
+	$('#right2').niceScroll(scroll());
 }
 //比较时间
 function getDateDiff(dateTime){
@@ -497,3 +545,7 @@ function getgisInfo(info,e){
 	});
 }
 
+function keyLogin(){
+	 if (event.keyCode==13)  //回车键的键值为13
+		 dosearch();
+	}
