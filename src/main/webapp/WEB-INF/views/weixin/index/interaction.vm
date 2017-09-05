@@ -160,7 +160,7 @@
 			<tr>
 				
 				<td>
-					<a href="#">
+					<a href="${springPath}/wx/failureReport/index">
     					<div class="icon icon7" style="background-image:url('${springPath}/static/img/weixin/index/icon7.png');background-color:#ffaf59"></div>
                         <div class="desc">设备故障上报</div>
                     </a>
