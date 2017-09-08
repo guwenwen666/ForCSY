@@ -42,7 +42,7 @@ public class BFailureReportController {
       rst = new JSONObject();
       rst.put("errMsg", "未抓取到上传用户信息");
     }else{
-      rst = new JSONObject();
+      rst = new JSONObject();  
       try{
         failureReport.setFkWxOpenid(wxUser.getOpenid());
         failureReportService.addFailureReport(failureReport);
