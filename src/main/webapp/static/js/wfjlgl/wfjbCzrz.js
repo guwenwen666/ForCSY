@@ -66,9 +66,9 @@ function initTable()
 		    	align : 'center',
 		  	  formatter:function(value,rowData,rowIndex){
 		        	var ret ='';
-					if(value == 1){//系统异常
+					if(value == 1){
 						ret="审核状态更新";
-					}else if(value == 2){//优化建议
+					}else if(value == 2){
 						ret="其他";
 					}
 					return ret;
@@ -83,9 +83,9 @@ function initTable()
 		    	align : 'center',
 		    	formatter:function(value,rowData,rowIndex){
 		        	var ret ='';
-					if(value == 1){//系统异常
+					if(value == 1){
 						ret="已确认";
-					}else if(value == 2){//优化建议
+					}else if(value == 2){
 						ret="已忽略";
 					}
 					return ret;
@@ -140,6 +140,16 @@ function doSearch()
 {
 	$("#CzTable").datagrid('load',getQueryParams());
 		
+}
+
+//重置
+function doReset()
+{
+	
+	$("#statusSelect").val('');
+	$('#faccount').val('');	
+	$('#kssj').val($('#hidden_kssj').val());
+	$('#jssj').val($('#hidden_jssj').val());
 }
 //时间转换
 function createTimeFormat(value){

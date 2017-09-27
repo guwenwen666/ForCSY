@@ -131,7 +131,7 @@ INSERT INTO `b_xtpz_dmlx` (`dmlxbh`, `ywm`, `zwm`, `dmlxms`) VALUES ('30003', 'l
 
 
 /**
- * date: 2017-02-17
+ * date: 2017-09-01
  * author: guwenwen
  * description: 新增日志代码项
 */
@@ -140,3 +140,12 @@ INSERT INTO `b_xtpz_dmx` VALUES (null, '30001', '审核模块', '审核模块', 
 INSERT INTO `b_xtpz_dmx` VALUES (null, '30002', '审核状态更新', '审核状态更新', '1', null, '1', '1', '0', '1', '违法举报审核状态更新', null);
 INSERT INTO `b_xtpz_dmx` VALUES (null, '30003', '已确认', '已确认', '1', null, '1', '1', '0', '1', '确认违法', null);
 INSERT INTO `b_xtpz_dmx` VALUES (null, '30003', '已忽略', '已忽略', '2', null, '1', '1', '0', '1', '忽略违法', null);
+
+
+/**
+ * date: 2017-09-26
+ * author: guwenwen
+ * description: 菜单新增
+*/
+INSERT INTO `b_qj_menu` VALUES ('7', 'KCKPGLPT', 'GZSB', '故障上报', '故障上报', '2', '1', '0', '0', '0', null, null, null, '0', null);
+INSERT INTO `b_qj_menu` VALUES ('8', 'GZSB', 'SBGZSB', '设备故障上报', '设备故障上报', '3', '1', null, null, '0', null, null, null, '0', 'SBGZSB');

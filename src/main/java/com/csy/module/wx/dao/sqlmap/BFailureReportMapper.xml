@@ -304,4 +304,60 @@
       process_status = #{processStatus,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="String">
+   select 
+    <include refid="Base_Column_List" />
+    from b_failure_report
+    <where>
+    	<if test="kssj != null and kssj != ''" >
+        	and  upload_time &gt;= #{kssj,jdbcType=VARCHAR}
+      	</if>
+      	<if test="jssj != null and jssj != ''" >
+        	and  upload_time &lt;= #{jssj,jdbcType=VARCHAR}
+      	</if>
+      	<if test="auditstatus != null and auditstatus != '' and auditstatus != 0" >
+        	and audit_status = #{auditstatus,jdbcType=VARCHAR}
+      	</if>
+      	<if test="auditstatus ==0" >
+        	and audit_status is null
+      	</if>
+      	<if test="processstatus != null and processstatus != '' and processstatus != 0" >
+        	and  process_status = #{processstatus,jdbcType=VARCHAR}
+      	</if>
+      	
+      	<if test="processstatus ==0" >
+        	and  process_status is null
+      	</if>
+    </where>
+    order by upload_time desc
+  
+  
+  </select>
+  
+  <select id="countByParams" resultType="java.lang.Integer" parameterType="String">
+		select count(*) from
+		b_failure_report
+ <where>
+    	<if test="kssj != null and kssj != ''" >
+        	and  upload_time &gt;= #{kssj,jdbcType=VARCHAR}
+      	</if>
+      	<if test="jssj != null and jssj != ''" >
+        	and  upload_time &lt;= #{jssj,jdbcType=VARCHAR}
+      	</if>
+      	<if test="auditstatus != null and auditstatus != '' and auditstatus != 0" >
+        	and audit_status = #{auditstatus,jdbcType=VARCHAR}
+      	</if>
+      	<if test="auditstatus ==0" >
+        	and audit_status is null
+      	</if>
+      	<if test="processstatus != null and processstatus != '' and processstatus != 0" >
+        	and  process_status = #{processstatus,jdbcType=VARCHAR}
+      	</if>
+      	
+      	<if test="processstatus ==0" >
+        	and  process_status is null
+      	</if>
+    </where>
+  </select>
 </mapper>
