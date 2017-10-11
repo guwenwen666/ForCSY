@@ -214,7 +214,7 @@
 				<div id="mainDiv1" style="float: left; border: none"
 					class="overFlow" align="center" onkeydown="keyLogin();"></div>
 				<div id="mainDiv2" style="float: right; border: none"
-					class="overFlow" align="center"></div>
+					class="overFlow" align="center" ></div>
 			</div>
 		</div>
 	</div>

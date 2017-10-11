@@ -64,7 +64,7 @@
 						<td></td>
 						<td colspan="2" class="znjt-text-align-center">
 							<input id="wfjbSearchBtn" type="button" onclick="doSearch()" value="查询" class="znjt-btn-s-1" style="margin-right: 20px; " /> 
-							<input id="vehicleSearchResetBtn" type="button" value="重置" class="znjt-btn-s-1" style="margin-left:60px; "/>
+							<input id="vehicleSearchResetBtn" type="button" onclick="doReset()" value="重置" class="znjt-btn-s-1" style="margin-left:60px; "/>
 						</td>
 					</tr>
 				</table>

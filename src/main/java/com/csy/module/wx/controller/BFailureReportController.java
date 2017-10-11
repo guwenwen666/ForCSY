@@ -1,5 +1,7 @@
 package com.csy.module.wx.controller;
 
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,16 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import com.csy.module.wx.entity.BFailureReport;
 import com.csy.module.wx.entity.BWxUser;
 import com.csy.module.wx.service.service.BFailureReportService;
 import com.csy.util.JSONUtil;
+import com.csy.util.StringUtils;
+import com.csy.util.TimeFormatUtil;
 
 import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("wx/failureReport")
 public class BFailureReportController {
+
 
   @Autowired
   private BFailureReportService failureReportService;
@@ -55,4 +61,7 @@ public class BFailureReportController {
     }
     JSONUtil.writeJSONObjectToResponse(response, rst);
   }
+  
+  
+
 }
