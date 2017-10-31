@@ -63,7 +63,7 @@
                         <div class="weui-cell__hd"><label class="weui-label">车辆号牌</label></div>
                         <div class="weui-cell__bd">
                             <input ng-model="jsyxx.hphm" name="jsyxxHphm{{$index}}" class="weui-input" type="text" placeholder="输入车辆号牌"
-								validator="required,hphm">
+								validator="hphm">
                         </div>
 						<div class="weui-cell__ft">
                             <i class="weui-icon-warn"></i>
@@ -151,7 +151,7 @@
                     <div class="weui-cell__bd">
                         <input ng-model="info.duty" name="duty" class="weui-input" value="" 
 							placeholder="事故责任方" maxlength=32 
-							validator="required,maxlength=32">
+							validator="maxlength=32">
                     </div>
 					<div class="weui-cell__ft"> 
                         <i class="weui-icon-warn"></i>
@@ -160,7 +160,7 @@
             </div>
 			
 			<!-- 录音责任代码 start -->
-			<div class="weui-cells__title">事故描述+责任确认录音
+			<div class="weui-cells__title">事故经过简要陈述录音
 				<span class="weui-cells__ft union-btn" ng-init="editUploderVoice=false" ng-hide="editUploderVoice" 
 					ng-click="editUploderVoice=!editUploderVoice">
 					<span class="weui-icon-modify_sm"></span>编辑
