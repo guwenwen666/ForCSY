@@ -65,7 +65,7 @@
                         <div class="weui-cell__bd">
                             <input ng-model="jsyxx.hphm" name="jsyxxHphm{{$index}}" 
 								class="weui-input" type="text" placeholder="输入车辆号牌" 
-								validator="{{$index==0?'required,':'required=false,'}}hphm">
+								validator="{{$index==0?'required,':''}}hphm">
                         </div>
 						<div class="weui-cell__ft">
                             <i class="weui-icon-warn"></i>
@@ -75,7 +75,7 @@
                         <div class="weui-cell__hd"><label class="weui-label">手机号码</label></div>
                         <div class="weui-cell__bd">
                             <input ng-model="jsyxx.contact" name="jsyxxContact{{$index}}" class="weui-input" type="tel" value="" placeholder="输入手机号"
-								validator="{{$index==0?'required,':'required=false,'}}phone">
+								validator="{{$index==0?'required,':''}}phone">
                         </div>
 						<div class="weui-cell__ft">
                             <i class="weui-icon-warn"></i>
