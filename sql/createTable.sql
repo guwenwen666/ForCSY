@@ -302,7 +302,7 @@ CREATE TABLE `b_failure_report` (
   `id` varchar(64) NOT NULL COMMENT '故障id',
   `fk_wx_openid` varchar(64) NOT NULL DEFAULT '微信openid',
   `phone` varchar(16) DEFAULT NULL COMMENT '联系电话',
-  `upload_time` datetime DEFAULT NULL COMMENT '上传时间',
+  `upload_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '上传时间',
   `upload_position` varchar(128) DEFAULT NULL COMMENT '上传地点',
   `longitude` varchar(128) DEFAULT NULL COMMENT '经度',
   `latitude` varchar(128) DEFAULT NULL COMMENT '纬度',

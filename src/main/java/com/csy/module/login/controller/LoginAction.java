@@ -15,6 +15,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +40,6 @@ import com.csy.util.algorithm.RSAUtil;
 import com.csy.util.exception.account.EmailNotActivatedException;
 import com.csy.util.exception.account.PhoneNotActivatedException;
 import com.csy.util.exception.account.UserNotUniqueException;
-
-import net.sf.json.JSONObject;
 
 
 @Controller
@@ -207,10 +207,14 @@ public class LoginAction {
 				logger.error("此用户没有绑定ip:"+account);
 			}else{
 				String ip = UserUtil.getIpByHttpRequest(request);
-				if(userIp.equals(ip)){
-					flag = true;
-				}else{
-					flag = false;
+				String[] userIpArray = userIp.split(",");
+				for(int i = 0; i < userIpArray.length; i++){
+					if(ip.equals(userIpArray[i])){
+						flag = true;
+						break;
+					}else{
+						flag = false;
+					}
 				}
 			}
 		} catch (IOException e) {
